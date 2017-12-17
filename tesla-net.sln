@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{FA538EDD-4
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tesla.NET", "src\Tesla.NET\Tesla.NET.csproj", "{00F4979E-7B29-4664-B40B-70C5F088A7AD}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tesla.NET.Tests", "test\Tesla.NET.Tests\Tesla.NET.Tests.csproj", "{0AA89B3B-FE26-41C4-B844-CC4CD3C0F922}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,12 +21,17 @@ Global
 		{00F4979E-7B29-4664-B40B-70C5F088A7AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00F4979E-7B29-4664-B40B-70C5F088A7AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00F4979E-7B29-4664-B40B-70C5F088A7AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AA89B3B-FE26-41C4-B844-CC4CD3C0F922}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AA89B3B-FE26-41C4-B844-CC4CD3C0F922}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AA89B3B-FE26-41C4-B844-CC4CD3C0F922}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AA89B3B-FE26-41C4-B844-CC4CD3C0F922}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{00F4979E-7B29-4664-B40B-70C5F088A7AD} = {FCF27571-1616-458D-A813-EED8BDA3BA26}
+		{0AA89B3B-FE26-41C4-B844-CC4CD3C0F922} = {FA538EDD-4092-4A5A-9E4D-F48A624045CA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03D40007-8CA8-468B-A7D0-53F4AF66A8DC}
