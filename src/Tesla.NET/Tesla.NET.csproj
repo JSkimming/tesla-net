@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <CodeAnalysisRuleSet>..\stylecop.ruleset</CodeAnalysisRuleSet>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Authors>James Skimming</Authors>
+    <Description>A .NET client library for the Tesla Owner API</Description>
+    <Copyright>Copyright © 2018 James Skimming</Copyright>
+    <PackageLicenseUrl>https://github.com/JSkimming/tesla-net/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/JSkimming/tesla-net</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/JSkimming/tesla-net</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>tesla tesla-api dotnet dotnet-core</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta004" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+
+</Project>
