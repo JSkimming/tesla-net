@@ -14,6 +14,7 @@
     <RepositoryUrl>https://github.com/JSkimming/tesla-net</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>tesla tesla-api dotnet dotnet-core</PackageTags>
+    <DebugType>pdbonly</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
