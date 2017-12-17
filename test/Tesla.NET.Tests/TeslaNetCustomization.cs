@@ -8,6 +8,7 @@ namespace Tesla.NET
     using System.Linq;
     using AutoFixture;
     using AutoFixture.AutoMoq;
+    using AutoFixture.Xunit2;
 
     internal class TeslaNetCustomization : CompositeCustomization
     {
@@ -20,6 +21,14 @@ namespace Tesla.NET
     internal class FixtureCustomization : ICustomization
     {
         void ICustomization.Customize(IFixture fixture)
+        {
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Method)]
+    internal class AutoMoqDataAttribute : AutoDataAttribute
+    {
+        public AutoMoqDataAttribute() : base(() => new Fixture().Customize(new TeslaNetCustomization()))
         {
         }
     }

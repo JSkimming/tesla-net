@@ -7,10 +7,8 @@ namespace Tesla.NET
     using System.Collections.Generic;
     using System.Linq;
 
-    /// <summary>
-    /// Client for the Tesla Owner API.
-    /// </summary>
-    public class TeslaClient
+    /// <inheritdoc />
+    public class TeslaClient : ITeslaClient
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TeslaClient"/> class.
