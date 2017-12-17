@@ -26,7 +26,7 @@ image: Visual Studio 2017
 
 environment:
   COVERALLS_REPO_TOKEN:
-    secure: B7OiQ6HwQytMefA6v113Q+s2WLaQDih4O8JAGxUFZwyHP+/xks+1EO0BWueF4Ihl
+    secure: xSjg1Q1suh+F7HKoZ6Efr73Wkk6a7hcln6xWLd6h1dDLLJ80QkGmdmyfIQt7Dvt1
 
 # scripts that are called at very beginning, before repo cloning
 init:
