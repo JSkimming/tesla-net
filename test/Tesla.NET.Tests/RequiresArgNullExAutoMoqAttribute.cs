@@ -35,6 +35,7 @@ namespace Tesla.NET
         {
             IFixture fixture = new Fixture().Customize(new TeslaNetCustomization());
             fixture.Inject(new TeslaClient());
+            fixture.Register<TeslaClientBase>(fixture.Create<TeslaAuthClient>);
 
             var argNullFixture = new ArgumentNullExceptionFixture(assemblyUnderTest, fixture);
 

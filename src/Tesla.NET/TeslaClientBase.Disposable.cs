@@ -5,13 +5,15 @@ namespace Tesla.NET
 {
     using System;
 
-    /// <inheritdoc cref="ITeslaClient" />
-    public partial class TeslaClient : IDisposable
+    /// <summary>
+    /// Base client for the Tesla Owner API.
+    /// </summary>
+    public partial class TeslaClientBase : IDisposable
     {
         /// <summary>
-        /// Finalizes an instance of the <see cref="TeslaClient"/> class.
+        /// Finalizes an instance of the <see cref="TeslaClientBase"/> class.
         /// </summary>
-        ~TeslaClient()
+        ~TeslaClientBase()
         {
             Dispose(false);
         }
@@ -24,7 +26,7 @@ namespace Tesla.NET
         }
 
         /// <summary>
-        /// Releases the unmanaged resources used by the <see cref="TeslaClient"/> and optionally releases the managed
+        /// Releases the unmanaged resources used by the <see cref="TeslaClientBase"/> and optionally releases the managed
         /// resources.
         /// </summary>
         /// <param name="disposing">
