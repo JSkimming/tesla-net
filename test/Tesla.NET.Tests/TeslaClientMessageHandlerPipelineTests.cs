@@ -142,4 +142,26 @@ namespace Tesla.NET
             action.ShouldThrowExactly<ArgumentException>();
         }
     }
+
+    public class When_initialising_a_TeslaClient_with_no_parameters
+    {
+        private readonly TeslaClient _sut;
+
+        public When_initialising_a_TeslaClient_with_no_parameters()
+        {
+            _sut = new TeslaClient();
+        }
+
+        [Fact]
+        public void Should_create_an_HttpClient()
+        {
+            _sut.Client.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void Should_use_the_default_Base_Uri()
+        {
+            _sut.BaseUri.Should().BeSameAs(TeslaClient.DefaultBaseUri);
+        }
+    }
 }

@@ -9,22 +9,43 @@ namespace Tesla.NET
     using System.Net;
     using System.Net.Http;
 
-    /// <inheritdoc />
-    public class TeslaClient : ITeslaClient
+    /// <inheritdoc cref="ITeslaClient" />
+    public partial class TeslaClient : ITeslaClient
     {
+        /// <summary>
+        /// The default base <see cref="Uri"/> for the Tesla Owner API.
+        /// </summary>
+        public static readonly Uri DefaultBaseUri = new Uri("https://owner-api.teslamotors.com/");
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TeslaClient"/> class.
+        /// </summary>
+        /// <param name='handlers'>Optional. The handlers to add to the HTTP client pipeline.</param>
+        public TeslaClient(params HttpMessageHandler[] handlers)
+            : this(DefaultBaseUri, handlers)
+        {
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TeslaClient"/> class.
         /// </summary>
         /// <param name="baseUri">The <see cref="BaseUri"/> of the Tesla Owner API.</param>
-        public TeslaClient(Uri baseUri)
+        /// <param name='handlers'>Optional. The handlers to add to the HTTP client pipeline.</param>
+        public TeslaClient(Uri baseUri, params HttpMessageHandler[] handlers)
         {
             BaseUri = baseUri ?? throw new ArgumentNullException(nameof(baseUri));
+            Client = new HttpClient(CreatePipeline(handlers));
         }
 
         /// <summary>
         /// Gets the base <see cref="Uri"/> of the Tesla Owner API.
         /// </summary>
-        public Uri BaseUri { get; }
+        public Uri BaseUri { get; private set; }
+
+        /// <summary>
+        /// Gets the underlying HttpClient used to make requests.
+        /// </summary>
+        public HttpClient Client { get; private set; }
 
         /// <summary>
         /// Transform a collection of <see cref="HttpMessageHandler"/>s into a chain of
@@ -72,11 +93,10 @@ namespace Tesla.NET
         /// <returns>A default HttpMessageHandler that supports automatic decompression.</returns>
         public static HttpClientHandler CreateDefaultHttpClientHandler()
         {
-            var handler = new HttpClientHandler();
-            if (handler.SupportsAutomaticDecompression)
+            var handler = new HttpClientHandler
             {
-                handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-            }
+                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate,
+            };
 
             return handler;
         }

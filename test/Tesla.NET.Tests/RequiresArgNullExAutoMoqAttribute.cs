@@ -34,6 +34,7 @@ namespace Tesla.NET
         private static IArgumentNullExceptionFixture CreateFixture(Assembly assemblyUnderTest)
         {
             IFixture fixture = new Fixture().Customize(new TeslaNetCustomization());
+            fixture.Inject(new TeslaClient());
 
             var argNullFixture = new ArgumentNullExceptionFixture(assemblyUnderTest, fixture);
 
