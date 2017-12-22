@@ -10,23 +10,23 @@ namespace Tesla.NET
     using FluentAssertions;
     using Xunit;
 
-    public class TeslaClient_should
+    public class TeslaAuthClient_should
     {
         [Fact]
-        public void Be_of_Type_ITeslaClient()
+        public void Be_of_Type_ITeslaAuthClient()
         {
             // Arrange/Act
-            var sut = new TeslaClient();
+            var sut = new TeslaAuthClient();
 
             // Assert
-            sut.Should().BeAssignableTo<ITeslaClient>();
+            sut.Should().BeAssignableTo<ITeslaAuthClient>();
         }
 
         [Theory, AutoMoqData]
         public void Use_the_specified_Base_Uri(Uri baseUri)
         {
             // Arrange/Act
-            var sut = new TeslaClient(baseUri);
+            var sut = new TeslaAuthClient(baseUri);
 
             // Assert
             sut.BaseUri.Should().BeSameAs(baseUri);
@@ -36,7 +36,7 @@ namespace Tesla.NET
         public void Use_the_specified_HTTP_Client_and_Base_Uri(Uri baseUri, HttpClient client)
         {
             // Arrange/Act
-            var sut = new TeslaClient(baseUri, client);
+            var sut = new TeslaAuthClient(baseUri, client);
 
             // Assert
             sut.BaseUri.Should().BeSameAs(baseUri);
@@ -47,7 +47,7 @@ namespace Tesla.NET
         public void Use_the_specified_HTTP_Client(HttpClient client)
         {
             // Arrange/Act
-            var sut = new TeslaClient(client);
+            var sut = new TeslaAuthClient(client);
 
             // Assert
             sut.Client.Should().BeSameAs(client);
@@ -57,7 +57,7 @@ namespace Tesla.NET
         public void Dispose_The_HttpClient()
         {
             // Arrange
-            var sut = new TeslaClient();
+            var sut = new TeslaAuthClient();
 
             // Act
             sut.Dispose();
@@ -71,7 +71,7 @@ namespace Tesla.NET
         public void Dispose_Is_Idempotent()
         {
             // Arrange
-            var sut = new TeslaClient();
+            var sut = new TeslaAuthClient();
 
             // Act
             sut.Dispose();

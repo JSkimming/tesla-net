@@ -9,12 +9,15 @@ namespace Tesla.NET
     using System.Threading.Tasks;
     using AutoTest.ArgNullEx;
     using AutoTest.ArgNullEx.Xunit;
+    using Tesla.NET.Models;
     using Xunit;
 
     public class RequiresArgNullEx
     {
-        [Theory, RequiresArgNullExAutoMoq(typeof(TeslaClient))]
-        public Task WebJobs(MethodData method)
+        [Theory, RequiresArgNullExAutoMoq(typeof(TeslaClientBase))]
+        [Substitute(typeof(TeslaClientBase), typeof(TeslaAuthClient))]
+        [Substitute(typeof(MessageResponse<>), typeof(MessageResponse<object>))]
+        public Task TeslaNet(MethodData method)
         {
             return method.Execute();
         }

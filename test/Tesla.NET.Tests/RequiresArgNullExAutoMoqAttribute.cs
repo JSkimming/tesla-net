@@ -10,6 +10,7 @@ namespace Tesla.NET
     using AutoFixture;
     using AutoTest.ArgNullEx;
     using AutoTest.ArgNullEx.Xunit;
+    using Tesla.NET.Models;
 
     [AttributeUsage(AttributeTargets.Method)]
     internal class RequiresArgNullExAutoMoqAttribute : RequiresArgumentNullExceptionAttribute
@@ -34,8 +35,8 @@ namespace Tesla.NET
         private static IArgumentNullExceptionFixture CreateFixture(Assembly assemblyUnderTest)
         {
             IFixture fixture = new Fixture().Customize(new TeslaNetCustomization());
+            fixture.Inject(new TeslaAuthClient());
             fixture.Inject(new TeslaClient());
-            fixture.Register<TeslaClientBase>(fixture.Create<TeslaAuthClient>);
 
             var argNullFixture = new ArgumentNullExceptionFixture(assemblyUnderTest, fixture);
 

@@ -1,0 +1,115 @@
+﻿// Copyright (c) 2018 James Skimming. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+
+namespace Tesla.NET
+{
+    using System;
+    using System.Diagnostics;
+    using System.Reflection;
+    using AutoFixture;
+    using FluentAssertions;
+    using Tesla.NET.Models;
+    using Xunit;
+
+    public abstract class DebuggerDisplayTestsBase : FixtureContext
+    {
+        private Type _sutType;
+        private DebuggerDisplayAttribute _debuggerDisplay;
+        private PropertyInfo _debuggerDisplayPropertyInfo;
+        private MethodInfo _debuggerDisplayGetMethod;
+        private object _debuggerDisplayValue;
+        protected string DebuggerDisplayText;
+
+        protected void GetDebuggerDisplay<TSut>(TSut sut)
+        {
+            _sutType = sut.GetType();
+
+            _debuggerDisplay = _sutType.GetTypeInfo().GetCustomAttribute<DebuggerDisplayAttribute>(inherit: false);
+
+            _debuggerDisplayPropertyInfo =
+                _sutType.GetProperty("DebuggerDisplay", BindingFlags.NonPublic | BindingFlags.Instance);
+
+            _debuggerDisplayGetMethod = _debuggerDisplayPropertyInfo.GetGetMethod(true);
+
+            _debuggerDisplayValue = _debuggerDisplayGetMethod.Invoke(sut, new object[] { });
+
+            DebuggerDisplayText = _debuggerDisplayValue.ToString();
+        }
+
+        [Fact]
+        public void have_the_debugger_display_attribute()
+        {
+            _debuggerDisplay.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void specify_the_debugger_display_property()
+        {
+            _debuggerDisplay.Value.Should().BeEquivalentTo("{DebuggerDisplay,nq}");
+        }
+
+        [Fact]
+        public void have_the_debugger_display_private_property()
+        {
+            _debuggerDisplayPropertyInfo.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void have_a_getter_on_the_debugger_display_property()
+        {
+            _debuggerDisplayGetMethod.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void provide_a_string_debugger_display_property()
+        {
+            _debuggerDisplayValue.Should().BeOfType<string>();
+        }
+
+        [Fact]
+        public void include_the_type_in_the_debugger_display()
+        {
+            DebuggerDisplayText.Should().StartWith($"{_sutType.Name}:");
+        }
+    }
+
+    public class When_running_in_the_debugger_AccessTokenResponse_Should : DebuggerDisplayTestsBase
+    {
+        private readonly AccessTokenResponse _sut;
+
+        public When_running_in_the_debugger_AccessTokenResponse_Should()
+        {
+            _sut = Fixture.Create<AccessTokenResponse>();
+            GetDebuggerDisplay(_sut);
+        }
+
+        [Fact]
+        public void include_the_truncated_access_token_in_the_debugger_display()
+        {
+            DebuggerDisplayText.Should().Contain(_sut.AccessToken.Substring(0, 6) + "…");
+        }
+
+        [Fact]
+        public void include_the_expires_when_in_the_debugger_display()
+        {
+            DebuggerDisplayText.Should().Contain(_sut.ExpiresWhen.ToString("R"));
+        }
+    }
+
+    public class When_running_in_the_debugger_MessageResponse_Should : DebuggerDisplayTestsBase
+    {
+        private readonly MessageResponse<string> _sut;
+
+        public When_running_in_the_debugger_MessageResponse_Should()
+        {
+            _sut = Fixture.Create<MessageResponse<string>>();
+            GetDebuggerDisplay(_sut);
+        }
+
+        [Fact]
+        public void include_the_HTTP_status_code_in_the_debugger_display()
+        {
+            DebuggerDisplayText.Should().Contain(_sut.HttpStatusCode.ToString("G"));
+        }
+    }
+}

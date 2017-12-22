@@ -40,6 +40,26 @@ namespace Tesla.NET
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="TeslaClientBase"/> class.
+        /// </summary>
+        /// <param name='client'>The <see cref="Client"/>.</param>
+        protected TeslaClientBase(HttpClient client)
+            : this(DefaultBaseUri, client)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TeslaClientBase"/> class.
+        /// </summary>
+        /// <param name="baseUri">The <see cref="BaseUri"/> of the Tesla Owner API.</param>
+        /// <param name='client'>The <see cref="Client"/>.</param>
+        protected TeslaClientBase(Uri baseUri, HttpClient client)
+        {
+            BaseUri = baseUri ?? throw new ArgumentNullException(nameof(baseUri));
+            Client = client ?? throw new ArgumentNullException(nameof(client));
+        }
+
+        /// <summary>
         /// Gets the base <see cref="Uri"/> of the Tesla Owner API.
         /// </summary>
         public Uri BaseUri { get; private set; }
