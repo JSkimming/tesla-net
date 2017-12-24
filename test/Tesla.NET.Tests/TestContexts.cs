@@ -36,9 +36,9 @@ namespace Tesla.NET
         }
     }
 
-    public class AuithRequestContext : FixtureContext
+    public class AuthRequestContext : FixtureContext
     {
-        protected AuithRequestContext(bool useCustomBaseUri)
+        protected AuthRequestContext(bool useCustomBaseUri)
         {
             Uri baseUri = useCustomBaseUri ? Fixture.Create<Uri>() : null;
 
