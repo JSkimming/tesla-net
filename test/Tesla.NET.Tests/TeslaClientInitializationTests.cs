@@ -6,7 +6,7 @@ namespace Tesla.NET
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using AutoFixture.Xunit2;
+    using System.Net.Http;
     using FluentAssertions;
     using Xunit;
 
@@ -30,6 +30,27 @@ namespace Tesla.NET
 
             // Assert
             sut.BaseUri.Should().BeSameAs(baseUri);
+        }
+
+        [Theory, AutoMoqData]
+        public void Use_the_specified_HTTP_Client_and_Base_Uri(Uri baseUri, HttpClient client)
+        {
+            // Arrange/Act
+            var sut = new TeslaClient(baseUri, client);
+
+            // Assert
+            sut.BaseUri.Should().BeSameAs(baseUri);
+            sut.Client.Should().BeSameAs(client);
+        }
+
+        [Theory, AutoMoqData]
+        public void Use_the_specified_HTTP_Client(HttpClient client)
+        {
+            // Arrange/Act
+            var sut = new TeslaClient(client);
+
+            // Assert
+            sut.Client.Should().BeSameAs(client);
         }
 
         [Fact]

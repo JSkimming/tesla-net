@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-#if NET47
+#if NET45
 [assembly: AssemblyTitle("Tesla.NET .NET Framework")]
 #else
 [assembly: AssemblyTitle("Tesla.NET .NET Standard")]

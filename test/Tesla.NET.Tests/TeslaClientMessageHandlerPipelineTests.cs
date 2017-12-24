@@ -26,7 +26,7 @@ namespace Tesla.NET
         public void Should_start_the_chain_with_the_first_handler()
         {
             // Act
-            HttpMessageHandler result = TeslaClient.CreatePipeline(_handlers);
+            HttpMessageHandler result = TeslaClientBase.CreatePipeline(_handlers);
 
             // Assert
             result.Should().BeSameAs(_handlers.First());
@@ -36,7 +36,7 @@ namespace Tesla.NET
         public void Should_create_a_chain_of_delegates()
         {
             // Act
-            HttpMessageHandler result = TeslaClient.CreatePipeline(_handlers);
+            HttpMessageHandler result = TeslaClientBase.CreatePipeline(_handlers);
 
             // Assert
             HttpMessageHandler current = result;
@@ -51,7 +51,7 @@ namespace Tesla.NET
         public void Should_end_the_chain_with_a_HttpClientHandler()
         {
             // Act
-            HttpMessageHandler result = TeslaClient.CreatePipeline(_handlers);
+            HttpMessageHandler result = TeslaClientBase.CreatePipeline(_handlers);
 
             // Assert
             HttpMessageHandler current = result;
@@ -82,7 +82,7 @@ namespace Tesla.NET
         public void Should_start_the_chain_with_the_first_handler()
         {
             // Act
-            HttpMessageHandler result = TeslaClient.CreatePipeline(_handlers);
+            HttpMessageHandler result = TeslaClientBase.CreatePipeline(_handlers);
 
             // Assert
             result.Should().BeSameAs(_handlers.First());
@@ -92,7 +92,7 @@ namespace Tesla.NET
         public void Should_create_a_chain_of_delegates()
         {
             // Act
-            HttpMessageHandler result = TeslaClient.CreatePipeline(_handlers);
+            HttpMessageHandler result = TeslaClientBase.CreatePipeline(_handlers);
 
             // Assert
             HttpMessageHandler current = result;
@@ -107,7 +107,7 @@ namespace Tesla.NET
         public void Should_end_the_chain_with_the_last_HttpClientHandler()
         {
             // Act
-            HttpMessageHandler result = TeslaClient.CreatePipeline(_handlers);
+            HttpMessageHandler result = TeslaClientBase.CreatePipeline(_handlers);
 
             // Assert
             HttpMessageHandler current = result;
@@ -136,7 +136,7 @@ namespace Tesla.NET
         public void Should_throw_an_ArgumentException()
         {
             // Act
-            Action action = () => TeslaClient.CreatePipeline(_handlers);
+            Action action = () => TeslaClientBase.CreatePipeline(_handlers);
 
             // Assert
             action.ShouldThrowExactly<ArgumentException>();
@@ -161,7 +161,7 @@ namespace Tesla.NET
         [Fact]
         public void Should_use_the_default_Base_Uri()
         {
-            _sut.BaseUri.Should().BeSameAs(TeslaClient.DefaultBaseUri);
+            _sut.BaseUri.Should().BeSameAs(TeslaClientBase.DefaultBaseUri);
         }
     }
 }
