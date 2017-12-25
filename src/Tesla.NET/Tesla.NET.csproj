@@ -12,6 +12,7 @@
     <Copyright>Copyright © 2018 James Skimming</Copyright>
     <PackageLicenseUrl>https://github.com/JSkimming/tesla-net/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/JSkimming/tesla-net</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/JSkimming/tesla-net/master/docs/images/TeslaLogo_128x128.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/JSkimming/tesla-net</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>tesla tesla-api dotnet dotnet-core</PackageTags>
