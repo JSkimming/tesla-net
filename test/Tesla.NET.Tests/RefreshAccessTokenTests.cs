@@ -16,22 +16,23 @@ namespace Tesla.NET
     using Newtonsoft.Json.Linq;
     using Tesla.NET.Models;
     using Xunit;
+    using Xunit.Abstractions;
 
     public abstract class RefreshAccessTokenSuccessTestsBase : AuthRequestContext
     {
         private readonly AccessTokenResponse _expected;
-        private readonly Uri _expectedRefreshUri;
+        private readonly Uri _expectedRequestUri;
         private readonly string _clientId;
         private readonly string _clientSecret;
         private readonly string _refreshToken;
 
-        protected RefreshAccessTokenSuccessTestsBase(bool useCustomBaseUri)
-            : base(useCustomBaseUri)
+        protected RefreshAccessTokenSuccessTestsBase(ITestOutputHelper output, bool useCustomBaseUri)
+            : base(output, useCustomBaseUri)
         {
             // Arrange
             _expected = Fixture.Create<AccessTokenResponse>();
             Handler.SetResponseContent(_expected);
-            _expectedRefreshUri = new Uri(BaseUri, "oauth/token");
+            _expectedRequestUri = new Uri(BaseUri, "oauth/token");
 
             _clientId = Fixture.Create("clientId");
             _clientSecret = Fixture.Create("clientSecret");
@@ -41,7 +42,7 @@ namespace Tesla.NET
         [Fact]
         public async Task Should_make_a_POST_request()
         {
-            // Act_refreshToken
+            // Act
             await Sut.RefreshAccessTokenAsync(_clientId, _clientSecret, _refreshToken)
                 .ConfigureAwait(false);
 
@@ -50,14 +51,14 @@ namespace Tesla.NET
         }
 
         [Fact]
-        public async Task Should_refresh_the_OAuth_Token_endpoint()
+        public async Task Should_request_the_OAuth_Token_endpoint()
         {
             // Act
             await Sut.RefreshAccessTokenAsync(_clientId, _clientSecret, _refreshToken)
                 .ConfigureAwait(false);
 
             // Assert
-            Handler.Request.RequestUri.Should().Be(_expectedRefreshUri);
+            Handler.Request.RequestUri.Should().Be(_expectedRequestUri);
         }
 
         [Fact]
@@ -74,7 +75,7 @@ namespace Tesla.NET
         }
 
         [Fact]
-        public async Task Should_make_a_POST_4_parameters()
+        public async Task Should_POST_4_parameters()
         {
             // Act
             await Sut.RefreshAccessTokenAsync(_clientId, _clientSecret, _refreshToken)
@@ -88,7 +89,7 @@ namespace Tesla.NET
         }
 
         [Fact]
-        public async Task Should_make_a_POST_the_grant_type_parameter()
+        public async Task Should_POST_the_grant_type_parameter()
         {
             // Act
             await Sut.RefreshAccessTokenAsync(_clientId, _clientSecret, _refreshToken)
@@ -105,7 +106,7 @@ namespace Tesla.NET
         }
 
         [Fact]
-        public async Task Should_make_a_POST_the_client_id_parameter()
+        public async Task Should_POST_the_client_id_parameter()
         {
             // Act
             await Sut.RefreshAccessTokenAsync(_clientId, _clientSecret, _refreshToken)
@@ -122,7 +123,7 @@ namespace Tesla.NET
         }
 
         [Fact]
-        public async Task Should_make_a_POST_the_client_secret_parameter()
+        public async Task Should_POST_the_client_secret_parameter()
         {
             // Act
             await Sut.RefreshAccessTokenAsync(_clientId, _clientSecret, _refreshToken)
@@ -139,7 +140,7 @@ namespace Tesla.NET
         }
 
         [Fact]
-        public async Task Should_make_a_POST_the_refresh_token_parameter()
+        public async Task Should_POST_the_refresh_token_parameter()
         {
             // Act
             await Sut.RefreshAccessTokenAsync(_clientId, _clientSecret, _refreshToken)
@@ -158,16 +159,16 @@ namespace Tesla.NET
 
     public class When_refreshing_an_access_token_using_the_default_base_Uri : RefreshAccessTokenSuccessTestsBase
     {
-        public When_refreshing_an_access_token_using_the_default_base_Uri()
-            : base(useCustomBaseUri: false)
+        public When_refreshing_an_access_token_using_the_default_base_Uri(ITestOutputHelper output)
+            : base(output, useCustomBaseUri: false)
         {
         }
     }
 
     public class When_refreshing_an_access_token_using_a_custom_base_Uri : RefreshAccessTokenSuccessTestsBase
     {
-        public When_refreshing_an_access_token_using_a_custom_base_Uri()
-            : base(useCustomBaseUri: true)
+        public When_refreshing_an_access_token_using_a_custom_base_Uri(ITestOutputHelper output)
+            : base(output, useCustomBaseUri: true)
         {
         }
     }
@@ -178,8 +179,8 @@ namespace Tesla.NET
         private readonly string _clientSecret;
         private readonly string _refreshToken;
 
-        protected RefreshAccessTokenFailureTestsBase(bool useCustomBaseUri)
-            : base(useCustomBaseUri)
+        protected RefreshAccessTokenFailureTestsBase(ITestOutputHelper output, bool useCustomBaseUri)
+            : base(output, useCustomBaseUri)
         {
             // Arrange
             Handler.SetResponseContent(new JObject(), HttpStatusCode.Unauthorized);
@@ -203,8 +204,8 @@ namespace Tesla.NET
     public class When_failing_to_refresh_an_access_token_using_the_default_base_Uri
         : RefreshAccessTokenFailureTestsBase
     {
-        public When_failing_to_refresh_an_access_token_using_the_default_base_Uri()
-            : base(useCustomBaseUri: false)
+        public When_failing_to_refresh_an_access_token_using_the_default_base_Uri(ITestOutputHelper output)
+            : base(output, useCustomBaseUri: false)
         {
         }
     }
@@ -212,8 +213,8 @@ namespace Tesla.NET
     public class When_failing_to_refresh_an_access_token_using_a_custom_base_Uri
         : RefreshAccessTokenFailureTestsBase
     {
-        public When_failing_to_refresh_an_access_token_using_a_custom_base_Uri()
-            : base(useCustomBaseUri: true)
+        public When_failing_to_refresh_an_access_token_using_a_custom_base_Uri(ITestOutputHelper output)
+            : base(output, useCustomBaseUri: true)
         {
         }
     }

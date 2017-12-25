@@ -9,6 +9,7 @@ namespace Tesla.NET
     using System.Net.Http;
     using AutoFixture;
     using Tesla.NET.HttpHandlers;
+    using Xunit.Abstractions;
 
     public abstract class FixtureContext : IDisposable
     {
@@ -38,11 +39,11 @@ namespace Tesla.NET
 
     public class AuthRequestContext : FixtureContext
     {
-        protected AuthRequestContext(bool useCustomBaseUri)
+        protected AuthRequestContext(ITestOutputHelper output, bool useCustomBaseUri)
         {
             Uri baseUri = useCustomBaseUri ? Fixture.Create<Uri>() : null;
 
-            Handler = new TestHttpHandler();
+            Handler = new TestHttpHandler(output);
             Sut = baseUri == null
                 ? new TeslaAuthClient(new HttpClient(Handler))
                 : new TeslaAuthClient(baseUri, new HttpClient(Handler));

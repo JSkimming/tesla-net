@@ -16,6 +16,7 @@ namespace Tesla.NET
     using Newtonsoft.Json.Linq;
     using Tesla.NET.Models;
     using Xunit;
+    using Xunit.Abstractions;
 
     public abstract class RequestAccessTokenSuccessTestsBase : AuthRequestContext
     {
@@ -26,8 +27,8 @@ namespace Tesla.NET
         private readonly string _email;
         private readonly string _password;
 
-        protected RequestAccessTokenSuccessTestsBase(bool useCustomBaseUri)
-            : base(useCustomBaseUri)
+        protected RequestAccessTokenSuccessTestsBase(ITestOutputHelper output, bool useCustomBaseUri)
+            : base(output, useCustomBaseUri)
         {
             // Arrange
             _expected = Fixture.Create<AccessTokenResponse>();
@@ -76,7 +77,7 @@ namespace Tesla.NET
         }
 
         [Fact]
-        public async Task Should_make_a_POST_5_parameters()
+        public async Task Should_POST_5_parameters()
         {
             // Act
             await Sut.RequestAccessTokenAsync(_clientId, _clientSecret, _email, _password)
@@ -90,7 +91,7 @@ namespace Tesla.NET
         }
 
         [Fact]
-        public async Task Should_make_a_POST_the_grant_type_parameter()
+        public async Task Should_POST_the_grant_type_parameter()
         {
             // Act
             await Sut.RequestAccessTokenAsync(_clientId, _clientSecret, _email, _password)
@@ -107,7 +108,7 @@ namespace Tesla.NET
         }
 
         [Fact]
-        public async Task Should_make_a_POST_the_client_id_parameter()
+        public async Task Should_POST_the_client_id_parameter()
         {
             // Act
             await Sut.RequestAccessTokenAsync(_clientId, _clientSecret, _email, _password)
@@ -124,7 +125,7 @@ namespace Tesla.NET
         }
 
         [Fact]
-        public async Task Should_make_a_POST_the_client_secret_parameter()
+        public async Task Should_POST_the_client_secret_parameter()
         {
             // Act
             await Sut.RequestAccessTokenAsync(_clientId, _clientSecret, _email, _password)
@@ -141,7 +142,7 @@ namespace Tesla.NET
         }
 
         [Fact]
-        public async Task Should_make_a_POST_the_email_parameter()
+        public async Task Should_POST_the_email_parameter()
         {
             // Act
             await Sut.RequestAccessTokenAsync(_clientId, _clientSecret, _email, _password)
@@ -158,7 +159,7 @@ namespace Tesla.NET
         }
 
         [Fact]
-        public async Task Should_make_a_POST_the_password_parameter()
+        public async Task Should_POST_the_password_parameter()
         {
             // Act
             await Sut.RequestAccessTokenAsync(_clientId, _clientSecret, _email, _password)
@@ -177,16 +178,16 @@ namespace Tesla.NET
 
     public class When_requesting_an_access_token_using_the_default_base_Uri : RequestAccessTokenSuccessTestsBase
     {
-        public When_requesting_an_access_token_using_the_default_base_Uri()
-            : base(useCustomBaseUri: false)
+        public When_requesting_an_access_token_using_the_default_base_Uri(ITestOutputHelper output)
+            : base(output, useCustomBaseUri: false)
         {
         }
     }
 
     public class When_requesting_an_access_token_using_a_custom_base_Uri : RequestAccessTokenSuccessTestsBase
     {
-        public When_requesting_an_access_token_using_a_custom_base_Uri()
-            : base(useCustomBaseUri: true)
+        public When_requesting_an_access_token_using_a_custom_base_Uri(ITestOutputHelper output)
+            : base(output, useCustomBaseUri: true)
         {
         }
     }
@@ -198,8 +199,8 @@ namespace Tesla.NET
         private readonly string _email;
         private readonly string _password;
 
-        protected RequestAccessTokenFailureTestsBase(bool useCustomBaseUri)
-            : base(useCustomBaseUri)
+        protected RequestAccessTokenFailureTestsBase(ITestOutputHelper output, bool useCustomBaseUri)
+            : base(output, useCustomBaseUri)
         {
             // Arrange
             Handler.SetResponseContent(new JObject(), HttpStatusCode.Unauthorized);
@@ -224,8 +225,8 @@ namespace Tesla.NET
     public class When_failing_to_request_an_access_token_using_the_default_base_Uri
         : RequestAccessTokenFailureTestsBase
     {
-        public When_failing_to_request_an_access_token_using_the_default_base_Uri()
-            : base(useCustomBaseUri: false)
+        public When_failing_to_request_an_access_token_using_the_default_base_Uri(ITestOutputHelper output)
+            : base(output, useCustomBaseUri: false)
         {
         }
     }
@@ -233,8 +234,8 @@ namespace Tesla.NET
     public class When_failing_to_request_an_access_token_using_a_custom_base_Uri
         : RequestAccessTokenFailureTestsBase
     {
-        public When_failing_to_request_an_access_token_using_a_custom_base_Uri()
-            : base(useCustomBaseUri: true)
+        public When_failing_to_request_an_access_token_using_a_custom_base_Uri(ITestOutputHelper output)
+            : base(output, useCustomBaseUri: true)
         {
         }
     }
