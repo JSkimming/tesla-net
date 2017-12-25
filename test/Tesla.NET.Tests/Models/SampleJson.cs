@@ -29,7 +29,12 @@ namespace Tesla.NET.Models
             }
         }
 
-
         public static JObject AccessTokenResponse => Load<JObject>(nameof(AccessTokenResponse));
+
+        public static JObject GetVehiclesResponse => Load<JObject>(nameof(GetVehiclesResponse));
+
+        public static JObject Vehicle => (JObject)GetVehiclesResponse["response"][0];
+
+        public static JObject VehicleMinimal => new JObject();
     }
 }

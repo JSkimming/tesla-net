@@ -22,6 +22,8 @@ namespace Tesla.NET
     {
         void ICustomization.Customize(IFixture fixture)
         {
+            fixture.Register<IReadOnlyList<string>>(fixture.Create<string[]>);
+            fixture.Register<IReadOnlyCollection<string>>(fixture.Create<string[]>);
         }
     }
 

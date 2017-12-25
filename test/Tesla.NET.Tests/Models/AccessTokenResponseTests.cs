@@ -93,4 +93,27 @@ namespace Tesla.NET.Models
         [Fact]
         public void created_at() => _sut.CreatedAt.Should().Be(_json["created_at"].Value<long>());
     }
+
+    public class When_running_in_the_debugger_AccessTokenResponse_Should : DebuggerDisplayTestsBase
+    {
+        private readonly AccessTokenResponse _sut;
+
+        public When_running_in_the_debugger_AccessTokenResponse_Should()
+        {
+            _sut = Fixture.Create<AccessTokenResponse>();
+            GetDebuggerDisplay(_sut);
+        }
+
+        [Fact]
+        public void include_the_truncated_access_token_in_the_debugger_display()
+        {
+            DebuggerDisplayText.Should().Contain(_sut.AccessToken.Substring(0, 6) + "…");
+        }
+
+        [Fact]
+        public void include_the_expires_when_in_the_debugger_display()
+        {
+            DebuggerDisplayText.Should().Contain(_sut.ExpiresWhen.ToString("R"));
+        }
+    }
 }

@@ -8,6 +8,7 @@ namespace Tesla.NET
     using System.Linq;
     using SemanticComparison;
     using SemanticComparison.Fluent;
+    using Tesla.NET.Models;
 
     internal static class LikenessExtensions
     {
@@ -18,6 +19,18 @@ namespace Tesla.NET
                 throw new ArgumentNullException(nameof(actual));
 
             return actual.AsSource().OfLikeness<T>();
+        }
+
+        public static Likeness<Vehicle, Vehicle> AsLikeness(this Vehicle actual)
+        {
+            if (actual == null)
+                throw new ArgumentNullException(nameof(actual));
+
+            return actual
+                .AsSource()
+                .OfLikeness<Vehicle>()
+                .With(e => e.Tokens)
+                .EqualsWhen((a, e) => a.Tokens.SequenceEqual(e.Tokens));
         }
     }
 }
