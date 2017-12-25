@@ -9,21 +9,23 @@ namespace Tesla.NET.HttpHandlers
     using System.Linq;
     using System.Net;
     using System.Net.Http;
+    using System.Net.Http.Headers;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
+    using Xunit.Abstractions;
 
     public class TestHttpHandler : HttpMessageHandler
     {
+        private readonly ITestOutputHelper _output;
+
         private int _responseIndex;
 
-        public TestHttpHandler()
+        public TestHttpHandler(ITestOutputHelper output)
         {
-            Requests = new List<HttpRequestMessage>(1);
-            Responses = new List<HttpResponseMessage>(1);
-            RequestContents = new List<string>(1);
+            _output = output ?? throw new ArgumentNullException(nameof(output));
         }
 
         public HttpRequestMessage Request
@@ -36,8 +38,11 @@ namespace Tesla.NET.HttpHandlers
             }
         }
 
-        public List<HttpRequestMessage> Requests { get; }
-        public List<string> RequestContents { get; }
+        public List<HttpRequestMessage> Requests { get; } = new List<HttpRequestMessage>(1);
+
+        public List<HttpResponseMessage> Responses { get; } = new List<HttpResponseMessage>(1);
+
+        public List<string> RequestContents { get; } = new List<string>(1);
 
         public HttpResponseMessage Response
         {
@@ -49,8 +54,6 @@ namespace Tesla.NET.HttpHandlers
                 Responses.Add(value);
             }
         }
-
-        public List<HttpResponseMessage> Responses { get; set; }
 
         public Func<HttpRequestMessage, Task<HttpRequestMessage>> OnSendingRequest { get; set; }
 
@@ -68,10 +71,14 @@ namespace Tesla.NET.HttpHandlers
             HttpRequestMessage request,
             CancellationToken cancellationToken)
         {
-            string content = request.Content == null
-                ? null
-                : await request.Content.ReadAsStringAsync().ConfigureAwait(false);
-            RequestContents.Add(content);
+            string requestContent = await GetStringContent(request.Content).ConfigureAwait(false);
+            RequestContents.Add(requestContent);
+
+            _output.WriteLine($"Started {request.Method} '{request.RequestUri}'");
+            if (requestContent != null)
+            {
+                _output.WriteLine(requestContent);
+            }
 
             if (OnSendingRequest != null)
             {
@@ -85,12 +92,53 @@ namespace Tesla.NET.HttpHandlers
             // Ensure the task continues asynchronously.
             await Task.Yield();
 
-            if (_responseIndex < Responses.Count)
+            HttpResponseMessage responseMessage =
+                _responseIndex < Responses.Count
+                    ? Responses[_responseIndex++]
+                    : CreateResponse(string.Empty);
+
+            responseMessage.RequestMessage = request;
+
+            _output.WriteLine(
+                $"Completed {request.Method} '{request.RequestUri}' " +
+                $"with {responseMessage.StatusCode:G} ({responseMessage.StatusCode:D})");
+
+            string responseContent = await GetStringContent(responseMessage.Content).ConfigureAwait(false);
+            if (responseContent != null)
             {
-                return Responses[_responseIndex++];
+                _output.WriteLine(responseContent);
             }
 
-            return CreateResponse(string.Empty);
+            return responseMessage;
+        }
+
+        private static async Task<string> GetStringContent(HttpContent content)
+        {
+            if (content == null)
+                return null;
+
+            string contentData;
+            if (content is DelayedStreamContent delayedContent)
+            {
+                using (var s = new StreamReader(delayedContent.Stream, Encoding.UTF8, true, 10240, leaveOpen:true))
+                {
+                    contentData = s.ReadToEnd();
+                }
+
+                delayedContent.Stream.Seek(0, SeekOrigin.Begin);
+            }
+            else
+            {
+                contentData = await content.ReadAsStringAsync().ConfigureAwait(false);
+            }
+
+            bool? isJson = content.Headers?.ContentType?.ToString().Equals("application/json");
+            if (isJson.GetValueOrDefault())
+            {
+                contentData = JToken.Parse(contentData).ToString(Formatting.Indented);
+            }
+
+            return contentData;
         }
 
         private static HttpResponseMessage CreateResponse(object content, HttpStatusCode code = HttpStatusCode.OK)
@@ -106,9 +154,17 @@ namespace Tesla.NET.HttpHandlers
             }
 
             stream.Seek(0, SeekOrigin.Begin);
+            var httpContent = new DelayedStreamContent(stream)
+            {
+                Headers =
+                {
+                    ContentType = new MediaTypeHeaderValue("application/json"),
+                }
+            };
+
             return new HttpResponseMessage(code)
             {
-                Content = new DelayedStreamContent(stream),
+                Content = httpContent,
             };
         }
     }

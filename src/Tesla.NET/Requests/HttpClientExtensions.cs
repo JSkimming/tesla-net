@@ -71,6 +71,53 @@ namespace Tesla.NET.Requests
         }
 
         /// <summary>
+        /// Refreshes an access token for access to the Tesla Owner API.
+        /// </summary>
+        /// <param name="client">The <see cref="HttpClient"/>.</param>
+        /// <param name="baseUri">The base <see cref="Uri"/> of the Tesla Owner API.</param>
+        /// <param name="clientId">The unique ID of the client.</param>
+        /// <param name="clientSecret">The secret for the <paramref name="clientId"/>.</param>
+        /// <param name="refreshToken">A refresh token for a Tesla Owner.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
+        /// complete.</param>
+        /// <returns>The response to the request for an access token.</returns>
+        public static Task<MessageResponse<AccessTokenResponse>> RefreshAccessTokenAsync(
+            this HttpClient client,
+            Uri baseUri,
+            string clientId,
+            string clientSecret,
+            string refreshToken,
+            CancellationToken cancellationToken = default)
+        {
+            if (client == null)
+                throw new ArgumentNullException(nameof(client));
+            if (baseUri == null)
+                throw new ArgumentNullException(nameof(baseUri));
+            if (string.IsNullOrWhiteSpace(clientId))
+                throw new ArgumentNullException(nameof(clientId));
+            if (string.IsNullOrWhiteSpace(clientSecret))
+                throw new ArgumentNullException(nameof(clientSecret));
+            if (string.IsNullOrWhiteSpace(refreshToken))
+                throw new ArgumentNullException(nameof(refreshToken));
+
+            Uri requestUri = new Uri(baseUri, "oauth/token");
+            IEnumerable<KeyValuePair<string, string>> parameters = GetRefreshAccessTokenParameters();
+
+            return
+                client
+                    .PostFormAsync(requestUri, parameters, cancellationToken)
+                    .ReadJsonAsAsync<AccessTokenResponse>(cancellationToken);
+
+            IEnumerable<KeyValuePair<string, string>> GetRefreshAccessTokenParameters()
+            {
+                yield return new KeyValuePair<string, string>("grant_type", "refresh_token");
+                yield return new KeyValuePair<string, string>("client_id", clientId);
+                yield return new KeyValuePair<string, string>("client_secret", clientSecret);
+                yield return new KeyValuePair<string, string>("refresh_token", refreshToken);
+            }
+        }
+
+        /// <summary>
         /// Posts the form <paramref name="parameters"/> to the <paramref name="requestUri"/>.
         /// </summary>
         /// <param name="client">The <see cref="HttpClient"/>.</param>

@@ -31,5 +31,20 @@ namespace Tesla.NET
             string email,
             string password,
             CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Refreshes an access token for access to the Tesla Owner API.
+        /// </summary>
+        /// <param name="clientId">The unique ID of the client.</param>
+        /// <param name="clientSecret">The secret for the <paramref name="clientId"/>.</param>
+        /// <param name="refreshToken">A refresh token for a Tesla Owner.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
+        /// complete.</param>
+        /// <returns>The response to the request for an access token.</returns>
+        Task<MessageResponse<AccessTokenResponse>> RefreshAccessTokenAsync(
+            string clientId,
+            string clientSecret,
+            string refreshToken,
+            CancellationToken cancellationToken = default);
     }
 }

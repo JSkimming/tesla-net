@@ -16,10 +16,13 @@ namespace Tesla.NET.HttpHandlers
     /// </summary>
     internal class DelayedStreamContent : StreamContent
     {
-        public DelayedStreamContent(Stream stream)
+        public DelayedStreamContent(MemoryStream stream)
             : base(stream)
         {
+            Stream = stream;
         }
+
+        public MemoryStream Stream { get; }
 
         protected override async Task<Stream> CreateContentReadStreamAsync()
         {
