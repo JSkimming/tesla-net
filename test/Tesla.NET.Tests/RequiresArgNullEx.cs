@@ -17,6 +17,7 @@ namespace Tesla.NET
         [Theory, RequiresArgNullExAutoMoq(typeof(TeslaClientBase))]
         [Substitute(typeof(TeslaClientBase), typeof(TeslaAuthClient))]
         [Substitute(typeof(MessageResponse<>), typeof(MessageResponse<object>))]
+        [Substitute(typeof(ResponseDataWrapper<>), typeof(ResponseDataWrapper<Guid>))]
         public Task TeslaNet(MethodData method)
         {
             return method.Execute();

@@ -12,15 +12,14 @@ namespace Tesla.NET.Models
     using Xunit;
     using Xunit.Abstractions;
 
-    public class When_serializing_AccessTokenResponse_Should_serialize
+    public class When_serializing_AccessTokenResponse_Should_serialize : FixtureContext
     {
         private readonly AccessTokenResponse _sut;
         private readonly JObject _json;
 
         public When_serializing_AccessTokenResponse_Should_serialize(ITestOutputHelper output)
         {
-            IFixture fixture = new Fixture().Customize(new TeslaNetCustomization());
-            _sut = fixture.Create<AccessTokenResponse>();
+            _sut = Fixture.Create<AccessTokenResponse>();
             _json = JObject.FromObject(_sut);
 
             output.WriteLine("Serialized JSON:" + Environment.NewLine + _json);
@@ -45,15 +44,14 @@ namespace Tesla.NET.Models
         public void created_at() => _json["created_at"].Value<long>().Should().Be(_sut.CreatedAt);
     }
 
-    public class When_serializing_and_deserializing_AccessTokenResponse
+    public class When_serializing_and_deserializing_AccessTokenResponse : FixtureContext
     {
         private readonly AccessTokenResponse _expected;
         private readonly AccessTokenResponse _actual;
 
         public When_serializing_and_deserializing_AccessTokenResponse(ITestOutputHelper output)
         {
-            IFixture fixture = new Fixture().Customize(new TeslaNetCustomization());
-            _expected = fixture.Create<AccessTokenResponse>();
+            _expected = Fixture.Create<AccessTokenResponse>();
             JObject json = JObject.FromObject(_expected);
 
             output.WriteLine("Serialized JSON:" + Environment.NewLine + json);

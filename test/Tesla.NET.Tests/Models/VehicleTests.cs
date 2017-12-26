@@ -12,15 +12,14 @@ namespace Tesla.NET.Models
     using Xunit;
     using Xunit.Abstractions;
 
-    public class When_serializing_Vehicle_Should_serialize
+    public class When_serializing_Vehicle_Should_serialize : FixtureContext
     {
         private readonly Vehicle _sut;
         private readonly JObject _json;
 
         public When_serializing_Vehicle_Should_serialize(ITestOutputHelper output)
         {
-            IFixture fixture = new Fixture().Customize(new TeslaNetCustomization());
-            _sut = fixture.Create<Vehicle>();
+            _sut = Fixture.Create<Vehicle>();
             _json = JObject.FromObject(_sut);
 
             output.WriteLine("Serialized JSON:" + Environment.NewLine + _json);
@@ -77,15 +76,14 @@ namespace Tesla.NET.Models
             _json["backseat_token_updated_at"].Value<string>().Should().Be(_sut.BackseatTokenUpdatedAt);
     }
 
-    public class When_serializing_and_deserializing_Vehicle
+    public class When_serializing_and_deserializing_Vehicle : FixtureContext
     {
         private readonly Vehicle _expected;
         private readonly Vehicle _actual;
 
         public When_serializing_and_deserializing_Vehicle(ITestOutputHelper output)
         {
-            IFixture fixture = new Fixture().Customize(new TeslaNetCustomization());
-            _expected = fixture.Create<Vehicle>();
+            _expected = Fixture.Create<Vehicle>();
             JObject json = JObject.FromObject(_expected);
 
             output.WriteLine("Serialized JSON:" + Environment.NewLine + json);
