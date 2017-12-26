@@ -46,6 +46,10 @@
 
 @echo dotnet build --configuration %config% "%~dp0test\Tesla.NET.Tests\Tesla.NET.Tests.csproj"
 @dotnet build --configuration %config% "%~dp0test\Tesla.NET.Tests\Tesla.NET.Tests.csproj"
+@IF ERRORLEVEL 1 (
+   echo Error building the test project
+   EXIT /B 2
+)
 
 cd "%~dp0test\Tesla.NET.Tests"
 
@@ -60,9 +64,6 @@ cd "%~dp0test\Tesla.NET.Tests"
 )
 
 cd "%~dp0"
-
-@echo "%report_exe%" -verbosity:Error "-reports:%coverage_results%" "-targetdir:%results_path%" -reporttypes:HtmlSummary
-@"%report_exe%" -verbosity:Error "-reports:%coverage_results%" "-targetdir:%results_path%" -reporttypes:HtmlSummary
 
 @echo "%report_exe%" -verbosity:Error "-reports:%coverage_results%" "-targetdir:%results_path%\Report" -reporttypes:Html
 @"%report_exe%" -verbosity:Error "-reports:%coverage_results%" "-targetdir:%results_path%\Report" -reporttypes:Html
