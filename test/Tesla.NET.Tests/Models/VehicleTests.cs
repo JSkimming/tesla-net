@@ -48,8 +48,7 @@ namespace Tesla.NET.Models
 
         [Fact]
         public void tokens() =>
-            _json["tokens"].Select(t => t.Value<string>())
-                .ShouldAllBeEquivalentTo(_sut.Tokens, config => config.WithStrictOrdering());
+            _json["tokens"].Select(t => t.Value<string>()).ShouldAllBeEquivalentTo(_sut.Tokens, WithStrictOrdering);
 
         [Fact]
         public void state() => _json["state"].Value<string>().Should().Be(_sut.State);
@@ -92,10 +91,10 @@ namespace Tesla.NET.Models
         }
 
         [Fact]
-        public void Should_retain_all_properties() => _actual.AsLikeness().ShouldEqual(_expected);
+        public void Should_retain_all_properties() => _actual.ShouldBeEquivalentTo(_expected, WithStrictOrdering);
     }
 
-    public class When_deserializing_Vehicle_Should_deserialize
+    public class When_deserializing_Vehicle_Should_deserialize : FixtureContext
     {
         private readonly Vehicle _sut;
         private readonly JObject _json;
@@ -128,8 +127,7 @@ namespace Tesla.NET.Models
 
         [Fact]
         public void tokens() =>
-            _sut.Tokens.ShouldAllBeEquivalentTo(
-                _json["tokens"].Select(t => t.Value<string>()), config => config.WithStrictOrdering());
+            _sut.Tokens.ShouldAllBeEquivalentTo(_json["tokens"].Select(t => t.Value<string>()), WithStrictOrdering);
 
         [Fact]
         public void state() => _sut.State.Should().Be(_json["state"].Value<string>());

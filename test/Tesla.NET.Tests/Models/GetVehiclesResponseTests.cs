@@ -45,11 +45,10 @@ namespace Tesla.NET.Models
         }
 
         [Fact]
-        public void Should_retain_all_properties() =>
-            _actual.ShouldBeEquivalentTo(_expected, config => config.WithStrictOrdering());
+        public void Should_retain_all_properties() => _actual.ShouldBeEquivalentTo(_expected, WithStrictOrdering);
     }
 
-    public class When_deserializing_GetVehiclesResponse_Should_deserialize
+    public class When_deserializing_GetVehiclesResponse_Should_deserialize : FixtureContext
     {
         private readonly ResponseDataWrapper<IReadOnlyList<Vehicle>> _sut;
         private readonly JObject _json;
@@ -68,7 +67,6 @@ namespace Tesla.NET.Models
         }
 
         [Fact]
-        public void response() =>
-            _sut.Response.ShouldBeEquivalentTo(_expectedResponse, config => config.WithStrictOrdering());
+        public void response() =>_sut.Response.ShouldBeEquivalentTo(_expectedResponse, WithStrictOrdering);
     }
 }

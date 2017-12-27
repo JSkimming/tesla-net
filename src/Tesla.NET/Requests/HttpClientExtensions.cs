@@ -8,6 +8,7 @@ namespace Tesla.NET.Requests
     using System.IO;
     using System.Linq;
     using System.Net.Http;
+    using System.Net.Http.Headers;
     using System.Threading;
     using System.Threading.Tasks;
     using Newtonsoft.Json;
@@ -118,6 +119,37 @@ namespace Tesla.NET.Requests
         }
 
         /// <summary>
+        /// Gets the vehicles associated with an account.
+        /// </summary>
+        /// <param name="client">The <see cref="HttpClient"/>.</param>
+        /// <param name="baseUri">The base <see cref="Uri"/> of the Tesla Owner API.</param>
+        /// <param name="accessToken">
+        /// The access token used to authenticate the request; can be <see langword="null"/> if the authentication is
+        /// added by default.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
+        /// complete.</param>
+        /// <returns>The vehicles associated with an account.</returns>
+        public static Task<MessageResponse<ResponseDataWrapper<IReadOnlyList<Vehicle>>>> GetVehiclesAsync(
+            this HttpClient client,
+            Uri baseUri,
+            string accessToken = null,
+            CancellationToken cancellationToken = default)
+        {
+            if (client == null)
+                throw new ArgumentNullException(nameof(client));
+            if (baseUri == null)
+                throw new ArgumentNullException(nameof(baseUri));
+
+            Uri requestUri = new Uri(baseUri, "api/1/vehicles");
+
+            return
+                client
+                    .GetWithAuthAsync(requestUri, accessToken, cancellationToken)
+                    .ReadJsonAsAsync<ResponseDataWrapper<IReadOnlyList<Vehicle>>>(cancellationToken);
+        }
+
+        /// <summary>
         /// Posts the form <paramref name="parameters"/> to the <paramref name="requestUri"/>.
         /// </summary>
         /// <param name="client">The <see cref="HttpClient"/>.</param>
@@ -143,6 +175,45 @@ namespace Tesla.NET.Requests
             {
                 Content = new FormUrlEncodedContent(parameters),
             };
+
+            using (requestMessage)
+            {
+                return await client.SendAsync(
+                    requestMessage,
+                    HttpCompletionOption.ResponseHeadersRead,
+                    cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// Sends a <see cref="HttpMethod.Get"/> request to the <paramref name="requestUri"/> authenticated using the
+        /// <paramref name="accessToken"/>.
+        /// </summary>
+        /// <param name="client">The <see cref="HttpClient"/>.</param>
+        /// <param name="requestUri">The request <see cref="Uri"/>.</param>
+        /// <param name="accessToken">
+        /// The access token used to authenticate the request; can be <see langword="null"/> if the authentication is
+        /// added by default.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
+        /// complete.</param>
+        /// <returns>The <see cref="HttpResponseMessage"/> to the request.</returns>
+        private static async Task<HttpResponseMessage> GetWithAuthAsync(
+            this HttpClient client,
+            Uri requestUri,
+            string accessToken = null,
+            CancellationToken cancellationToken = default)
+        {
+            if (client == null)
+                throw new ArgumentNullException(nameof(client));
+            if (requestUri == null)
+                throw new ArgumentNullException(nameof(requestUri));
+
+            var requestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+            if (!string.IsNullOrWhiteSpace(accessToken))
+            {
+                requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            }
 
             using (requestMessage)
             {
