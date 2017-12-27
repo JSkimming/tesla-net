@@ -6,10 +6,9 @@ namespace Tesla.NET
     using System;
     using System.Diagnostics;
     using System.Reflection;
-    using AutoFixture;
     using FluentAssertions;
-    using Tesla.NET.Models;
     using Xunit;
+    using Xunit.Abstractions;
 
     public abstract class DebuggerDisplayTestsBase : FixtureContext
     {
@@ -19,6 +18,11 @@ namespace Tesla.NET
         private MethodInfo _debuggerDisplayGetMethod;
         private object _debuggerDisplayValue;
         protected string DebuggerDisplayText;
+
+        protected DebuggerDisplayTestsBase(ITestOutputHelper output)
+            : base(output)
+        {
+        }
 
         protected void GetDebuggerDisplay<TSut>(TSut sut)
         {

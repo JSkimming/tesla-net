@@ -18,6 +18,7 @@ namespace Tesla.NET.Models
         private readonly JObject _json;
 
         public When_serializing_AccessTokenResponse_Should_serialize(ITestOutputHelper output)
+            : base(output)
         {
             _sut = Fixture.Create<AccessTokenResponse>();
             _json = JObject.FromObject(_sut);
@@ -50,6 +51,7 @@ namespace Tesla.NET.Models
         private readonly AccessTokenResponse _actual;
 
         public When_serializing_and_deserializing_AccessTokenResponse(ITestOutputHelper output)
+            : base(output)
         {
             _expected = Fixture.Create<AccessTokenResponse>();
             JObject json = JObject.FromObject(_expected);
@@ -96,7 +98,8 @@ namespace Tesla.NET.Models
     {
         private readonly AccessTokenResponse _sut;
 
-        public When_running_in_the_debugger_AccessTokenResponse_Should()
+        public When_running_in_the_debugger_AccessTokenResponse_Should(ITestOutputHelper output)
+            : base(output)
         {
             _sut = Fixture.Create<AccessTokenResponse>();
             GetDebuggerDisplay(_sut);

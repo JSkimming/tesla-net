@@ -18,6 +18,7 @@ namespace Tesla.NET.Models
         private readonly JObject _json;
 
         public When_serializing_GetVehiclesResponse_Should_serialize(ITestOutputHelper output)
+            : base(output)
         {
             _sut = Fixture.Create<ResponseDataWrapper<IReadOnlyList<Vehicle>>>();
             _json = JObject.FromObject(_sut);
@@ -35,6 +36,7 @@ namespace Tesla.NET.Models
         private readonly ResponseDataWrapper<IReadOnlyList<Vehicle>> _actual;
 
         public When_serializing_and_deserializing_GetVehiclesResponse(ITestOutputHelper output)
+            : base(output)
         {
             _expected = Fixture.Create<ResponseDataWrapper<IReadOnlyList<Vehicle>>>();
             JObject json = JObject.FromObject(_expected);
@@ -55,6 +57,7 @@ namespace Tesla.NET.Models
         private readonly Vehicle[] _expectedResponse;
 
         public When_deserializing_GetVehiclesResponse_Should_deserialize(ITestOutputHelper output)
+            : base(output)
         {
             _json = SampleJson.GetVehiclesResponse;
             _sut = _json.ToObject<ResponseDataWrapper<IReadOnlyList<Vehicle>>>();

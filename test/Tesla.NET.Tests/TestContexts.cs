@@ -14,9 +14,9 @@ namespace Tesla.NET
 
     public abstract class FixtureContext : IDisposable
     {
-        protected FixtureContext()
+        protected FixtureContext(ITestOutputHelper output)
         {
-            Fixture = new Fixture().Customize(new TeslaNetCustomization());
+            Output = output;
         }
 
         ~FixtureContext()
@@ -24,11 +24,28 @@ namespace Tesla.NET
             Dispose(false);
         }
 
-        protected IFixture Fixture { get; private set; }
+        protected IFixture Fixture { get; private set; } = new Fixture().Customize(new TeslaNetCustomization());
+
+        public StringBuilderTraceWriter TraceWriter { get; private set; } = new StringBuilderTraceWriter();
+
+        public ITestOutputHelper Output { get; private set; }
 
         protected virtual void Dispose(bool disposing)
         {
+            if (disposing)
+            {
+                // Output any trace from fluent assertions.
+                string faTrace = TraceWriter.ToString().Trim();
+                if (!string.IsNullOrWhiteSpace(faTrace))
+                {
+                    Output.WriteLine("Fluent Assertions Trace:");
+                    Output.WriteLine(faTrace);
+                }
+            }
+
             Fixture = null;
+            TraceWriter = null;
+            Output = null;
         }
 
         public void Dispose()
@@ -37,15 +54,16 @@ namespace Tesla.NET
             GC.SuppressFinalize(this);
         }
 
-        public static EquivalencyAssertionOptions<T> WithStrictOrdering<T>(EquivalencyAssertionOptions<T> config)
+        public EquivalencyAssertionOptions<T> WithStrictOrdering<T>(EquivalencyAssertionOptions<T> config)
         {
-            return config.WithStrictOrdering();
+            return config.WithStrictOrdering().WithTracing(TraceWriter);
         }
     }
 
     public class AuthRequestContext : FixtureContext
     {
         protected AuthRequestContext(ITestOutputHelper output, bool useCustomBaseUri)
+            : base(output)
         {
             Uri baseUri = useCustomBaseUri ? Fixture.Create<Uri>() : null;
 
@@ -74,12 +92,15 @@ namespace Tesla.NET
             Handler = null;
             Sut = null;
             BaseUri = null;
+
+            base.Dispose(disposing);
         }
     }
 
     public class ClientRequestContext : FixtureContext
     {
         protected ClientRequestContext(ITestOutputHelper output, bool useCustomBaseUri)
+            : base(output)
         {
             Uri baseUri = useCustomBaseUri ? Fixture.Create<Uri>() : null;
 
@@ -115,6 +136,8 @@ namespace Tesla.NET
             Sut = null;
             BaseUri = null;
             AccessToken = null;
+
+            base.Dispose(disposing);
         }
     }
 }

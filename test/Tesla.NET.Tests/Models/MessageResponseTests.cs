@@ -9,12 +9,14 @@ namespace Tesla.NET.Models
     using AutoFixture;
     using FluentAssertions;
     using Xunit;
+    using Xunit.Abstractions;
 
     public class When_running_in_the_debugger_MessageResponse_Should : DebuggerDisplayTestsBase
     {
         private readonly MessageResponse<string> _sut;
 
-        public When_running_in_the_debugger_MessageResponse_Should()
+        public When_running_in_the_debugger_MessageResponse_Should(ITestOutputHelper output)
+            : base(output)
         {
             _sut = Fixture.Create<MessageResponse<string>>();
             GetDebuggerDisplay(_sut);

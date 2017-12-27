@@ -10,12 +10,14 @@ namespace Tesla.NET
     using AutoFixture;
     using FluentAssertions;
     using Xunit;
+    using Xunit.Abstractions;
 
     public class When_creating_the_message_handler_pipeline_using_only_delegates : FixtureContext
     {
         private readonly IReadOnlyCollection<DelegatingHandler> _handlers;
 
-        public When_creating_the_message_handler_pipeline_using_only_delegates()
+        public When_creating_the_message_handler_pipeline_using_only_delegates(ITestOutputHelper output)
+            : base(output)
         {
             _handlers = Fixture.Create<DelegatingHandler[]>();
         }
@@ -68,7 +70,8 @@ namespace Tesla.NET
         private readonly List<HttpMessageHandler> _handlers;
         private readonly HttpClientHandler _last;
 
-        public When_creating_the_message_handler_pipeline_with_a_HttpClientHandler_at_the_end()
+        public When_creating_the_message_handler_pipeline_with_a_HttpClientHandler_at_the_end(ITestOutputHelper output)
+            : base(output)
         {
             _last = new HttpClientHandler();
             _handlers = Fixture.Create<DelegatingHandler[]>().ToList<HttpMessageHandler>();
@@ -122,7 +125,8 @@ namespace Tesla.NET
     {
         private readonly List<HttpMessageHandler> _handlers;
 
-        public When_creating_a_pipeline_with_a_HttpClientHandler_at_the_front()
+        public When_creating_a_pipeline_with_a_HttpClientHandler_at_the_front(ITestOutputHelper output)
+            : base(output)
         {
             _handlers = Fixture.Create<DelegatingHandler[]>().ToList<HttpMessageHandler>();
             _handlers.Insert(0, new HttpClientHandler());

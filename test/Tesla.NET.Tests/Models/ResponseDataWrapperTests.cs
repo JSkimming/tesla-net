@@ -9,12 +9,14 @@ namespace Tesla.NET.Models
     using AutoFixture;
     using FluentAssertions;
     using Xunit;
+    using Xunit.Abstractions;
 
     public class When_running_in_the_debugger_ResponseDataWrapper_Should : DebuggerDisplayTestsBase
     {
         private readonly ResponseDataWrapper<IReadOnlyList<Vehicle>> _sut;
 
-        public When_running_in_the_debugger_ResponseDataWrapper_Should()
+        public When_running_in_the_debugger_ResponseDataWrapper_Should(ITestOutputHelper output)
+            : base(output)
         {
             _sut = Fixture.Create<ResponseDataWrapper<IReadOnlyList<Vehicle>>>();
             GetDebuggerDisplay(_sut);
