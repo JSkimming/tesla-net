@@ -7,6 +7,10 @@ namespace Tesla.NET
     using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Tesla.NET.Models;
+    using Tesla.NET.Requests;
 
     /// <inheritdoc cref="ITeslaClient" />
     public class TeslaClient : TeslaClientBase, ITeslaClient
@@ -47,6 +51,24 @@ namespace Tesla.NET
         public TeslaClient(Uri baseUri, HttpClient client)
             : base(baseUri, client)
         {
+        }
+
+        /// <inheritdoc />
+        public Task<MessageResponse<ResponseDataWrapper<IReadOnlyList<Vehicle>>>> GetVehiclesAsync(
+            string accessToken,
+            CancellationToken cancellationToken = default)
+        {
+            if (string.IsNullOrWhiteSpace(accessToken))
+                throw new ArgumentNullException(nameof(accessToken));
+
+            return Client.GetVehiclesAsync(BaseUri, accessToken, cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public Task<MessageResponse<ResponseDataWrapper<IReadOnlyList<Vehicle>>>> GetVehiclesAsync(
+            CancellationToken cancellationToken = default)
+        {
+            return Client.GetVehiclesAsync(BaseUri, cancellationToken: cancellationToken);
         }
     }
 }

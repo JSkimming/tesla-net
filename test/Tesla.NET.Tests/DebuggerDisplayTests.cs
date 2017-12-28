@@ -6,10 +6,9 @@ namespace Tesla.NET
     using System;
     using System.Diagnostics;
     using System.Reflection;
-    using AutoFixture;
     using FluentAssertions;
-    using Tesla.NET.Models;
     using Xunit;
+    using Xunit.Abstractions;
 
     public abstract class DebuggerDisplayTestsBase : FixtureContext
     {
@@ -19,6 +18,11 @@ namespace Tesla.NET
         private MethodInfo _debuggerDisplayGetMethod;
         private object _debuggerDisplayValue;
         protected string DebuggerDisplayText;
+
+        protected DebuggerDisplayTestsBase(ITestOutputHelper output)
+            : base(output)
+        {
+        }
 
         protected void GetDebuggerDisplay<TSut>(TSut sut)
         {
@@ -70,46 +74,6 @@ namespace Tesla.NET
         public void include_the_type_in_the_debugger_display()
         {
             DebuggerDisplayText.Should().StartWith($"{_sutType.Name}:");
-        }
-    }
-
-    public class When_running_in_the_debugger_AccessTokenResponse_Should : DebuggerDisplayTestsBase
-    {
-        private readonly AccessTokenResponse _sut;
-
-        public When_running_in_the_debugger_AccessTokenResponse_Should()
-        {
-            _sut = Fixture.Create<AccessTokenResponse>();
-            GetDebuggerDisplay(_sut);
-        }
-
-        [Fact]
-        public void include_the_truncated_access_token_in_the_debugger_display()
-        {
-            DebuggerDisplayText.Should().Contain(_sut.AccessToken.Substring(0, 6) + "…");
-        }
-
-        [Fact]
-        public void include_the_expires_when_in_the_debugger_display()
-        {
-            DebuggerDisplayText.Should().Contain(_sut.ExpiresWhen.ToString("R"));
-        }
-    }
-
-    public class When_running_in_the_debugger_MessageResponse_Should : DebuggerDisplayTestsBase
-    {
-        private readonly MessageResponse<string> _sut;
-
-        public When_running_in_the_debugger_MessageResponse_Should()
-        {
-            _sut = Fixture.Create<MessageResponse<string>>();
-            GetDebuggerDisplay(_sut);
-        }
-
-        [Fact]
-        public void include_the_HTTP_status_code_in_the_debugger_display()
-        {
-            DebuggerDisplayText.Should().Contain(_sut.HttpStatusCode.ToString("G"));
         }
     }
 }

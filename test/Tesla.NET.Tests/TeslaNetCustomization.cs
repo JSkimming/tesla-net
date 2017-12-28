@@ -9,6 +9,7 @@ namespace Tesla.NET
     using AutoFixture;
     using AutoFixture.AutoMoq;
     using AutoFixture.Xunit2;
+    using Tesla.NET.Models;
 
     internal class TeslaNetCustomization : CompositeCustomization
     {
@@ -22,6 +23,10 @@ namespace Tesla.NET
     {
         void ICustomization.Customize(IFixture fixture)
         {
+            fixture.Register<IReadOnlyList<string>>(fixture.Create<string[]>);
+            fixture.Register<IReadOnlyCollection<string>>(fixture.Create<string[]>);
+            fixture.Register<IReadOnlyList<Vehicle>>(fixture.Create<Vehicle[]>);
+            fixture.Register<IReadOnlyCollection<Vehicle>>(fixture.Create<Vehicle[]>);
         }
     }
 

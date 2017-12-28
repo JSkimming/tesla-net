@@ -12,15 +12,15 @@ namespace Tesla.NET.Models
     using Xunit;
     using Xunit.Abstractions;
 
-    public class When_serializing_AccessTokenResponse_Should_serialize
+    public class When_serializing_AccessTokenResponse_Should_serialize : FixtureContext
     {
         private readonly AccessTokenResponse _sut;
         private readonly JObject _json;
 
         public When_serializing_AccessTokenResponse_Should_serialize(ITestOutputHelper output)
+            : base(output)
         {
-            IFixture fixture = new Fixture().Customize(new TeslaNetCustomization());
-            _sut = fixture.Create<AccessTokenResponse>();
+            _sut = Fixture.Create<AccessTokenResponse>();
             _json = JObject.FromObject(_sut);
 
             output.WriteLine("Serialized JSON:" + Environment.NewLine + _json);
@@ -45,15 +45,15 @@ namespace Tesla.NET.Models
         public void created_at() => _json["created_at"].Value<long>().Should().Be(_sut.CreatedAt);
     }
 
-    public class When_serializing_and_deserializing_AccessTokenResponse
+    public class When_serializing_and_deserializing_AccessTokenResponse : FixtureContext
     {
         private readonly AccessTokenResponse _expected;
         private readonly AccessTokenResponse _actual;
 
         public When_serializing_and_deserializing_AccessTokenResponse(ITestOutputHelper output)
+            : base(output)
         {
-            IFixture fixture = new Fixture().Customize(new TeslaNetCustomization());
-            _expected = fixture.Create<AccessTokenResponse>();
+            _expected = Fixture.Create<AccessTokenResponse>();
             JObject json = JObject.FromObject(_expected);
 
             output.WriteLine("Serialized JSON:" + Environment.NewLine + json);
@@ -62,7 +62,7 @@ namespace Tesla.NET.Models
         }
 
         [Fact]
-        public void Should_retain_all_properties() => _actual.AsLikeness().ShouldEqual(_expected);
+        public void Should_retain_all_properties() => _actual.ShouldBeEquivalentTo(_expected, WithStrictOrdering);
     }
 
     public class When_deserializing_AccessTokenResponse_Should_deserialize
@@ -92,5 +92,29 @@ namespace Tesla.NET.Models
 
         [Fact]
         public void created_at() => _sut.CreatedAt.Should().Be(_json["created_at"].Value<long>());
+    }
+
+    public class When_running_in_the_debugger_AccessTokenResponse_Should : DebuggerDisplayTestsBase
+    {
+        private readonly AccessTokenResponse _sut;
+
+        public When_running_in_the_debugger_AccessTokenResponse_Should(ITestOutputHelper output)
+            : base(output)
+        {
+            _sut = Fixture.Create<AccessTokenResponse>();
+            GetDebuggerDisplay(_sut);
+        }
+
+        [Fact]
+        public void include_the_truncated_access_token_in_the_debugger_display()
+        {
+            DebuggerDisplayText.Should().Contain(_sut.AccessToken.Substring(0, 6) + "…");
+        }
+
+        [Fact]
+        public void include_the_expires_when_in_the_debugger_display()
+        {
+            DebuggerDisplayText.Should().Contain(_sut.ExpiresWhen.ToString("R"));
+        }
     }
 }
