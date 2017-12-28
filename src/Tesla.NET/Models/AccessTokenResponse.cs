@@ -13,8 +13,6 @@ namespace Tesla.NET.Models
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class AccessTokenResponse
     {
-        private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
         /// <summary>
         /// Initializes a new instance of the <see cref="AccessTokenResponse"/> class.
         /// </summary>
@@ -61,13 +59,13 @@ namespace Tesla.NET.Models
         /// Gets the expiry duration of the <see cref="AccessToken"/>.
         /// </summary>
         [JsonIgnore]
-        public TimeSpan ExpiresInTimestamp => TimeSpan.FromSeconds(ExpiresIn);
+        public TimeSpan ExpiresInTimespan => TimeSpan.FromSeconds(ExpiresIn);
 
         /// <summary>
-        /// Gets the date when of the <see cref="AccessToken"/> expires.
+        /// Gets the UTC <see cref="DateTime"/> when the <see cref="AccessToken"/> expires.
         /// </summary>
         [JsonIgnore]
-        public DateTime ExpiresWhen => Epoch + TimeSpan.FromSeconds(CreatedAt + ExpiresIn);
+        public DateTime ExpiresUtc => EpochConversion.FromSeconds(CreatedAt + ExpiresIn);
 
         /// <summary>
         /// Gets the Epoch timestamp when the <see cref="AccessToken"/> was issued.
@@ -76,10 +74,10 @@ namespace Tesla.NET.Models
         public long CreatedAt { get; }
 
         /// <summary>
-        /// Gets the date when the <see cref="AccessToken"/> was issued.
+        /// Gets the UTC <see cref="DateTime"/> when the <see cref="AccessToken"/> was issued.
         /// </summary>
         [JsonIgnore]
-        public DateTime CreatedDate => Epoch + TimeSpan.FromSeconds(CreatedAt);
+        public DateTime CreatedUtc => EpochConversion.FromSeconds(CreatedAt);
 
         /// <summary>
         /// Gets the refresh token that can be used to acquire a new <see cref="AccessToken"/>.
@@ -87,6 +85,6 @@ namespace Tesla.NET.Models
         [JsonProperty("refresh_token")]
         public string RefreshToken { get; }
 
-        private string DebuggerDisplay => $"{GetType().Name}: {AccessToken.Substring(0, 6)}… Expires {ExpiresWhen:R}";
+        private string DebuggerDisplay => $"{GetType().Name}: {AccessToken.Substring(0, 6)}… Expires {ExpiresUtc:R}";
     }
 }

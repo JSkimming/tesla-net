@@ -114,7 +114,31 @@ namespace Tesla.NET.Models
         [Fact]
         public void include_the_expires_when_in_the_debugger_display()
         {
-            DebuggerDisplayText.Should().Contain(_sut.ExpiresWhen.ToString("R"));
+            DebuggerDisplayText.Should().Contain(_sut.ExpiresUtc.ToString("R"));
         }
+    }
+
+    public class AccessTokenResponse_Should_calculate
+    {
+        private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+        private readonly AccessTokenResponse _sut;
+
+        public AccessTokenResponse_Should_calculate(ITestOutputHelper output)
+        {
+            JObject json = SampleJson.AccessTokenResponse;
+            _sut = json.ToObject<AccessTokenResponse>();
+
+            output.WriteLine("Serialized JSON:" + Environment.NewLine + json);
+        }
+
+        [Fact]
+        public void ExpiresInTimespan() => _sut.ExpiresInTimespan.Should().Be(TimeSpan.FromSeconds(_sut.ExpiresIn));
+
+        [Fact]
+        public void ExpiresUtc() => _sut.ExpiresUtc.Should().Be(_sut.CreatedUtc + _sut.ExpiresInTimespan);
+
+        [Fact]
+        public void CreatedUtc() => _sut.CreatedUtc.Should().Be(Epoch.AddSeconds(_sut.CreatedAt));
     }
 }
