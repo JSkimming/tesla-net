@@ -150,6 +150,42 @@ namespace Tesla.NET.Requests
         }
 
         /// <summary>
+        /// Gets the <see cref="DriveState"/> of the <see cref="Vehicle"/> with the specified
+        /// <see cref="Vehicle.Id"/>.
+        /// </summary>
+        /// <param name="client">The <see cref="HttpClient"/>.</param>
+        /// <param name="baseUri">The base <see cref="Uri"/> of the Tesla Owner API.</param>
+        /// <param name="vehicleId">The unique <see cref="Vehicle.Id"/> of a <see cref="Vehicle"/>.</param>
+        /// <param name="accessToken">
+        /// The access token used to authenticate the request; can be <see langword="null"/> if the authentication is
+        /// added by default.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
+        /// complete.</param>
+        /// <returns>
+        /// The <see cref="DriveState"/> of the <see cref="Vehicle"/> with the specified <see cref="Vehicle.Id"/>.
+        /// </returns>
+        public static Task<MessageResponse<ResponseDataWrapper<DriveState>>> GetDriveStateAsync(
+            this HttpClient client,
+            Uri baseUri,
+            long vehicleId,
+            string accessToken = null,
+            CancellationToken cancellationToken = default)
+        {
+            if (client == null)
+                throw new ArgumentNullException(nameof(client));
+            if (baseUri == null)
+                throw new ArgumentNullException(nameof(baseUri));
+
+            Uri requestUri = new Uri(baseUri, $"api/1/vehicles/{vehicleId}/data_request/drive_state");
+
+            return
+                client
+                    .GetWithAuthAsync(requestUri, accessToken, cancellationToken)
+                    .ReadJsonAsAsync<ResponseDataWrapper<DriveState>>(cancellationToken);
+        }
+
+        /// <summary>
         /// Posts the form <paramref name="parameters"/> to the <paramref name="requestUri"/>.
         /// </summary>
         /// <param name="client">The <see cref="HttpClient"/>.</param>

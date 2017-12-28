@@ -55,6 +55,13 @@ namespace Tesla.NET
 
         /// <inheritdoc />
         public Task<MessageResponse<ResponseDataWrapper<IReadOnlyList<Vehicle>>>> GetVehiclesAsync(
+            CancellationToken cancellationToken = default)
+        {
+            return Client.GetVehiclesAsync(BaseUri, cancellationToken: cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public Task<MessageResponse<ResponseDataWrapper<IReadOnlyList<Vehicle>>>> GetVehiclesAsync(
             string accessToken,
             CancellationToken cancellationToken = default)
         {
@@ -65,10 +72,23 @@ namespace Tesla.NET
         }
 
         /// <inheritdoc />
-        public Task<MessageResponse<ResponseDataWrapper<IReadOnlyList<Vehicle>>>> GetVehiclesAsync(
+        public Task<MessageResponse<ResponseDataWrapper<DriveState>>> GetDriveStateAsync(
+            long vehicleId,
             CancellationToken cancellationToken = default)
         {
-            return Client.GetVehiclesAsync(BaseUri, cancellationToken: cancellationToken);
+            return Client.GetDriveStateAsync(BaseUri, vehicleId, cancellationToken: cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public Task<MessageResponse<ResponseDataWrapper<DriveState>>> GetDriveStateAsync(
+            long vehicleId,
+            string accessToken,
+            CancellationToken cancellationToken = default)
+        {
+            if (string.IsNullOrWhiteSpace(accessToken))
+                throw new ArgumentNullException(nameof(accessToken));
+
+            return Client.GetDriveStateAsync(BaseUri, vehicleId, accessToken, cancellationToken);
         }
     }
 }

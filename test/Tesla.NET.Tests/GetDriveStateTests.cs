@@ -16,46 +16,48 @@ namespace Tesla.NET
     using Xunit;
     using Xunit.Abstractions;
 
-    public abstract class GetVehiclesSuccessTestsBase : ClientRequestContext
+    public abstract class GetDriveStateSuccessTestsBase : ClientRequestContext
     {
-        private readonly ResponseDataWrapper<IReadOnlyList<Vehicle>> _expected;
+        private readonly ResponseDataWrapper<DriveState> _expected;
+        private readonly long _vehicleId;
         private readonly Uri _expectedRequestUri;
 
-        protected GetVehiclesSuccessTestsBase(ITestOutputHelper output, bool useCustomBaseUri)
+        protected GetDriveStateSuccessTestsBase(ITestOutputHelper output, bool useCustomBaseUri)
             : base(output, useCustomBaseUri)
         {
             // Arrange
-            _expected = Fixture.Create<ResponseDataWrapper<IReadOnlyList<Vehicle>>>();
+            _expected = Fixture.Create<ResponseDataWrapper<DriveState>>();
+            _vehicleId = Fixture.Create<long>();
             Handler.SetResponseContent(_expected);
-            _expectedRequestUri = new Uri(BaseUri, "api/1/vehicles");
+            _expectedRequestUri = new Uri(BaseUri, $"api/1/vehicles/{_vehicleId}/data_request/drive_state");
         }
 
         [Fact]
         public async Task Should_make_a_GET_request()
         {
             // Act
-            await Sut.GetVehiclesAsync(AccessToken).ConfigureAwait(false);
+            await Sut.GetDriveStateAsync(_vehicleId, AccessToken).ConfigureAwait(false);
 
             // Assert
             Handler.Request.Method.Should().Be(HttpMethod.Get);
         }
 
         [Fact]
-        public async Task Should_request_the_vehicles_endpoint()
+        public async Task Should_request_the_drive_state_endpoint()
         {
             // Act
-            await Sut.GetVehiclesAsync(AccessToken).ConfigureAwait(false);
+            await Sut.GetDriveStateAsync(_vehicleId, AccessToken).ConfigureAwait(false);
 
             // Assert
             Handler.Request.RequestUri.Should().Be(_expectedRequestUri);
         }
 
         [Fact]
-        public async Task Should_return_the_expected_vehicles()
+        public async Task Should_return_the_expected_drive_state()
         {
             // Act
-            MessageResponse<ResponseDataWrapper<IReadOnlyList<Vehicle>>> actual =
-                await Sut.GetVehiclesAsync(AccessToken).ConfigureAwait(false);
+            MessageResponse<ResponseDataWrapper<DriveState>> actual =
+                await Sut.GetDriveStateAsync(_vehicleId, AccessToken).ConfigureAwait(false);
 
             // Assert
             actual.HttpStatusCode.Should().Be(HttpStatusCode.OK);
@@ -66,7 +68,7 @@ namespace Tesla.NET
         public async Task Should_set_the_bearer_token_with_the_specified_access_token()
         {
             // Act
-            await Sut.GetVehiclesAsync(AccessToken).ConfigureAwait(false);
+            await Sut.GetDriveStateAsync(_vehicleId, AccessToken).ConfigureAwait(false);
 
             // Assert
             Handler.Request.Headers.Authorization.Scheme.Should().Be("Bearer");
@@ -77,35 +79,38 @@ namespace Tesla.NET
         public async Task Should_NOT_set_the_bearer_token_if_the_access_token_is_not_specified()
         {
             // Act
-            await Sut.GetVehiclesAsync().ConfigureAwait(false);
+            await Sut.GetDriveStateAsync(_vehicleId).ConfigureAwait(false);
 
             // Assert
             Handler.Request.Headers.Authorization.Should().BeNull();
         }
     }
 
-    public class When_getting_the_vehicles_for_an_account_using_the_default_base_Uri : GetVehiclesSuccessTestsBase
+    public class When_getting_the_drive_state_for_a_vehicle_using_the_default_base_Uri : GetDriveStateSuccessTestsBase
     {
-        public When_getting_the_vehicles_for_an_account_using_the_default_base_Uri(ITestOutputHelper output)
+        public When_getting_the_drive_state_for_a_vehicle_using_the_default_base_Uri(ITestOutputHelper output)
             : base(output, useCustomBaseUri: false)
         {
         }
     }
 
-    public class When_getting_the_vehicles_for_an_account_using_a_custom_base_Uri : GetVehiclesSuccessTestsBase
+    public class When_getting_the_drive_state_for_a_vehicle_using_a_custom_base_Uri : GetDriveStateSuccessTestsBase
     {
-        public When_getting_the_vehicles_for_an_account_using_a_custom_base_Uri(ITestOutputHelper output)
+        public When_getting_the_drive_state_for_a_vehicle_using_a_custom_base_Uri(ITestOutputHelper output)
             : base(output, useCustomBaseUri: true)
         {
         }
     }
 
-    public abstract class GetVehiclesFailureTestsBase : ClientRequestContext
+    public abstract class GetDriveStateFailureTestsBase : ClientRequestContext
     {
-        protected GetVehiclesFailureTestsBase(ITestOutputHelper output, bool useCustomBaseUri)
+        private readonly long _vehicleId;
+
+        protected GetDriveStateFailureTestsBase(ITestOutputHelper output, bool useCustomBaseUri)
             : base(output, useCustomBaseUri)
         {
             // Arrange
+            _vehicleId = Fixture.Create<long>();
             Handler.SetResponseContent(new JObject(), HttpStatusCode.BadGateway);
         }
 
@@ -113,26 +118,26 @@ namespace Tesla.NET
         public void Should_throw_an_HttpRequestException()
         {
             // Act
-            Func<Task> action = () => Sut.GetVehiclesAsync(AccessToken);
+            Func<Task> action = () => Sut.GetDriveStateAsync(_vehicleId, AccessToken);
 
             // Assert
             action.ShouldThrowExactly<HttpRequestException>();
         }
     }
 
-    public class When_failing_to_get_the_vehicles_for_an_account_using_the_default_base_Uri
-        : GetVehiclesFailureTestsBase
+    public class When_failing_to_get_the_drive_state_for_a_vehicle_using_the_default_base_Uri
+        : GetDriveStateFailureTestsBase
     {
-        public When_failing_to_get_the_vehicles_for_an_account_using_the_default_base_Uri(ITestOutputHelper output)
+        public When_failing_to_get_the_drive_state_for_a_vehicle_using_the_default_base_Uri(ITestOutputHelper output)
             : base(output, useCustomBaseUri: false)
         {
         }
     }
 
-    public class When_failing_to_get_the_vehicles_for_an_account_using_a_custom_base_Uri
-        : GetVehiclesFailureTestsBase
+    public class When_failing_to_get_the_drive_state_for_a_vehicle_using_a_custom_base_Uri
+        : GetDriveStateFailureTestsBase
     {
-        public When_failing_to_get_the_vehicles_for_an_account_using_a_custom_base_Uri(ITestOutputHelper output)
+        public When_failing_to_get_the_drive_state_for_a_vehicle_using_a_custom_base_Uri(ITestOutputHelper output)
             : base(output, useCustomBaseUri: true)
         {
         }

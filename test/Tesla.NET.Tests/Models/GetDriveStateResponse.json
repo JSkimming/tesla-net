@@ -1,0 +1,12 @@
+{
+  "response": {
+    "shift_state": "unknown shift_state",
+    "speed": "unknown speed",
+    "power": 0,
+    "latitude": 51.510403,
+    "longitude": -0.461047,
+    "heading": 107,
+    "gps_as_of": 1514461723,
+    "timestamp": 1514461790245
+  }
+}
