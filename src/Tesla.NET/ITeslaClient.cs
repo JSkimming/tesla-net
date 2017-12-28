@@ -18,6 +18,15 @@ namespace Tesla.NET
         /// <summary>
         /// Gets the vehicles associated with an account.
         /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
+        /// complete.</param>
+        /// <returns>The vehicles associated with an account.</returns>
+        Task<MessageResponse<ResponseDataWrapper<IReadOnlyList<Vehicle>>>> GetVehiclesAsync(
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Gets the vehicles associated with an account.
+        /// </summary>
         /// <param name="accessToken">
         /// The access token used to authenticate the request.
         /// </param>
@@ -29,12 +38,36 @@ namespace Tesla.NET
             CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Gets the vehicles associated with an account.
+        /// Gets the <see cref="DriveState"/> of the <see cref="Vehicle"/> with the specified
+        /// <see cref="Vehicle.Id"/>.
         /// </summary>
+        /// <param name="vehicleId">The unique <see cref="Vehicle.Id"/> of a <see cref="Vehicle"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
         /// complete.</param>
-        /// <returns>The vehicles associated with an account.</returns>
-        Task<MessageResponse<ResponseDataWrapper<IReadOnlyList<Vehicle>>>> GetVehiclesAsync(
+        /// <returns>
+        /// The <see cref="DriveState"/> of the <see cref="Vehicle"/> with the specified <see cref="Vehicle.Id"/>.
+        /// </returns>
+        Task<MessageResponse<ResponseDataWrapper<DriveState>>> GetDriveStateAsync(
+            long vehicleId,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Gets the <see cref="DriveState"/> of the <see cref="Vehicle"/> with the specified
+        /// <see cref="Vehicle.Id"/>.
+        /// </summary>
+        /// <param name="vehicleId">The unique <see cref="Vehicle.Id"/> of a <see cref="Vehicle"/>.</param>
+        /// <param name="accessToken">
+        /// The access token used to authenticate the request; can be <see langword="null"/> if the authentication is
+        /// added by default.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
+        /// complete.</param>
+        /// <returns>
+        /// The <see cref="DriveState"/> of the <see cref="Vehicle"/> with the specified <see cref="Vehicle.Id"/>.
+        /// </returns>
+        Task<MessageResponse<ResponseDataWrapper<DriveState>>> GetDriveStateAsync(
+            long vehicleId,
+            string accessToken,
             CancellationToken cancellationToken = default);
     }
 }
