@@ -11,6 +11,7 @@ namespace Tesla.NET
     using System.Threading.Tasks;
     using AutoFixture;
     using FluentAssertions;
+    using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using Tesla.NET.Models;
     using Xunit;
@@ -140,6 +141,38 @@ namespace Tesla.NET
         public When_failing_to_get_the_drive_state_for_a_vehicle_using_a_custom_base_Uri(ITestOutputHelper output)
             : base(output, useCustomBaseUri: true)
         {
+        }
+    }
+
+    public class When_getting_the_drive_state_for_a_vehicle_the_raw_JSON : ClientRequestContext
+    {
+        private readonly JObject _expected;
+        private readonly long _vehicleId;
+
+        public When_getting_the_drive_state_for_a_vehicle_the_raw_JSON(ITestOutputHelper output)
+            : base(output, useCustomBaseUri: false)
+        {
+            // Arrange
+            _expected = SampleJson.GetDriveStateResponse;
+            _vehicleId = Fixture.Create<long>();
+
+            // Add random values to test whether it is correctly passed through.
+            _expected["randomValue1"] = Fixture.Create("randomValue1");
+            _expected["randomValue2"] = JObject.FromObject(new { fakeId = Guid.NewGuid() });
+            _expected["response"]["randomValue3"] = Fixture.Create("randomValue3");
+
+            Handler.SetResponseContent(_expected);
+        }
+
+        [Fact]
+        public async Task Should_be_passed_through_in_the_response()
+        {
+            // Act
+            MessageResponse<ResponseDataWrapper<DriveState>> response =
+                await Sut.GetDriveStateAsync(_vehicleId).ConfigureAwait(false);
+
+            // Assert
+            response.RawJsonAsString.Should().Be(_expected.ToString(Formatting.None));
         }
     }
 }

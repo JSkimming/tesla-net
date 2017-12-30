@@ -118,7 +118,7 @@ namespace Tesla.NET.HttpHandlers
                 return null;
 
             string contentData;
-            if (content is DelayedStreamContent delayedContent)
+            if (content is ForcedAsyncStreamContent delayedContent)
             {
                 using (var s = new StreamReader(delayedContent.Stream, Encoding.UTF8, true, 10240, leaveOpen:true))
                 {
@@ -154,7 +154,7 @@ namespace Tesla.NET.HttpHandlers
             }
 
             stream.Seek(0, SeekOrigin.Begin);
-            var httpContent = new DelayedStreamContent(stream)
+            var httpContent = new ForcedAsyncStreamContent(stream)
             {
                 Headers =
                 {

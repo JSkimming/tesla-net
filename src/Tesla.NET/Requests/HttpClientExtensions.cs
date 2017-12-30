@@ -12,6 +12,7 @@ namespace Tesla.NET.Requests
     using System.Threading;
     using System.Threading.Tasks;
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
     using Tesla.NET.Models;
 
     /// <summary>
@@ -320,8 +321,9 @@ namespace Tesla.NET.Requests
             {
                 responseMessage.EnsureSuccessStatusCode();
 
-                T dataResponse = await responseMessage.ReadJsonAsAsync<T>(cancellationToken).ConfigureAwait(false);
-                MessageResponse<T> response = new MessageResponse<T>(responseMessage.StatusCode, dataResponse);
+                (T data, JObject rawJson) =
+                    await responseMessage.ReadJsonAsAsync<T>(cancellationToken).ConfigureAwait(false);
+                MessageResponse<T> response = new MessageResponse<T>(responseMessage.StatusCode, rawJson, data);
                 return response;
             }
         }
@@ -335,7 +337,7 @@ namespace Tesla.NET.Requests
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
         /// complete.</param>
         /// <returns>The deserialized object of type <typeparamref name="T"/>.</returns>
-        private static async Task<T> ReadJsonAsAsync<T>(
+        private static async Task<(T data, JObject rawJson)> ReadJsonAsAsync<T>(
             this HttpResponseMessage response,
             CancellationToken cancellationToken)
             where T : class
@@ -347,9 +349,12 @@ namespace Tesla.NET.Requests
             using (var sr = new StreamReader(stream))
             using (var reader = new JsonTextReader(sr))
             {
-                var serializer = JsonSerializer.CreateDefault();
-                T result = serializer.Deserialize<T>(reader);
-                return result;
+                JObject rawJson = await JObject.LoadAsync(reader, cancellationToken).ConfigureAwait(false);
+
+                JsonSerializer serializer = JsonSerializer.CreateDefault();
+                T data = rawJson.ToObject<T>(serializer);
+
+                return (data, rawJson);
             }
         }
     }
