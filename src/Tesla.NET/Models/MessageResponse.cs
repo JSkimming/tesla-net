@@ -6,6 +6,8 @@ namespace Tesla.NET.Models
     using System;
     using System.Diagnostics;
     using System.Net;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
 
     /// <summary>
     /// The message response from the Tesla Owner API.
@@ -15,14 +17,18 @@ namespace Tesla.NET.Models
     public class MessageResponse<TData>
         where TData : class
     {
+        private readonly JObject _rawJson;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MessageResponse{TData}"/> class.
         /// </summary>
         /// <param name="httpStatusCode">The <see cref="HttpStatusCode"/>.</param>
+        /// <param name="rawJson">The raw JSON of the <see cref="Data"/>.</param>
         /// <param name="data">The <see cref="Data"/> object.</param>
-        public MessageResponse(HttpStatusCode httpStatusCode, TData data)
+        public MessageResponse(HttpStatusCode httpStatusCode, JObject rawJson, TData data)
         {
             HttpStatusCode = httpStatusCode;
+            _rawJson = rawJson ?? throw new ArgumentNullException(nameof(rawJson));
             Data = data ?? throw new ArgumentNullException(nameof(data));
         }
 
@@ -30,6 +36,17 @@ namespace Tesla.NET.Models
         /// Gets the <see cref="HttpStatusCode"/>.
         /// </summary>
         public HttpStatusCode HttpStatusCode { get; }
+
+        /// <summary>
+        /// Gets the raw JSON of the <see cref="Data"/>.
+        /// </summary>
+        public JObject RawJson => (JObject)_rawJson.DeepClone();
+
+        /// <summary>
+        /// Gets the raw JSON of the <see cref="Data"/>.
+        /// </summary>
+        [JsonIgnore]
+        public string RawJsonAsString => _rawJson.ToString(Formatting.None);
 
         /// <summary>
         /// Gets the <typeparamref name="TData"/> object.

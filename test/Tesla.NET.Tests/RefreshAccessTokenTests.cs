@@ -13,6 +13,7 @@ namespace Tesla.NET
     using FluentAssertions;
     using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Extensions.Primitives;
+    using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using Tesla.NET.Models;
     using Xunit;
@@ -216,6 +217,42 @@ namespace Tesla.NET
         public When_failing_to_refresh_an_access_token_using_a_custom_base_Uri(ITestOutputHelper output)
             : base(output, useCustomBaseUri: true)
         {
+        }
+    }
+
+    public class When_refreshing_an_access_token_the_raw_JSON : AuthRequestContext
+    {
+        private readonly JObject _expected;
+        private readonly string _clientId;
+        private readonly string _clientSecret;
+        private readonly string _refreshToken;
+
+        public When_refreshing_an_access_token_the_raw_JSON(ITestOutputHelper output)
+            : base(output, useCustomBaseUri: false)
+        {
+            // Arrange
+            _expected = SampleJson.AccessTokenResponse;
+            _clientId = Fixture.Create("clientId");
+            _clientSecret = Fixture.Create("clientSecret");
+            _refreshToken = Fixture.Create("refreshToken");
+
+            // Add random values to test whether it is correctly passed through.
+            _expected["randomValue1"] = Fixture.Create("randomValue1");
+            _expected["randomValue2"] = JObject.FromObject(new { fakeId = Guid.NewGuid() });
+
+            Handler.SetResponseContent(_expected);
+        }
+
+        [Fact]
+        public async Task Should_be_passed_through_in_the_response()
+        {
+            // Act
+            MessageResponse<AccessTokenResponse> response =
+                await Sut.RefreshAccessTokenAsync(_clientId, _clientSecret, _refreshToken)
+                    .ConfigureAwait(false);
+
+            // Assert
+            response.RawJsonAsString.Should().Be(_expected.ToString(Formatting.None));
         }
     }
 }

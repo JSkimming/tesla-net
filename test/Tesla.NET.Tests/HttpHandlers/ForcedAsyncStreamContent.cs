@@ -11,24 +11,32 @@ namespace Tesla.NET.HttpHandlers
     using System.Threading.Tasks;
 
     /// <summary>
-    /// This override of <see cref="StreamContent"/> simply ads a delay to make the requests more representative of
-    /// real HTTP requests.
+    /// Adds a <see cref="Task.Yield"/> to <see cref="CreateContentReadStreamAsync"/> to ensure streams are read
+    /// asynchronously.
     /// </summary>
-    internal class DelayedStreamContent : StreamContent
+    internal class ForcedAsyncStreamContent : StreamContent
     {
-        public DelayedStreamContent(MemoryStream stream)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ForcedAsyncStreamContent"/> class.
+        /// </summary>
+        /// <param name="stream">The content used to initialize the <see cref="StreamContent"/>.</param>
+        public ForcedAsyncStreamContent(MemoryStream stream)
             : base(stream)
         {
             Stream = stream;
         }
 
+        /// <summary>
+        /// Gets the underlying <see cref="MemoryStream"/>.
+        /// </summary>
         public MemoryStream Stream { get; }
 
+        /// <inheritdoc />
         protected override async Task<Stream> CreateContentReadStreamAsync()
         {
             Stream stream = await base.CreateContentReadStreamAsync().ConfigureAwait(false);
             await Task.Yield();
-            return stream;
+            return new ForcedAsyncStream(stream);
         }
     }
 }

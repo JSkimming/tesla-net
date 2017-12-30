@@ -11,6 +11,7 @@ namespace Tesla.NET
     using System.Threading.Tasks;
     using AutoFixture;
     using FluentAssertions;
+    using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using Tesla.NET.Models;
     using Xunit;
@@ -135,6 +136,36 @@ namespace Tesla.NET
         public When_failing_to_get_the_vehicles_for_an_account_using_a_custom_base_Uri(ITestOutputHelper output)
             : base(output, useCustomBaseUri: true)
         {
+        }
+    }
+
+    public class When_getting_the_vehicles_for_an_account_the_raw_JSON : ClientRequestContext
+    {
+        private readonly JObject _expected;
+
+        public When_getting_the_vehicles_for_an_account_the_raw_JSON(ITestOutputHelper output)
+            : base(output, useCustomBaseUri: false)
+        {
+            // Arrange
+            _expected = SampleJson.GetVehiclesResponse;
+
+            // Add random values to test whether it is correctly passed through.
+            _expected["randomValue1"] = Fixture.Create("randomValue1");
+            _expected["randomValue2"] = JObject.FromObject(new { fakeId = Guid.NewGuid() });
+            _expected["response"][0]["randomValue3"] = Fixture.Create("randomValue3");
+
+            Handler.SetResponseContent(_expected);
+        }
+
+        [Fact]
+        public async Task Should_be_passed_through_in_the_response()
+        {
+            // Act
+            MessageResponse<ResponseDataWrapper<IReadOnlyList<Vehicle>>> response =
+                await Sut.GetVehiclesAsync().ConfigureAwait(false);
+
+            // Assert
+            response.RawJsonAsString.Should().Be(_expected.ToString(Formatting.None));
         }
     }
 }
