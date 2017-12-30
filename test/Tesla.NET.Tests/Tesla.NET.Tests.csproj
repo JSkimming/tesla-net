@@ -25,6 +25,7 @@
     <EmbeddedResource Include="Models\AccessTokenResponse.json" />
     <EmbeddedResource Include="Models\GetDriveStateResponse.json" />
     <EmbeddedResource Include="Models\GetVehiclesResponse.json" />
+    <EmbeddedResource Include="Models\GetVehicleStateResponse.json" />
   </ItemGroup>
 
   <ItemGroup>
