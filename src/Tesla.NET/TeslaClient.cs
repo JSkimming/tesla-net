@@ -72,15 +72,15 @@ namespace Tesla.NET
         }
 
         /// <inheritdoc />
-        public Task<MessageResponse<ResponseDataWrapper<VehicleState>>> GetVehicleStateAsync(
+        public Task<MessageResponse<ResponseDataWrapper<ChargeState>>> GetChargeStateAsync(
             long vehicleId,
             CancellationToken cancellationToken = default)
         {
-            return Client.GetVehicleStateAsync(BaseUri, vehicleId, cancellationToken: cancellationToken);
+            return Client.GetChargeStateAsync(BaseUri, vehicleId, cancellationToken: cancellationToken);
         }
 
         /// <inheritdoc />
-        public Task<MessageResponse<ResponseDataWrapper<VehicleState>>> GetVehicleStateAsync(
+        public Task<MessageResponse<ResponseDataWrapper<ChargeState>>> GetChargeStateAsync(
             long vehicleId,
             string accessToken,
             CancellationToken cancellationToken = default)
@@ -88,7 +88,7 @@ namespace Tesla.NET
             if (string.IsNullOrWhiteSpace(accessToken))
                 throw new ArgumentNullException(nameof(accessToken));
 
-            return Client.GetVehicleStateAsync(BaseUri, vehicleId, accessToken, cancellationToken);
+            return Client.GetChargeStateAsync(BaseUri, vehicleId, accessToken, cancellationToken);
         }
 
         /// <inheritdoc />
@@ -109,6 +109,26 @@ namespace Tesla.NET
                 throw new ArgumentNullException(nameof(accessToken));
 
             return Client.GetDriveStateAsync(BaseUri, vehicleId, accessToken, cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public Task<MessageResponse<ResponseDataWrapper<VehicleState>>> GetVehicleStateAsync(
+            long vehicleId,
+            CancellationToken cancellationToken = default)
+        {
+            return Client.GetVehicleStateAsync(BaseUri, vehicleId, cancellationToken: cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public Task<MessageResponse<ResponseDataWrapper<VehicleState>>> GetVehicleStateAsync(
+            long vehicleId,
+            string accessToken,
+            CancellationToken cancellationToken = default)
+        {
+            if (string.IsNullOrWhiteSpace(accessToken))
+                throw new ArgumentNullException(nameof(accessToken));
+
+            return Client.GetVehicleStateAsync(BaseUri, vehicleId, accessToken, cancellationToken);
         }
     }
 }
