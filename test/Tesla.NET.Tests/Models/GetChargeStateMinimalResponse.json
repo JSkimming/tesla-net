@@ -1,0 +1,14 @@
+{
+  "response": {
+    "fast_charger_brand": null,
+    "charge_limit_soc": null,
+    "charge_limit_soc_max": null,
+    "battery_range": null,
+    "charge_miles_added_rated": null,
+    "trip_charging": null,
+    "user_charge_enable_request": null,
+    "charge_current_request_max": null,
+    "managed_charging_active": null,
+    "timestamp": 1515396974152
+  }
+}
