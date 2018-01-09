@@ -4,6 +4,7 @@
 namespace Tesla.NET.Models
 {
     using System;
+    using System.ComponentModel;
     using System.Diagnostics;
     using System.Globalization;
     using Newtonsoft.Json;
@@ -59,51 +60,51 @@ namespace Tesla.NET.Models
         /// <param name="notEnoughPowerToHeat">The <see cref="NotEnoughPowerToHeat"/>.</param>
         /// <param name="timestamp">The <see cref="Timestamp"/>.</param>
         public ChargeState(
-            string chargingState = default,
-            string fastChargerType = default,
-            string fastChargerBrand = default,
-            long chargeLimitSoc = default,
-            long chargeLimitSocStd = default,
-            long chargeLimitSocMin = default,
-            long chargeLimitSocMax = default,
-            bool chargeToMaxRange = default,
-            long maxRangeChargeCounter = default,
-            bool fastChargerPresent = default,
-            double batteryRange = default,
-            double estBatteryRange = default,
-            double idealBatteryRange = default,
-            long batteryLevel = default,
-            long usableBatteryLevel = default,
-            double chargeEnergyAdded = default,
-            double chargeMilesAddedRated = default,
-            long chargeMilesAddedIdeal = default,
-            long chargerVoltage = default,
-            long chargerPilotCurrent = default,
-            long chargerActualCurrent = default,
-            long chargerPower = default,
-            long timeToFullCharge = default,
-            bool tripCharging = default,
-            long chargeRate = default,
-            bool chargePortDoorOpen = default,
-            string connChargeCable = default,
-            string scheduledChargingStartTime = default,
-            bool scheduledChargingPending = default,
-            string userChargeEnableRequest = default,
-            bool chargeEnableRequest = default,
-            int? chargerPhases = default,
-            string chargePortLatch = default,
-            long chargeCurrentRequest = default,
-            long chargeCurrentRequestMax = default,
-            bool managedChargingActive = default,
-            bool managedChargingUserCanceled = default,
-            string managedChargingStartTime = default,
-            bool batteryHeaterOn = default,
-            bool notEnoughPowerToHeat = default,
-            long timestamp = default)
+            string chargingState = null,
+            string fastChargerType = null,
+            string fastChargerBrand = null,
+            long? chargeLimitSoc = null,
+            long? chargeLimitSocStd = null,
+            long? chargeLimitSocMin = null,
+            long? chargeLimitSocMax = null,
+            bool? chargeToMaxRange = null,
+            long? maxRangeChargeCounter = null,
+            bool? fastChargerPresent = null,
+            double? batteryRange = null,
+            double? estBatteryRange = null,
+            double? idealBatteryRange = null,
+            long? batteryLevel = null,
+            long? usableBatteryLevel = null,
+            double? chargeEnergyAdded = null,
+            double? chargeMilesAddedRated = null,
+            long? chargeMilesAddedIdeal = null,
+            long? chargerVoltage = null,
+            long? chargerPilotCurrent = null,
+            long? chargerActualCurrent = null,
+            long? chargerPower = null,
+            long? timeToFullCharge = null,
+            bool? tripCharging = null,
+            long? chargeRate = null,
+            bool? chargePortDoorOpen = null,
+            string connChargeCable = null,
+            string scheduledChargingStartTime = null,
+            bool? scheduledChargingPending = null,
+            string userChargeEnableRequest = null,
+            bool? chargeEnableRequest = null,
+            int? chargerPhases = null,
+            string chargePortLatch = null,
+            long? chargeCurrentRequest = null,
+            long? chargeCurrentRequestMax = null,
+            bool? managedChargingActive = null,
+            bool? managedChargingUserCanceled = null,
+            string managedChargingStartTime = null,
+            bool? batteryHeaterOn = null,
+            bool? notEnoughPowerToHeat = null,
+            long timestamp = 0)
         {
-            ChargingState = chargingState ?? string.Empty;
-            FastChargerType = fastChargerType ?? string.Empty;
-            FastChargerBrand = fastChargerBrand ?? string.Empty;
+            ChargingState = chargingState;
+            FastChargerType = fastChargerType;
+            FastChargerBrand = fastChargerBrand;
             ChargeLimitSoc = chargeLimitSoc;
             ChargeLimitSocStd = chargeLimitSocStd;
             ChargeLimitSocMin = chargeLimitSocMin;
@@ -127,18 +128,18 @@ namespace Tesla.NET.Models
             TripCharging = tripCharging;
             ChargeRate = chargeRate;
             ChargePortDoorOpen = chargePortDoorOpen;
-            ConnChargeCable = connChargeCable ?? string.Empty;
-            ScheduledChargingStartTime = scheduledChargingStartTime ?? string.Empty;
+            ConnChargeCable = connChargeCable;
+            ScheduledChargingStartTime = scheduledChargingStartTime;
             ScheduledChargingPending = scheduledChargingPending;
-            UserChargeEnableRequest = userChargeEnableRequest ?? string.Empty;
+            UserChargeEnableRequest = userChargeEnableRequest;
             ChargeEnableRequest = chargeEnableRequest;
             ChargerPhases = chargerPhases;
-            ChargePortLatch = chargePortLatch ?? string.Empty;
+            ChargePortLatch = chargePortLatch;
             ChargeCurrentRequest = chargeCurrentRequest;
             ChargeCurrentRequestMax = chargeCurrentRequestMax;
             ManagedChargingActive = managedChargingActive;
             ManagedChargingUserCanceled = managedChargingUserCanceled;
-            ManagedChargingStartTime = managedChargingStartTime ?? string.Empty;
+            ManagedChargingStartTime = managedChargingStartTime;
             BatteryHeaterOn = batteryHeaterOn;
             NotEnoughPowerToHeat = notEnoughPowerToHeat;
             Timestamp = timestamp;
@@ -166,139 +167,139 @@ namespace Tesla.NET.Models
         /// Gets the charge limit <see cref="Vehicle"/>.
         /// </summary>
         [JsonProperty("charge_limit_soc")]
-        public long ChargeLimitSoc { get; }
+        public long? ChargeLimitSoc { get; }
 
         /// <summary>
         /// Gets the standard charge limit of a <see cref="Vehicle"/>.
         /// </summary>
         [JsonProperty("charge_limit_soc_std")]
-        public long ChargeLimitSocStd { get; }
+        public long? ChargeLimitSocStd { get; }
 
         /// <summary>
         /// Gets the minimum change limit of a <see cref="Vehicle"/>.
         /// </summary>
         [JsonProperty("charge_limit_soc_min")]
-        public long ChargeLimitSocMin { get; }
+        public long? ChargeLimitSocMin { get; }
 
         /// <summary>
         /// Gets the maximum change limit of a <see cref="Vehicle"/>.
         /// </summary>
         [JsonProperty("charge_limit_soc_max")]
-        public long ChargeLimitSocMax { get; }
+        public long? ChargeLimitSocMax { get; }
 
         /// <summary>
         /// Gets a value indicating whether a <see cref="Vehicle"/> will change to max range.
         /// </summary>
         [JsonProperty("charge_to_max_range")]
-        public bool ChargeToMaxRange { get; }
+        public bool? ChargeToMaxRange { get; }
 
         /// <summary>
         /// Gets the counter of haw many times a <see cref="Vehicle"/> has been changed to maximum range.
         /// </summary>
         [JsonProperty("max_range_charge_counter")]
-        public long MaxRangeChargeCounter { get; }
+        public long? MaxRangeChargeCounter { get; }
 
         /// <summary>
         /// Gets a value indicating whether a <see cref="Vehicle"/> is supercharging.
         /// </summary>
         [JsonProperty("fast_charger_present")]
-        public bool FastChargerPresent { get; }
+        public bool? FastChargerPresent { get; }
 
         /// <summary>
         /// Gets the batter range of a <see cref="Vehicle"/>.
         /// </summary>
         [JsonProperty("battery_range")]
-        public double BatteryRange { get; }
+        public double? BatteryRange { get; }
 
         /// <summary>
         /// Gets the estimated battery range of a <see cref="Vehicle"/>.
         /// </summary>
         [JsonProperty("est_battery_range")]
-        public double EstBatteryRange { get; }
+        public double? EstBatteryRange { get; }
 
         /// <summary>
         /// Gets the ideal battery range of a <see cref="Vehicle"/>.
         /// </summary>
         [JsonProperty("ideal_battery_range")]
-        public double IdealBatteryRange { get; }
+        public double? IdealBatteryRange { get; }
 
         /// <summary>
         /// Gets the current battery level of a <see cref="Vehicle"/>.
         /// </summary>
         [JsonProperty("battery_level")]
-        public long BatteryLevel { get; }
+        public long? BatteryLevel { get; }
 
         /// <summary>
         /// Gets the usable battery level of a <see cref="Vehicle"/>.
         /// </summary>
         [JsonProperty("usable_battery_level")]
-        public long UsableBatteryLevel { get; }
+        public long? UsableBatteryLevel { get; }
 
         /// <summary>
         /// Gets the energy added to a <see cref="Vehicle"/> at the last charge.
         /// </summary>
         [JsonProperty("charge_energy_added")]
-        public double ChargeEnergyAdded { get; }
+        public double? ChargeEnergyAdded { get; }
 
         /// <summary>
         /// Gets the rated miles added to a <see cref="Vehicle"/> at the last charge.
         /// </summary>
         [JsonProperty("charge_miles_added_rated")]
-        public double ChargeMilesAddedRated { get; }
+        public double? ChargeMilesAddedRated { get; }
 
         /// <summary>
         /// Gets the ideal miles added to a <see cref="Vehicle"/> at the last charge.
         /// </summary>
         [JsonProperty("charge_miles_added_ideal")]
-        public long ChargeMilesAddedIdeal { get; }
+        public long? ChargeMilesAddedIdeal { get; }
 
         /// <summary>
         /// Gets the charge voltage of a <see cref="Vehicle"/> when charging.
         /// </summary>
         [JsonProperty("charger_voltage")]
-        public long ChargerVoltage { get; }
+        public long? ChargerVoltage { get; }
 
         /// <summary>
         /// Gets the charge pilot current of a <see cref="Vehicle"/> when charging.
         /// </summary>
         [JsonProperty("charger_pilot_current")]
-        public long ChargerPilotCurrent { get; }
+        public long? ChargerPilotCurrent { get; }
 
         /// <summary>
         /// Gets the charge actual current of a <see cref="Vehicle"/> when charging.
         /// </summary>
         [JsonProperty("charger_actual_current")]
-        public long ChargerActualCurrent { get; }
+        public long? ChargerActualCurrent { get; }
 
         /// <summary>
         /// Gets the charge power of a <see cref="Vehicle"/> when charging.
         /// </summary>
         [JsonProperty("charger_power")]
-        public long ChargerPower { get; }
+        public long? ChargerPower { get; }
 
         /// <summary>
         /// Gets the time in minutes to a full charge of a <see cref="Vehicle"/> when charging.
         /// </summary>
         [JsonProperty("time_to_full_charge")]
-        public long TimeToFullCharge { get; }
+        public long? TimeToFullCharge { get; }
 
         /// <summary>
         /// Gets a value indicating whether a <see cref="Vehicle"/> is trip charging.
         /// </summary>
         [JsonProperty("trip_charging")]
-        public bool TripCharging { get; }
+        public bool? TripCharging { get; }
 
         /// <summary>
         /// Gets the charge rate of a <see cref="Vehicle"/> when charging.
         /// </summary>
         [JsonProperty("charge_rate")]
-        public long ChargeRate { get; }
+        public long? ChargeRate { get; }
 
         /// <summary>
         /// Gets a value indicating whether the charge port of a <see cref="Vehicle"/> is open.
         /// </summary>
         [JsonProperty("charge_port_door_open")]
-        public bool ChargePortDoorOpen { get; }
+        public bool? ChargePortDoorOpen { get; }
 
         /// <summary>
         /// Gets the type of the charge cable connected to a <see cref="Vehicle"/>.
@@ -316,7 +317,7 @@ namespace Tesla.NET.Models
         /// Gets a value indicating whether scheduled charging is pending for a <see cref="Vehicle"/>.
         /// </summary>
         [JsonProperty("scheduled_charging_pending")]
-        public bool ScheduledChargingPending { get; }
+        public bool? ScheduledChargingPending { get; }
 
         /// <summary>
         /// Gets a value indicating whether a user charge enable request has been made for a <see cref="Vehicle"/>.
@@ -328,7 +329,7 @@ namespace Tesla.NET.Models
         /// Gets a value indicating whether a charge enable request has been made for a <see cref="Vehicle"/>.
         /// </summary>
         [JsonProperty("charge_enable_request")]
-        public bool ChargeEnableRequest { get; }
+        public bool? ChargeEnableRequest { get; }
 
         /// <summary>
         /// Gets the charger phases of a <see cref="Vehicle"/>.
@@ -346,25 +347,25 @@ namespace Tesla.NET.Models
         /// Gets the charge current request of a <see cref="Vehicle"/>.
         /// </summary>
         [JsonProperty("charge_current_request")]
-        public long ChargeCurrentRequest { get; }
+        public long? ChargeCurrentRequest { get; }
 
         /// <summary>
         /// Gets the maximum charge current request of a <see cref="Vehicle"/>.
         /// </summary>
         [JsonProperty("charge_current_request_max")]
-        public long ChargeCurrentRequestMax { get; }
+        public long? ChargeCurrentRequestMax { get; }
 
         /// <summary>
         /// Gets a value indicating whether managed charging is active for a <see cref="Vehicle"/>.
         /// </summary>
         [JsonProperty("managed_charging_active")]
-        public bool ManagedChargingActive { get; }
+        public bool? ManagedChargingActive { get; }
 
         /// <summary>
         /// Gets a value indicating whether managed charging for <see cref="Vehicle"/> has been canceled by a user.
         /// </summary>
         [JsonProperty("managed_charging_user_canceled")]
-        public bool ManagedChargingUserCanceled { get; }
+        public bool? ManagedChargingUserCanceled { get; }
 
         /// <summary>
         /// Gets the managed charging start time of a <see cref="Vehicle"/>.
@@ -376,13 +377,13 @@ namespace Tesla.NET.Models
         /// Gets a value indicating whether battery heating is on for a <see cref="Vehicle"/>.
         /// </summary>
         [JsonProperty("battery_heater_on")]
-        public bool BatteryHeaterOn { get; }
+        public bool? BatteryHeaterOn { get; }
 
         /// <summary>
         /// Gets a value indicating whether there is not enough power to heat a <see cref="Vehicle"/>.
         /// </summary>
         [JsonProperty("not_enough_power_to_heat")]
-        public bool NotEnoughPowerToHeat { get; }
+        public bool? NotEnoughPowerToHeat { get; }
 
         /// <summary>
         /// Gets the millisecond Epoch timestamp when the <see cref="ChargeState"/> was captured.
@@ -398,6 +399,6 @@ namespace Tesla.NET.Models
 
         private string DebuggerDisplay =>
             $"{GetType().Name}: {ChargingState} @ {BatteryLevel}% giving " +
-            $"{EstBatteryRange.ToString(CultureInfo.InvariantCulture)}";
+            $"{EstBatteryRange.GetValueOrDefault().ToString(CultureInfo.InvariantCulture)}";
     }
 }
