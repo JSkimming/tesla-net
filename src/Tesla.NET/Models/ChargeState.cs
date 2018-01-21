@@ -4,7 +4,6 @@
 namespace Tesla.NET.Models
 {
     using System;
-    using System.ComponentModel;
     using System.Diagnostics;
     using System.Globalization;
     using Newtonsoft.Json;
@@ -87,9 +86,9 @@ namespace Tesla.NET.Models
             long? chargeRate = null,
             bool? chargePortDoorOpen = null,
             string connChargeCable = null,
-            string scheduledChargingStartTime = null,
+            long? scheduledChargingStartTime = null,
             bool? scheduledChargingPending = null,
-            string userChargeEnableRequest = null,
+            bool? userChargeEnableRequest = null,
             bool? chargeEnableRequest = null,
             int? chargerPhases = null,
             string chargePortLatch = null,
@@ -97,7 +96,7 @@ namespace Tesla.NET.Models
             long? chargeCurrentRequestMax = null,
             bool? managedChargingActive = null,
             bool? managedChargingUserCanceled = null,
-            string managedChargingStartTime = null,
+            long? managedChargingStartTime = null,
             bool? batteryHeaterOn = null,
             bool? notEnoughPowerToHeat = null,
             long timestamp = 0)
@@ -311,7 +310,13 @@ namespace Tesla.NET.Models
         /// Gets the schedule charging start time of a <see cref="Vehicle"/>.
         /// </summary>
         [JsonProperty("scheduled_charging_start_time")]
-        public string ScheduledChargingStartTime { get; }
+        public long? ScheduledChargingStartTime { get; }
+
+        /// <summary>
+        /// Gets the UTC <see cref="DateTime"/> of the schedule charging start time of a <see cref="Vehicle"/>.
+        /// </summary>
+        [JsonIgnore]
+        public DateTime? ScheduledChargingStartTimeUtc => EpochConversion.FromSeconds(ScheduledChargingStartTime);
 
         /// <summary>
         /// Gets a value indicating whether scheduled charging is pending for a <see cref="Vehicle"/>.
@@ -323,7 +328,7 @@ namespace Tesla.NET.Models
         /// Gets a value indicating whether a user charge enable request has been made for a <see cref="Vehicle"/>.
         /// </summary>
         [JsonProperty("user_charge_enable_request")]
-        public string UserChargeEnableRequest { get; }
+        public bool? UserChargeEnableRequest { get; }
 
         /// <summary>
         /// Gets a value indicating whether a charge enable request has been made for a <see cref="Vehicle"/>.
@@ -371,7 +376,13 @@ namespace Tesla.NET.Models
         /// Gets the managed charging start time of a <see cref="Vehicle"/>.
         /// </summary>
         [JsonProperty("managed_charging_start_time")]
-        public string ManagedChargingStartTime { get; }
+        public long? ManagedChargingStartTime { get; }
+
+        /// <summary>
+        /// Gets the UTC <see cref="DateTime"/> of the managed charging start time of a <see cref="Vehicle"/>.
+        /// </summary>
+        [JsonIgnore]
+        public DateTime? ManagedChargingStartTimeUtc => EpochConversion.FromSeconds(ManagedChargingStartTime);
 
         /// <summary>
         /// Gets a value indicating whether battery heating is on for a <see cref="Vehicle"/>.

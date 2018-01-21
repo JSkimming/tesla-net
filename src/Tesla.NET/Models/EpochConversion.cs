@@ -23,6 +23,16 @@ namespace Tesla.NET.Models
         public static DateTime FromSeconds(long epoch) => Epoch + TimeSpan.FromSeconds(epoch);
 
         /// <summary>
+        /// Returns the UTC <see cref="DateTime"/> of the <paramref name="epoch"/> seconds.
+        /// </summary>
+        /// <param name="epoch">The number of seconds since the <see cref="Epoch"/>.</param>
+        /// <returns>The UTC <see cref="DateTime"/> of the <paramref name="epoch"/> seconds.</returns>
+        public static DateTime? FromSeconds(long? epoch)
+        {
+            return epoch.HasValue ? FromSeconds(epoch.Value) : default(DateTime?);
+        }
+
+        /// <summary>
         /// Returns the UTC <see cref="DateTime"/> of the <paramref name="epoch"/> milliseconds.
         /// </summary>
         /// <param name="epoch">The number of milliseconds since the <see cref="Epoch"/>.</param>
