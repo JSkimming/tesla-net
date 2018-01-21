@@ -140,7 +140,7 @@ namespace Tesla.NET.Models
 
         [Fact]
         public void scheduled_charging_start_time() =>
-            _json["scheduled_charging_start_time"].Value<string>().Should().Be(_sut.ScheduledChargingStartTime);
+            _json["scheduled_charging_start_time"].Value<long?>().Should().Be(_sut.ScheduledChargingStartTime);
 
         [Fact]
         public void scheduled_charging_pending() =>
@@ -148,7 +148,7 @@ namespace Tesla.NET.Models
 
         [Fact]
         public void user_charge_enable_request() =>
-            _json["user_charge_enable_request"].Value<string>().Should().Be(_sut.UserChargeEnableRequest);
+            _json["user_charge_enable_request"].Value<bool?>().Should().Be(_sut.UserChargeEnableRequest);
 
         [Fact]
         public void charge_enable_request() =>
@@ -180,7 +180,7 @@ namespace Tesla.NET.Models
 
         [Fact]
         public void managed_charging_start_time() =>
-            _json["managed_charging_start_time"].Value<string>().Should().Be(_sut.ManagedChargingStartTime);
+            _json["managed_charging_start_time"].Value<long?>().Should().Be(_sut.ManagedChargingStartTime);
 
         [Fact]
         public void battery_heater_on() =>
@@ -339,7 +339,7 @@ namespace Tesla.NET.Models
 
         [Fact]
         public void scheduled_charging_start_time() =>
-            _sut.ScheduledChargingStartTime.Should().Be(_json["scheduled_charging_start_time"].Value<string>());
+            _sut.ScheduledChargingStartTime.Should().Be(_json["scheduled_charging_start_time"].Value<long?>());
 
         [Fact]
         public void scheduled_charging_pending() =>
@@ -347,7 +347,7 @@ namespace Tesla.NET.Models
 
         [Fact]
         public void user_charge_enable_request() =>
-            _sut.UserChargeEnableRequest.Should().Be(_json["user_charge_enable_request"].Value<string>());
+            _sut.UserChargeEnableRequest.Should().Be(_json["user_charge_enable_request"].Value<bool?>());
 
         [Fact]
         public void charge_enable_request() =>
@@ -379,7 +379,7 @@ namespace Tesla.NET.Models
 
         [Fact]
         public void managed_charging_start_time() =>
-            _sut.ManagedChargingStartTime.Should().Be(_json["managed_charging_start_time"].Value<string>());
+            _sut.ManagedChargingStartTime.Should().Be(_json["managed_charging_start_time"].Value<long?>());
 
         [Fact]
         public void battery_heater_on() =>
@@ -575,6 +575,16 @@ namespace Tesla.NET.Models
 
             output.WriteLine("Serialized JSON:" + Environment.NewLine + json);
         }
+
+        [Fact]
+        public void ScheduledChargingStartTimeUtc() =>
+            _sut.ScheduledChargingStartTimeUtc.Should().Be(Epoch.AddSeconds(
+                _sut.ScheduledChargingStartTime.GetValueOrDefault()));
+
+        [Fact]
+        public void ManagedChargingStartTimeUtc() =>
+            _sut.ManagedChargingStartTimeUtc.Should().Be(Epoch.AddSeconds(
+                _sut.ManagedChargingStartTime.GetValueOrDefault()));
 
         [Fact]
         public void TimestampUtc() => _sut.TimestampUtc.Should().Be(Epoch.AddMilliseconds(_sut.Timestamp));
