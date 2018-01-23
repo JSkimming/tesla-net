@@ -5,13 +5,12 @@ namespace Tesla.NET.Models
 {
     using System;
     using System.Diagnostics;
-    using Newtonsoft.Json;
 
     /// <summary>
     /// The drive state of a <see cref="Vehicle"/>.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class DriveState
+    public class DriveState : IDriveState
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DriveState"/> class.
@@ -47,61 +46,51 @@ namespace Tesla.NET.Models
         /// <summary>
         /// Gets the shift state of a <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("shift_state")]
         public string ShiftState { get; }
 
         /// <summary>
         /// Gets the speed <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("speed")]
         public string Speed { get; }
 
         /// <summary>
         /// Gets the power <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("power")]
         public long Power { get; }
 
         /// <summary>
         /// Gets the GPS latitude <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("latitude")]
         public double Latitude { get; }
 
         /// <summary>
         /// Gets the GPS longitude <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("longitude")]
         public double Longitude { get; }
 
         /// <summary>
         /// Gets the heading <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("heading")]
         public long Heading { get; }
 
         /// <summary>
         /// Gets the Epoch timestamp of when the GPS data was captured.
         /// </summary>
-        [JsonProperty("gps_as_of")]
         public long GpsAsOf { get; }
 
         /// <summary>
         /// Gets the UTC <see cref="DateTime"/> when the GPS data was captured.
         /// </summary>
-        [JsonIgnore]
         public DateTime GpsAsOfUtc => EpochConversion.FromSeconds(GpsAsOf);
 
         /// <summary>
         /// Gets the millisecond Epoch timestamp when the <see cref="DriveState"/> was captured.
         /// </summary>
-        [JsonProperty("timestamp")]
         public long Timestamp { get; }
 
         /// <summary>
         /// Gets the UTC <see cref="DateTime"/> when the <see cref="DriveState"/> was captured.
         /// </summary>
-        [JsonIgnore]
         public DateTime TimestampUtc => EpochConversion.FromMilliseconds(Timestamp);
 
         private string DebuggerDisplay => $"{GetType().Name}: ({Latitude},{Longitude}) @ {GpsAsOfUtc:R}";

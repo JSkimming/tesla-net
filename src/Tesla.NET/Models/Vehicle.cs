@@ -3,16 +3,14 @@
 
 namespace Tesla.NET.Models
 {
-    using System;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using Newtonsoft.Json;
 
     /// <summary>
     /// The vehicle object.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class Vehicle
+    public class Vehicle : IVehicle
     {
         private static readonly string[] EmptyTokens = { };
 
@@ -68,85 +66,71 @@ namespace Tesla.NET.Models
         /// <summary>
         /// Gets the unique ID of the <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("id")]
         public long Id { get; }
 
         /// <summary>
         /// Gets the id of the <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("vehicle_id")]
         public long VehicleId { get; }
 
         /// <summary>
         /// Gets the VIN (vehicle identification number) of the <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("vin")]
         public string Vin { get; }
 
         /// <summary>
         /// Gets the display name of the <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("display_name")]
         public string DisplayName { get; }
 
         /// <summary>
         /// Gets the option codes of the <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("option_codes")]
         public string OptionCodes { get; }
 
         /// <summary>
         /// Gets the color of the <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("color")]
         public string Color { get; }
 
         /// <summary>
         /// Gets the tokens of the <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("tokens")]
         public IReadOnlyCollection<string> Tokens { get; }
 
         /// <summary>
         /// Gets the state of the <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("state")]
         public string State { get; }
 
         /// <summary>
         /// Gets the in service state of the <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("in_service")]
         public string InService { get; }
 
         /// <summary>
         /// Gets a value indicating whether remote start is enabled for the <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("remote_start_enabled")]
         public bool RemoteStartEnabled { get; }
 
         /// <summary>
         /// Gets a value indicating whether the calendar is enabled for the <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("calendar_enabled")]
         public bool CalendarEnabled { get; }
 
         /// <summary>
         /// Gets a value indicating whether notifications are enabled for the <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("notifications_enabled")]
         public bool NotificationsEnabled { get; }
 
         /// <summary>
         /// Gets the <see cref="BackseatToken"/> of the <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("backseat_token")]
         public string BackseatToken { get; }
 
         /// <summary>
         /// Gets the <see cref="BackseatTokenUpdatedAt"/> of the <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("backseat_token_updated_at")]
         public string BackseatTokenUpdatedAt { get; }
 
         private string DebuggerDisplay => $"{GetType().Name}: {DisplayName} VIN={Vin}";

@@ -6,13 +6,12 @@ namespace Tesla.NET.Models
     using System;
     using System.Diagnostics;
     using System.Globalization;
-    using Newtonsoft.Json;
 
     /// <summary>
     /// The charge state of a <see cref="Vehicle"/>.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class ChargeState
+    public class ChargeState : IChargeState
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ChargeState"/> class.
@@ -147,265 +146,221 @@ namespace Tesla.NET.Models
         /// <summary>
         /// Gets the charging state of a <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("charging_state")]
         public string ChargingState { get; }
 
         /// <summary>
         /// Gets the type of fast charging.
         /// </summary>
-        [JsonProperty("fast_charger_type")]
         public string FastChargerType { get; }
 
         /// <summary>
         /// Gets the brand of fast charging.
         /// </summary>
-        [JsonProperty("fast_charger_brand")]
         public string FastChargerBrand { get; }
 
         /// <summary>
         /// Gets the charge limit <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("charge_limit_soc")]
         public long? ChargeLimitSoc { get; }
 
         /// <summary>
         /// Gets the standard charge limit of a <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("charge_limit_soc_std")]
         public long? ChargeLimitSocStd { get; }
 
         /// <summary>
         /// Gets the minimum change limit of a <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("charge_limit_soc_min")]
         public long? ChargeLimitSocMin { get; }
 
         /// <summary>
         /// Gets the maximum change limit of a <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("charge_limit_soc_max")]
         public long? ChargeLimitSocMax { get; }
 
         /// <summary>
         /// Gets a value indicating whether a <see cref="Vehicle"/> will change to max range.
         /// </summary>
-        [JsonProperty("charge_to_max_range")]
         public bool? ChargeToMaxRange { get; }
 
         /// <summary>
         /// Gets the counter of haw many times a <see cref="Vehicle"/> has been changed to maximum range.
         /// </summary>
-        [JsonProperty("max_range_charge_counter")]
         public long? MaxRangeChargeCounter { get; }
 
         /// <summary>
         /// Gets a value indicating whether a <see cref="Vehicle"/> is supercharging.
         /// </summary>
-        [JsonProperty("fast_charger_present")]
         public bool? FastChargerPresent { get; }
 
         /// <summary>
         /// Gets the batter range of a <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("battery_range")]
         public double? BatteryRange { get; }
 
         /// <summary>
         /// Gets the estimated battery range of a <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("est_battery_range")]
         public double? EstBatteryRange { get; }
 
         /// <summary>
         /// Gets the ideal battery range of a <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("ideal_battery_range")]
         public double? IdealBatteryRange { get; }
 
         /// <summary>
         /// Gets the current battery level of a <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("battery_level")]
         public long? BatteryLevel { get; }
 
         /// <summary>
         /// Gets the usable battery level of a <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("usable_battery_level")]
         public long? UsableBatteryLevel { get; }
 
         /// <summary>
         /// Gets the energy added to a <see cref="Vehicle"/> at the last charge.
         /// </summary>
-        [JsonProperty("charge_energy_added")]
         public double? ChargeEnergyAdded { get; }
 
         /// <summary>
         /// Gets the rated miles added to a <see cref="Vehicle"/> at the last charge.
         /// </summary>
-        [JsonProperty("charge_miles_added_rated")]
         public double? ChargeMilesAddedRated { get; }
 
         /// <summary>
         /// Gets the ideal miles added to a <see cref="Vehicle"/> at the last charge.
         /// </summary>
-        [JsonProperty("charge_miles_added_ideal")]
         public long? ChargeMilesAddedIdeal { get; }
 
         /// <summary>
         /// Gets the charge voltage of a <see cref="Vehicle"/> when charging.
         /// </summary>
-        [JsonProperty("charger_voltage")]
         public long? ChargerVoltage { get; }
 
         /// <summary>
         /// Gets the charge pilot current of a <see cref="Vehicle"/> when charging.
         /// </summary>
-        [JsonProperty("charger_pilot_current")]
         public long? ChargerPilotCurrent { get; }
 
         /// <summary>
         /// Gets the charge actual current of a <see cref="Vehicle"/> when charging.
         /// </summary>
-        [JsonProperty("charger_actual_current")]
         public long? ChargerActualCurrent { get; }
 
         /// <summary>
         /// Gets the charge power of a <see cref="Vehicle"/> when charging.
         /// </summary>
-        [JsonProperty("charger_power")]
         public long? ChargerPower { get; }
 
         /// <summary>
         /// Gets the time in minutes to a full charge of a <see cref="Vehicle"/> when charging.
         /// </summary>
-        [JsonProperty("time_to_full_charge")]
         public long? TimeToFullCharge { get; }
 
         /// <summary>
         /// Gets a value indicating whether a <see cref="Vehicle"/> is trip charging.
         /// </summary>
-        [JsonProperty("trip_charging")]
         public bool? TripCharging { get; }
 
         /// <summary>
         /// Gets the charge rate of a <see cref="Vehicle"/> when charging.
         /// </summary>
-        [JsonProperty("charge_rate")]
         public long? ChargeRate { get; }
 
         /// <summary>
         /// Gets a value indicating whether the charge port of a <see cref="Vehicle"/> is open.
         /// </summary>
-        [JsonProperty("charge_port_door_open")]
         public bool? ChargePortDoorOpen { get; }
 
         /// <summary>
         /// Gets the type of the charge cable connected to a <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("conn_charge_cable")]
         public string ConnChargeCable { get; }
 
         /// <summary>
         /// Gets the schedule charging start time of a <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("scheduled_charging_start_time")]
         public long? ScheduledChargingStartTime { get; }
 
         /// <summary>
         /// Gets the UTC <see cref="DateTime"/> of the schedule charging start time of a <see cref="Vehicle"/>.
         /// </summary>
-        [JsonIgnore]
         public DateTime? ScheduledChargingStartTimeUtc => EpochConversion.FromSeconds(ScheduledChargingStartTime);
 
         /// <summary>
         /// Gets a value indicating whether scheduled charging is pending for a <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("scheduled_charging_pending")]
         public bool? ScheduledChargingPending { get; }
 
         /// <summary>
         /// Gets a value indicating whether a user charge enable request has been made for a <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("user_charge_enable_request")]
         public bool? UserChargeEnableRequest { get; }
 
         /// <summary>
         /// Gets a value indicating whether a charge enable request has been made for a <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("charge_enable_request")]
         public bool? ChargeEnableRequest { get; }
 
         /// <summary>
         /// Gets the charger phases of a <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("charger_phases")]
         public int? ChargerPhases { get; }
 
         /// <summary>
         /// Gets the charge port latch of a <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("charge_port_latch")]
         public string ChargePortLatch { get; }
 
         /// <summary>
         /// Gets the charge current request of a <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("charge_current_request")]
         public long? ChargeCurrentRequest { get; }
 
         /// <summary>
         /// Gets the maximum charge current request of a <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("charge_current_request_max")]
         public long? ChargeCurrentRequestMax { get; }
 
         /// <summary>
         /// Gets a value indicating whether managed charging is active for a <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("managed_charging_active")]
         public bool? ManagedChargingActive { get; }
 
         /// <summary>
         /// Gets a value indicating whether managed charging for <see cref="Vehicle"/> has been canceled by a user.
         /// </summary>
-        [JsonProperty("managed_charging_user_canceled")]
         public bool? ManagedChargingUserCanceled { get; }
 
         /// <summary>
         /// Gets the managed charging start time of a <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("managed_charging_start_time")]
         public long? ManagedChargingStartTime { get; }
 
         /// <summary>
         /// Gets the UTC <see cref="DateTime"/> of the managed charging start time of a <see cref="Vehicle"/>.
         /// </summary>
-        [JsonIgnore]
         public DateTime? ManagedChargingStartTimeUtc => EpochConversion.FromSeconds(ManagedChargingStartTime);
 
         /// <summary>
         /// Gets a value indicating whether battery heating is on for a <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("battery_heater_on")]
         public bool? BatteryHeaterOn { get; }
 
         /// <summary>
         /// Gets a value indicating whether there is not enough power to heat a <see cref="Vehicle"/>.
         /// </summary>
-        [JsonProperty("not_enough_power_to_heat")]
         public bool? NotEnoughPowerToHeat { get; }
 
         /// <summary>
         /// Gets the millisecond Epoch timestamp when the <see cref="ChargeState"/> was captured.
         /// </summary>
-        [JsonProperty("timestamp")]
         public long Timestamp { get; }
 
         /// <summary>
         /// Gets the UTC <see cref="DateTime"/> when the <see cref="ChargeState"/> was captured.
         /// </summary>
-        [JsonIgnore]
         public DateTime TimestampUtc => EpochConversion.FromMilliseconds(Timestamp);
 
         private string DebuggerDisplay =>
