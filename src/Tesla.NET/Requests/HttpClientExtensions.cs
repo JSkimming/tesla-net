@@ -355,27 +355,71 @@ namespace Tesla.NET.Requests
             HttpResponseMessage responseMessage = await responseTask.ConfigureAwait(false);
             using (responseMessage)
             {
-                if (responseMessage.IsSuccessStatusCode)
-                {
-                    (T data, JObject rawJson) =
-                        await responseMessage.ReadJsonAsAsync<T>(cancellationToken).ConfigureAwait(false);
-                    MessageResponse<T> response = new MessageResponse<T>(responseMessage.StatusCode, rawJson, data);
-                    return response;
-                }
+                Task<MessageResponse<T>> messageTask =
+                    responseMessage.IsSuccessStatusCode
+                        ? responseMessage.ReadSuccessResponseAsync<T>(cancellationToken)
+                        : responseMessage.ReadFailureResponseAsync<T>(cancellationToken);
 
-                bool contentIsJson = IsContentJson(responseMessage);
-
-                JObject rawJson2 = null;
-                if (contentIsJson)
-                {
-                    rawJson2 = await ReadJsonAsync(responseMessage, cancellationToken).ConfigureAwait(false);
-                }
-
-                MessageResponse<T> response2 = new MessageResponse<T>(responseMessage.StatusCode, rawJson2);
-                return response2;
+                MessageResponse<T> response = await messageTask.ConfigureAwait(false);
+                return response;
             }
         }
 
+        /// <summary>
+        /// Reads the JSON from the successful <paramref name="responseMessage"/> and deserializes it to the type
+        /// <typeparamref name="T"/>.
+        /// </summary>
+        /// <typeparam name="T">The <see cref="Type"/> of the object to deserialize.</typeparam>
+        /// <param name="responseMessage">The <see cref="HttpResponseMessage"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
+        /// complete.</param>
+        /// <returns>The <see cref="MessageResponse{T}"/>.</returns>
+        private static async Task<MessageResponse<T>> ReadSuccessResponseAsync<T>(
+            this HttpResponseMessage responseMessage,
+            CancellationToken cancellationToken)
+            where T : class
+        {
+            JObject rawJson = await ReadJsonAsync(responseMessage, cancellationToken).ConfigureAwait(false);
+
+            JsonSerializer serializer = JsonSerializer.CreateDefault();
+            T data = rawJson.ToObject<T>(serializer);
+
+            MessageResponse<T> response = new MessageResponse<T>(responseMessage.StatusCode, rawJson, data);
+            return response;
+        }
+
+        /// <summary>
+        /// Creates an error <see cref="MessageResponse{T}"/> from the <paramref name="responseMessage"/>, extracting
+        /// the <see cref="MessageResponse{T}.RawJson"/> if the content of the response is JSON.
+        /// </summary>
+        /// <typeparam name="T">The <see cref="Type"/> of the object to deserialize.</typeparam>
+        /// <param name="responseMessage">The <see cref="HttpResponseMessage"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
+        /// complete.</param>
+        /// <returns>The <see cref="MessageResponse{T}"/>.</returns>
+        private static async Task<MessageResponse<T>> ReadFailureResponseAsync<T>(
+            this HttpResponseMessage responseMessage,
+            CancellationToken cancellationToken)
+            where T : class
+        {
+            JObject rawJson =
+                IsContentJson(responseMessage)
+                    ? await ReadJsonAsync(responseMessage, cancellationToken).ConfigureAwait(false)
+                    : null;
+
+            MessageResponse<T> response = new MessageResponse<T>(responseMessage.StatusCode, rawJson);
+            return response;
+        }
+
+        /// <summary>
+        /// Determines whether the <see cref="HttpResponseMessage.Content"/> of the <paramref name="responseMessage"/>
+        /// is JSON.
+        /// </summary>
+        /// <param name="responseMessage">The <see cref="HttpResponseMessage"/>.</param>
+        /// <returns>
+        /// <see langword="true"/> if the <see cref="HttpResponseMessage.Content"/> of the
+        /// <paramref name="responseMessage"/> is JSON; otherwise <see langword="false"/>.
+        /// </returns>
         private static bool IsContentJson(HttpResponseMessage responseMessage)
         {
             if (responseMessage == null)
@@ -383,28 +427,6 @@ namespace Tesla.NET.Requests
 
             string mediaType = responseMessage.Content?.Headers.ContentType.MediaType;
             return string.Equals(mediaType, "application/json", StringComparison.OrdinalIgnoreCase);
-        }
-
-        /// <summary>
-        /// Reads the JSON from the <paramref name="response"/> and deserializes it to the type
-        /// <typeparamref name="T"/>.
-        /// </summary>
-        /// <typeparam name="T">The <see cref="Type"/> of the object to deserialize.</typeparam>
-        /// <param name="response">The <see cref="HttpResponseMessage"/>.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
-        /// complete.</param>
-        /// <returns>The deserialized object of type <typeparamref name="T"/>.</returns>
-        private static async Task<(T data, JObject rawJson)> ReadJsonAsAsync<T>(
-            this HttpResponseMessage response,
-            CancellationToken cancellationToken)
-            where T : class
-        {
-            JObject rawJson = await ReadJsonAsync(response, cancellationToken).ConfigureAwait(false);
-
-            JsonSerializer serializer = JsonSerializer.CreateDefault();
-            T data = rawJson.ToObject<T>(serializer);
-
-            return (data, rawJson);
         }
 
         /// <summary>
