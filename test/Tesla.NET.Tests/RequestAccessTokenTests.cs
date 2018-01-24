@@ -204,7 +204,7 @@ namespace Tesla.NET
             : base(output, useCustomBaseUri)
         {
             // Arrange
-            Handler.SetResponseContent(new JObject(), HttpStatusCode.Unauthorized);
+            Handler.SetResponseContent(new { response = "authorization_required" }, HttpStatusCode.Unauthorized);
 
             _clientId = Fixture.Create("clientId");
             _clientSecret = Fixture.Create("clientSecret");
@@ -213,13 +213,14 @@ namespace Tesla.NET
         }
 
         [Fact]
-        public void Should_throw_an_HttpRequestException()
+        public async Task Should_return_the_error_status_code()
         {
             // Act
-            Func<Task> action = () => Sut.RequestAccessTokenAsync(_clientId, _clientSecret, _email, _password);
+            MessageResponse<AccessTokenResponse> actual =
+                await Sut.RequestAccessTokenAsync(_clientId, _clientSecret, _email, _password).ConfigureAwait(false);
 
             // Assert
-            action.ShouldThrowExactly<HttpRequestException>();
+            actual.HttpStatusCode.Should().Be(HttpStatusCode.Unauthorized);
         }
     }
 

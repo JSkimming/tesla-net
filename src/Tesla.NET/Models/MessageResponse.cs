@@ -25,11 +25,11 @@ namespace Tesla.NET.Models
         /// <param name="httpStatusCode">The <see cref="HttpStatusCode"/>.</param>
         /// <param name="rawJson">The raw JSON of the <see cref="Data"/>.</param>
         /// <param name="data">The <see cref="Data"/> object.</param>
-        public MessageResponse(HttpStatusCode httpStatusCode, JObject rawJson, TData data)
+        public MessageResponse(HttpStatusCode httpStatusCode, JObject rawJson = null, TData data = null)
         {
             HttpStatusCode = httpStatusCode;
-            _rawJson = rawJson ?? throw new ArgumentNullException(nameof(rawJson));
-            Data = data ?? throw new ArgumentNullException(nameof(data));
+            _rawJson = rawJson;
+            Data = data;
         }
 
         /// <summary>
@@ -40,13 +40,13 @@ namespace Tesla.NET.Models
         /// <summary>
         /// Gets the raw JSON of the <see cref="Data"/>.
         /// </summary>
-        public JObject RawJson => (JObject)_rawJson.DeepClone();
+        public JObject RawJson => (JObject)_rawJson?.DeepClone();
 
         /// <summary>
         /// Gets the raw JSON of the <see cref="Data"/>.
         /// </summary>
         [JsonIgnore]
-        public string RawJsonAsString => _rawJson.ToString(Formatting.None);
+        public string RawJsonAsString => _rawJson?.ToString(Formatting.None) ?? string.Empty;
 
         /// <summary>
         /// Gets the <typeparamref name="TData"/> object.

@@ -355,13 +355,34 @@ namespace Tesla.NET.Requests
             HttpResponseMessage responseMessage = await responseTask.ConfigureAwait(false);
             using (responseMessage)
             {
-                responseMessage.EnsureSuccessStatusCode();
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    (T data, JObject rawJson) =
+                        await responseMessage.ReadJsonAsAsync<T>(cancellationToken).ConfigureAwait(false);
+                    MessageResponse<T> response = new MessageResponse<T>(responseMessage.StatusCode, rawJson, data);
+                    return response;
+                }
 
-                (T data, JObject rawJson) =
-                    await responseMessage.ReadJsonAsAsync<T>(cancellationToken).ConfigureAwait(false);
-                MessageResponse<T> response = new MessageResponse<T>(responseMessage.StatusCode, rawJson, data);
-                return response;
+                bool contentIsJson = IsContentJson(responseMessage);
+
+                JObject rawJson2 = null;
+                if (contentIsJson)
+                {
+                    rawJson2 = await ReadJsonAsync(responseMessage, cancellationToken).ConfigureAwait(false);
+                }
+
+                MessageResponse<T> response2 = new MessageResponse<T>(responseMessage.StatusCode, rawJson2);
+                return response2;
             }
+        }
+
+        private static bool IsContentJson(HttpResponseMessage responseMessage)
+        {
+            if (responseMessage == null)
+                throw new ArgumentNullException(nameof(responseMessage));
+
+            string mediaType = responseMessage.Content?.Headers.ContentType.MediaType;
+            return string.Equals(mediaType, "application/json", StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>
@@ -378,6 +399,25 @@ namespace Tesla.NET.Requests
             CancellationToken cancellationToken)
             where T : class
         {
+            JObject rawJson = await ReadJsonAsync(response, cancellationToken).ConfigureAwait(false);
+
+            JsonSerializer serializer = JsonSerializer.CreateDefault();
+            T data = rawJson.ToObject<T>(serializer);
+
+            return (data, rawJson);
+        }
+
+        /// <summary>
+        /// Reads the JSON from the <paramref name="response"/>.
+        /// </summary>
+        /// <param name="response">The <see cref="HttpResponseMessage"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
+        /// complete.</param>
+        /// <returns>The JSON from the <paramref name="response"/>.</returns>
+        private static async Task<JObject> ReadJsonAsync(
+            this HttpResponseMessage response,
+            CancellationToken cancellationToken)
+        {
             if (response == null)
                 throw new ArgumentNullException(nameof(response));
 
@@ -386,11 +426,7 @@ namespace Tesla.NET.Requests
             using (var reader = new JsonTextReader(sr))
             {
                 JObject rawJson = await JObject.LoadAsync(reader, cancellationToken).ConfigureAwait(false);
-
-                JsonSerializer serializer = JsonSerializer.CreateDefault();
-                T data = rawJson.ToObject<T>(serializer);
-
-                return (data, rawJson);
+                return rawJson;
             }
         }
     }
