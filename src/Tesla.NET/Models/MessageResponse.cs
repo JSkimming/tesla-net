@@ -14,7 +14,7 @@ namespace Tesla.NET.Models
     /// </summary>
     /// <typeparam name="TData">The <see cref="Type"/> of the <see cref="Data"/>.</typeparam>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class MessageResponse<TData>
+    public class MessageResponse<TData> : IMessageResponse<TData>
         where TData : class
     {
         private readonly JObject _rawJson;
@@ -38,14 +38,13 @@ namespace Tesla.NET.Models
         public HttpStatusCode HttpStatusCode { get; }
 
         /// <summary>
-        /// Gets the raw JSON of the <see cref="Data"/>.
+        /// Gets the raw JSON of the <see cref="IMessageResponse"/>.
         /// </summary>
         public JObject RawJson => (JObject)_rawJson?.DeepClone();
 
         /// <summary>
-        /// Gets the raw JSON of the <see cref="Data"/>.
+        /// Gets the raw JSON of the <see cref="IMessageResponse"/>.
         /// </summary>
-        [JsonIgnore]
         public string RawJsonAsString => _rawJson?.ToString(Formatting.None) ?? string.Empty;
 
         /// <summary>

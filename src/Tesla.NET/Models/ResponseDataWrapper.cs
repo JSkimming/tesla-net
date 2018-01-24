@@ -5,14 +5,13 @@ namespace Tesla.NET.Models
 {
     using System;
     using System.Diagnostics;
-    using Newtonsoft.Json;
 
     /// <summary>
     /// The wrapper object for a response from the Tesla Owner API.
     /// </summary>
     /// <typeparam name="TResponse">The <see cref="Type"/> of the <see cref="Response"/>.</typeparam>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class ResponseDataWrapper<TResponse>
+    public class ResponseDataWrapper<TResponse> : IResponseDataWrapper<TResponse>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ResponseDataWrapper{TResponse}"/> class.
@@ -26,7 +25,6 @@ namespace Tesla.NET.Models
         /// <summary>
         /// Gets the <typeparamref name="TResponse"/> object.
         /// </summary>
-        [JsonProperty("response")]
         public TResponse Response { get; }
 
         private string DebuggerDisplay => $"{GetType().Name}: {typeof(TResponse).Name}";
