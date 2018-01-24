@@ -379,6 +379,9 @@ namespace Tesla.NET.Requests
             CancellationToken cancellationToken)
             where T : class
         {
+            if (responseMessage == null)
+                throw new ArgumentNullException(nameof(responseMessage));
+
             JObject rawJson = await ReadJsonAsync(responseMessage, cancellationToken).ConfigureAwait(false);
 
             JsonSerializer serializer = JsonSerializer.CreateDefault();
@@ -402,6 +405,9 @@ namespace Tesla.NET.Requests
             CancellationToken cancellationToken)
             where T : class
         {
+            if (responseMessage == null)
+                throw new ArgumentNullException(nameof(responseMessage));
+
             JObject rawJson =
                 IsContentJson(responseMessage)
                     ? await ReadJsonAsync(responseMessage, cancellationToken).ConfigureAwait(false)
