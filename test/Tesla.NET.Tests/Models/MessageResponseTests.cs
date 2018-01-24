@@ -94,4 +94,26 @@ namespace Tesla.NET.Models
             clone2.Should().NotBeSameAs(clone1);
         }
     }
+
+    public class When_there_is_no_raw_JSON_MessageResponse_Should
+    {
+        private readonly MessageResponse<ResponseDataWrapper<DriveState>> _sut;
+
+        public When_there_is_no_raw_JSON_MessageResponse_Should()
+        {
+            _sut = new MessageResponse<ResponseDataWrapper<DriveState>>(HttpStatusCode.BadRequest);
+        }
+
+        [Fact]
+        public void return_a_null_raw_JSON_object()
+        {
+            _sut.RawJson.Should().BeNull();
+        }
+
+        [Fact]
+        public void return_an_empty_string_for_the_null_JSON()
+        {
+            _sut.RawJsonAsString.Should().BeEmpty();
+        }
+    }
 }

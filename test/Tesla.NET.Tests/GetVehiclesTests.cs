@@ -107,17 +107,18 @@ namespace Tesla.NET
             : base(output, useCustomBaseUri)
         {
             // Arrange
-            Handler.SetResponseContent(new JObject(), HttpStatusCode.BadGateway);
+            Handler.SetResponse(HttpStatusCode.BadGateway);
         }
 
         [Fact]
-        public void Should_throw_an_HttpRequestException()
+        public async Task Should_return_the_error_status_code()
         {
             // Act
-            Func<Task> action = () => Sut.GetVehiclesAsync(AccessToken);
+            MessageResponse<ResponseDataWrapper<IReadOnlyList<Vehicle>>> actual =
+                await Sut.GetVehiclesAsync(AccessToken).ConfigureAwait(false);
 
             // Assert
-            action.ShouldThrowExactly<HttpRequestException>();
+            actual.HttpStatusCode.Should().Be(HttpStatusCode.BadGateway);
         }
     }
 

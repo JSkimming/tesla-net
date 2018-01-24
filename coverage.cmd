@@ -53,11 +53,11 @@
 
 cd "%~dp0test\Tesla.NET.Tests"
 
-::@echo dotnet.exe xunit -configuration %config% -nobuild -noshadow -html %xunit_results%
-::@dotnet.exe xunit -configuration %config% -nobuild -noshadow -html %xunit_results%
+::@echo dotnet.exe xunit -framework net47 -configuration %config% -nobuild -noshadow -html %xunit_results%
+::@dotnet.exe xunit -framework net47 -configuration %config% -nobuild -noshadow -html %xunit_results%
 
-@echo "%cover_exe%" -register:user "-target:dotnet.exe" "-targetargs:xunit -configuration %config% -nobuild -noshadow -html %xunit_results%" -returntargetcode -filter:^"%coverage_filter%^" "-output:%coverage_results%"
-@"%cover_exe%" -register:user "-target:dotnet.exe" "-targetargs:xunit -configuration %config% -nobuild -noshadow -html %xunit_results%" -returntargetcode -filter:^"%coverage_filter%^" "-output:%coverage_results%"
+@echo "%cover_exe%" -register:user "-target:dotnet.exe" "-targetargs:xunit -framework net47 -configuration %config% -nobuild -noshadow -html %xunit_results%" -returntargetcode -filter:^"%coverage_filter%^" "-output:%coverage_results%"
+@"%cover_exe%" -register:user "-target:dotnet.exe" "-targetargs:xunit -framework net47 -configuration %config% -nobuild -noshadow -html %xunit_results%" -returntargetcode -filter:^"%coverage_filter%^" "-output:%coverage_results%"
 @IF ERRORLEVEL 1 (
    echo Error executing the xunit tests
    EXIT /B 2

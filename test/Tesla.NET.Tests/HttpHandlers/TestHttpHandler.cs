@@ -57,6 +57,8 @@ namespace Tesla.NET.HttpHandlers
 
         public Func<HttpRequestMessage, Task<HttpRequestMessage>> OnSendingRequest { get; set; }
 
+        public void SetResponse(HttpStatusCode code) => SetResponseContent(null, code);
+
         public void SetResponseContent(object content, HttpStatusCode code = HttpStatusCode.OK)
         {
             Response = CreateResponse(content, code);
@@ -143,6 +145,11 @@ namespace Tesla.NET.HttpHandlers
 
         private static HttpResponseMessage CreateResponse(object content, HttpStatusCode code = HttpStatusCode.OK)
         {
+            if (content == null)
+            {
+                return new HttpResponseMessage(code);
+            }
+
             var stream = new MemoryStream(10240);
             using (var streamWriter = new StreamWriter(stream, Encoding.UTF8, 10240, leaveOpen: true))
             {
