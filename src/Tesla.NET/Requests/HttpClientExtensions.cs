@@ -14,6 +14,7 @@ namespace Tesla.NET.Requests
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using Tesla.NET.Models;
+    using Tesla.NET.Models.Internal;
 
     /// <summary>
     /// Extension methods on <see cref="HttpClient"/> to wrap the Tesla Owner API.

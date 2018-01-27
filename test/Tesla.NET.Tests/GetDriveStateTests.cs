@@ -14,6 +14,7 @@ namespace Tesla.NET
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using Tesla.NET.Models;
+    using Tesla.NET.Models.Internal;
     using Xunit;
     using Xunit.Abstractions;
 

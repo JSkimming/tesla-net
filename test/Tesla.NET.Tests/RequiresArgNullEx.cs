@@ -9,7 +9,7 @@ namespace Tesla.NET
     using System.Threading.Tasks;
     using AutoTest.ArgNullEx;
     using AutoTest.ArgNullEx.Xunit;
-    using Tesla.NET.Models;
+    using Tesla.NET.Models.Internal;
     using Xunit;
 
     public class RequiresArgNullEx
