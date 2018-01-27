@@ -68,9 +68,8 @@ namespace Tesla.NET
         public async Task Should_return_the_expected_access_token()
         {
             // Act
-            MessageResponse<AccessTokenResponse> actual =
-                await Sut.RequestAccessTokenAsync(_clientId, _clientSecret, _email, _password)
-                    .ConfigureAwait(false);
+            IMessageResponse<IAccessTokenResponse> actual =
+                await Sut.RequestAccessTokenAsync(_clientId, _clientSecret, _email, _password).ConfigureAwait(false);
 
             // Assert
             actual.HttpStatusCode.Should().Be(HttpStatusCode.OK);
@@ -216,7 +215,7 @@ namespace Tesla.NET
         public async Task Should_return_the_error_status_code()
         {
             // Act
-            MessageResponse<AccessTokenResponse> actual =
+            IMessageResponse actual =
                 await Sut.RequestAccessTokenAsync(_clientId, _clientSecret, _email, _password).ConfigureAwait(false);
 
             // Assert
@@ -271,9 +270,8 @@ namespace Tesla.NET
         public async Task Should_be_passed_through_in_the_response()
         {
             // Act
-            MessageResponse<AccessTokenResponse> response =
-                await Sut.RequestAccessTokenAsync(_clientId, _clientSecret, _email, _password)
-                    .ConfigureAwait(false);
+            IMessageResponse response =
+                await Sut.RequestAccessTokenAsync(_clientId, _clientSecret, _email, _password).ConfigureAwait(false);
 
             // Assert
             response.RawJsonAsString.Should().Be(_expected.ToString(Formatting.None));

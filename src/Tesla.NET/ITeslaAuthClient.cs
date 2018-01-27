@@ -25,7 +25,7 @@ namespace Tesla.NET
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
         /// complete.</param>
         /// <returns>The response to the request for an access token.</returns>
-        Task<MessageResponse<AccessTokenResponse>> RequestAccessTokenAsync(
+        Task<IMessageResponse<IAccessTokenResponse>> RequestAccessTokenAsync(
             string clientId,
             string clientSecret,
             string email,
@@ -41,7 +41,7 @@ namespace Tesla.NET
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
         /// complete.</param>
         /// <returns>The response to the request for an access token.</returns>
-        Task<MessageResponse<AccessTokenResponse>> RefreshAccessTokenAsync(
+        Task<IMessageResponse<IAccessTokenResponse>> RefreshAccessTokenAsync(
             string clientId,
             string clientSecret,
             string refreshToken,

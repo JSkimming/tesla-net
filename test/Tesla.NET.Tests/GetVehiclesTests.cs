@@ -55,7 +55,7 @@ namespace Tesla.NET
         public async Task Should_return_the_expected_vehicles()
         {
             // Act
-            MessageResponse<ResponseDataWrapper<IReadOnlyList<Vehicle>>> actual =
+            IMessageResponse<IResponseDataWrapper<IReadOnlyList<IVehicle>>> actual =
                 await Sut.GetVehiclesAsync(AccessToken).ConfigureAwait(false);
 
             // Assert
@@ -114,8 +114,7 @@ namespace Tesla.NET
         public async Task Should_return_the_error_status_code()
         {
             // Act
-            MessageResponse<ResponseDataWrapper<IReadOnlyList<Vehicle>>> actual =
-                await Sut.GetVehiclesAsync(AccessToken).ConfigureAwait(false);
+            IMessageResponse actual = await Sut.GetVehiclesAsync(AccessToken).ConfigureAwait(false);
 
             // Assert
             actual.HttpStatusCode.Should().Be(HttpStatusCode.BadGateway);
@@ -162,8 +161,7 @@ namespace Tesla.NET
         public async Task Should_be_passed_through_in_the_response()
         {
             // Act
-            MessageResponse<ResponseDataWrapper<IReadOnlyList<Vehicle>>> response =
-                await Sut.GetVehiclesAsync().ConfigureAwait(false);
+            IMessageResponse response = await Sut.GetVehiclesAsync().ConfigureAwait(false);
 
             // Assert
             response.RawJsonAsString.Should().Be(_expected.ToString(Formatting.None));

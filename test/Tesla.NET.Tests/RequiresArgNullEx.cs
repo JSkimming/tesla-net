@@ -18,6 +18,7 @@ namespace Tesla.NET
         [Substitute(typeof(TeslaClientBase), typeof(TeslaAuthClient))]
         [Substitute(typeof(MessageResponse<>), typeof(MessageResponse<object>))]
         [Substitute(typeof(ResponseDataWrapper<>), typeof(ResponseDataWrapper<Guid>))]
+        [Exclude(Method = "ReadJsonAsAsync", Parameter = "responseTask")]
         public Task TeslaNet(MethodData method)
         {
             return method.Execute();

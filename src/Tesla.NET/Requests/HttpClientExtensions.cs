@@ -32,7 +32,7 @@ namespace Tesla.NET.Requests
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
         /// complete.</param>
         /// <returns>The response to the request for an access token.</returns>
-        public static Task<MessageResponse<AccessTokenResponse>> RequestAccessTokenAsync(
+        public static Task<IMessageResponse<IAccessTokenResponse>> RequestAccessTokenAsync(
             this HttpClient client,
             Uri baseUri,
             string clientId,
@@ -60,7 +60,7 @@ namespace Tesla.NET.Requests
             return
                 client
                     .PostFormAsync(requestUri, parameters, cancellationToken)
-                    .ReadJsonAsAsync<AccessTokenResponse>(cancellationToken);
+                    .ReadJsonAsAsync<IAccessTokenResponse, AccessTokenResponse>(cancellationToken);
 
             IEnumerable<KeyValuePair<string, string>> GetRequestAccessTokenParameters()
             {
@@ -83,7 +83,7 @@ namespace Tesla.NET.Requests
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
         /// complete.</param>
         /// <returns>The response to the request for an access token.</returns>
-        public static Task<MessageResponse<AccessTokenResponse>> RefreshAccessTokenAsync(
+        public static Task<IMessageResponse<IAccessTokenResponse>> RefreshAccessTokenAsync(
             this HttpClient client,
             Uri baseUri,
             string clientId,
@@ -108,7 +108,7 @@ namespace Tesla.NET.Requests
             return
                 client
                     .PostFormAsync(requestUri, parameters, cancellationToken)
-                    .ReadJsonAsAsync<AccessTokenResponse>(cancellationToken);
+                    .ReadJsonAsAsync<IAccessTokenResponse, AccessTokenResponse>(cancellationToken);
 
             IEnumerable<KeyValuePair<string, string>> GetRefreshAccessTokenParameters()
             {
@@ -131,7 +131,7 @@ namespace Tesla.NET.Requests
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
         /// complete.</param>
         /// <returns>The vehicles associated with an account.</returns>
-        public static Task<MessageResponse<ResponseDataWrapper<IReadOnlyList<Vehicle>>>> GetVehiclesAsync(
+        public static Task<IMessageResponse<IResponseDataWrapper<IReadOnlyList<IVehicle>>>> GetVehiclesAsync(
             this HttpClient client,
             Uri baseUri,
             string accessToken = null,
@@ -147,7 +147,8 @@ namespace Tesla.NET.Requests
             return
                 client
                     .GetWithAuthAsync(requestUri, accessToken, cancellationToken)
-                    .ReadJsonAsAsync<ResponseDataWrapper<IReadOnlyList<Vehicle>>>(cancellationToken);
+                    .ReadJsonAsAsync<IResponseDataWrapper<IReadOnlyList<IVehicle>>,
+                        ResponseDataWrapper<IReadOnlyList<Vehicle>>>(cancellationToken);
         }
 
         /// <summary>
@@ -166,7 +167,7 @@ namespace Tesla.NET.Requests
         /// <returns>
         /// The <see cref="ChargeState"/> of the <see cref="Vehicle"/> with the specified <see cref="Vehicle.Id"/>.
         /// </returns>
-        public static Task<MessageResponse<ResponseDataWrapper<ChargeState>>> GetChargeStateAsync(
+        public static Task<IMessageResponse<IResponseDataWrapper<IChargeState>>> GetChargeStateAsync(
             this HttpClient client,
             Uri baseUri,
             long vehicleId,
@@ -183,7 +184,8 @@ namespace Tesla.NET.Requests
             return
                 client
                     .GetWithAuthAsync(requestUri, accessToken, cancellationToken)
-                    .ReadJsonAsAsync<ResponseDataWrapper<ChargeState>>(cancellationToken);
+                    .ReadJsonAsAsync<IResponseDataWrapper<IChargeState>, ResponseDataWrapper<ChargeState>>(
+                        cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +204,7 @@ namespace Tesla.NET.Requests
         /// <returns>
         /// The <see cref="DriveState"/> of the <see cref="Vehicle"/> with the specified <see cref="Vehicle.Id"/>.
         /// </returns>
-        public static Task<MessageResponse<ResponseDataWrapper<DriveState>>> GetDriveStateAsync(
+        public static Task<IMessageResponse<IResponseDataWrapper<IDriveState>>> GetDriveStateAsync(
             this HttpClient client,
             Uri baseUri,
             long vehicleId,
@@ -219,7 +221,8 @@ namespace Tesla.NET.Requests
             return
                 client
                     .GetWithAuthAsync(requestUri, accessToken, cancellationToken)
-                    .ReadJsonAsAsync<ResponseDataWrapper<DriveState>>(cancellationToken);
+                    .ReadJsonAsAsync<IResponseDataWrapper<IDriveState>, ResponseDataWrapper<DriveState>>(
+                        cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +241,7 @@ namespace Tesla.NET.Requests
         /// <returns>
         /// The <see cref="VehicleState"/> of the <see cref="Vehicle"/> with the specified <see cref="Vehicle.Id"/>.
         /// </returns>
-        public static Task<MessageResponse<ResponseDataWrapper<VehicleState>>> GetVehicleStateAsync(
+        public static Task<IMessageResponse<IResponseDataWrapper<IVehicleState>>> GetVehicleStateAsync(
             this HttpClient client,
             Uri baseUri,
             long vehicleId,
@@ -255,7 +258,8 @@ namespace Tesla.NET.Requests
             return
                 client
                     .GetWithAuthAsync(requestUri, accessToken, cancellationToken)
-                    .ReadJsonAsAsync<ResponseDataWrapper<VehicleState>>(cancellationToken);
+                    .ReadJsonAsAsync<IResponseDataWrapper<IVehicleState>, ResponseDataWrapper<VehicleState>>(
+                        cancellationToken);
         }
 
         /// <summary>
@@ -335,32 +339,31 @@ namespace Tesla.NET.Requests
 
         /// <summary>
         /// Reads the JSON from the <paramref name="responseTask"/> and deserializes it to the type
-        /// <typeparamref name="T"/>.
+        /// <typeparamref name="TResult"/>.
         /// </summary>
-        /// <typeparam name="T">The <see cref="Type"/> of the object to deserialize.</typeparam>
+        /// <typeparam name="TResult">The <see cref="Type"/> of the result object.</typeparam>
+        /// <typeparam name="TModel">The <see cref="Type"/> of the object to deserialize.</typeparam>
         /// <param name="responseTask">
         /// The asynchronous <see cref="Task{T}"/> of a <see cref="HttpResponseMessage"/>.
         /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
         /// complete.</param>
-        /// <returns>The deserialized object of type <typeparamref name="T"/>.</returns>
-        private static async Task<MessageResponse<T>> ReadJsonAsAsync<T>(
+        /// <returns>The deserialized object of type <typeparamref name="TResult"/>.</returns>
+        private static async Task<IMessageResponse<TResult>> ReadJsonAsAsync<TResult, TModel>(
             this Task<HttpResponseMessage> responseTask,
             CancellationToken cancellationToken)
-            where T : class
+            where TResult : class
+            where TModel : class, TResult
         {
-            if (responseTask == null)
-                throw new ArgumentNullException(nameof(responseTask));
-
             HttpResponseMessage responseMessage = await responseTask.ConfigureAwait(false);
             using (responseMessage)
             {
-                Task<MessageResponse<T>> messageTask =
+                Task<IMessageResponse<TModel>> messageTask =
                     responseMessage.IsSuccessStatusCode
-                        ? responseMessage.ReadSuccessResponseAsync<T>(cancellationToken)
-                        : responseMessage.ReadFailureResponseAsync<T>(cancellationToken);
+                        ? responseMessage.ReadSuccessResponseAsync<TModel>(cancellationToken)
+                        : responseMessage.ReadFailureResponseAsync<TModel>(cancellationToken);
 
-                MessageResponse<T> response = await messageTask.ConfigureAwait(false);
+                IMessageResponse<TModel> response = await messageTask.ConfigureAwait(false);
                 return response;
             }
         }
@@ -374,7 +377,7 @@ namespace Tesla.NET.Requests
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
         /// complete.</param>
         /// <returns>The <see cref="MessageResponse{T}"/>.</returns>
-        private static async Task<MessageResponse<T>> ReadSuccessResponseAsync<T>(
+        private static async Task<IMessageResponse<T>> ReadSuccessResponseAsync<T>(
             this HttpResponseMessage responseMessage,
             CancellationToken cancellationToken)
             where T : class
@@ -387,7 +390,7 @@ namespace Tesla.NET.Requests
             JsonSerializer serializer = JsonSerializer.CreateDefault();
             T data = rawJson.ToObject<T>(serializer);
 
-            MessageResponse<T> response = new MessageResponse<T>(responseMessage.StatusCode, rawJson, data);
+            IMessageResponse<T> response = new MessageResponse<T>(responseMessage.StatusCode, rawJson, data);
             return response;
         }
 
@@ -400,7 +403,7 @@ namespace Tesla.NET.Requests
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
         /// complete.</param>
         /// <returns>The <see cref="MessageResponse{T}"/>.</returns>
-        private static async Task<MessageResponse<T>> ReadFailureResponseAsync<T>(
+        private static async Task<IMessageResponse<T>> ReadFailureResponseAsync<T>(
             this HttpResponseMessage responseMessage,
             CancellationToken cancellationToken)
             where T : class
@@ -413,7 +416,7 @@ namespace Tesla.NET.Requests
                     ? await ReadJsonAsync(responseMessage, cancellationToken).ConfigureAwait(false)
                     : null;
 
-            MessageResponse<T> response = new MessageResponse<T>(responseMessage.StatusCode, rawJson);
+            IMessageResponse<T> response = new MessageResponse<T>(responseMessage.StatusCode, rawJson);
             return response;
         }
 

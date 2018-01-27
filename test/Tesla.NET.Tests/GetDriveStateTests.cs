@@ -57,7 +57,7 @@ namespace Tesla.NET
         public async Task Should_return_the_expected_drive_state()
         {
             // Act
-            MessageResponse<ResponseDataWrapper<DriveState>> actual =
+            IMessageResponse<IResponseDataWrapper<IDriveState>> actual =
                 await Sut.GetDriveStateAsync(_vehicleId, AccessToken).ConfigureAwait(false);
 
             // Assert
@@ -119,8 +119,7 @@ namespace Tesla.NET
         public async Task Should_return_the_error_status_code()
         {
             // Act
-            MessageResponse<ResponseDataWrapper<DriveState>> actual =
-                await Sut.GetDriveStateAsync(_vehicleId, AccessToken).ConfigureAwait(false);
+            IMessageResponse actual = await Sut.GetDriveStateAsync(_vehicleId, AccessToken).ConfigureAwait(false);
 
             // Assert
             actual.HttpStatusCode.Should().Be(HttpStatusCode.BadGateway);
@@ -169,8 +168,7 @@ namespace Tesla.NET
         public async Task Should_be_passed_through_in_the_response()
         {
             // Act
-            MessageResponse<ResponseDataWrapper<DriveState>> response =
-                await Sut.GetDriveStateAsync(_vehicleId).ConfigureAwait(false);
+            IMessageResponse response = await Sut.GetDriveStateAsync(_vehicleId).ConfigureAwait(false);
 
             // Assert
             response.RawJsonAsString.Should().Be(_expected.ToString(Formatting.None));

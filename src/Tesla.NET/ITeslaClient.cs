@@ -21,7 +21,7 @@ namespace Tesla.NET
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
         /// complete.</param>
         /// <returns>The vehicles associated with an account.</returns>
-        Task<MessageResponse<ResponseDataWrapper<IReadOnlyList<Vehicle>>>> GetVehiclesAsync(
+        Task<IMessageResponse<IResponseDataWrapper<IReadOnlyList<IVehicle>>>> GetVehiclesAsync(
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Tesla.NET
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
         /// complete.</param>
         /// <returns>The vehicles associated with an account.</returns>
-        Task<MessageResponse<ResponseDataWrapper<IReadOnlyList<Vehicle>>>> GetVehiclesAsync(
+        Task<IMessageResponse<IResponseDataWrapper<IReadOnlyList<IVehicle>>>> GetVehiclesAsync(
             string accessToken,
             CancellationToken cancellationToken = default);
 
@@ -47,7 +47,7 @@ namespace Tesla.NET
         /// <returns>
         /// The <see cref="ChargeState"/> of the <see cref="Vehicle"/> with the specified <see cref="Vehicle.Id"/>.
         /// </returns>
-        Task<MessageResponse<ResponseDataWrapper<ChargeState>>> GetChargeStateAsync(
+        Task<IMessageResponse<IResponseDataWrapper<IChargeState>>> GetChargeStateAsync(
             long vehicleId,
             CancellationToken cancellationToken = default);
 
@@ -65,7 +65,7 @@ namespace Tesla.NET
         /// <returns>
         /// The <see cref="ChargeState"/> of the <see cref="Vehicle"/> with the specified <see cref="Vehicle.Id"/>.
         /// </returns>
-        Task<MessageResponse<ResponseDataWrapper<ChargeState>>> GetChargeStateAsync(
+        Task<IMessageResponse<IResponseDataWrapper<IChargeState>>> GetChargeStateAsync(
             long vehicleId,
             string accessToken,
             CancellationToken cancellationToken = default);
@@ -80,7 +80,7 @@ namespace Tesla.NET
         /// <returns>
         /// The <see cref="DriveState"/> of the <see cref="Vehicle"/> with the specified <see cref="Vehicle.Id"/>.
         /// </returns>
-        Task<MessageResponse<ResponseDataWrapper<DriveState>>> GetDriveStateAsync(
+        Task<IMessageResponse<IResponseDataWrapper<IDriveState>>> GetDriveStateAsync(
             long vehicleId,
             CancellationToken cancellationToken = default);
 
@@ -98,7 +98,7 @@ namespace Tesla.NET
         /// <returns>
         /// The <see cref="DriveState"/> of the <see cref="Vehicle"/> with the specified <see cref="Vehicle.Id"/>.
         /// </returns>
-        Task<MessageResponse<ResponseDataWrapper<DriveState>>> GetDriveStateAsync(
+        Task<IMessageResponse<IResponseDataWrapper<IDriveState>>> GetDriveStateAsync(
             long vehicleId,
             string accessToken,
             CancellationToken cancellationToken = default);
@@ -113,7 +113,7 @@ namespace Tesla.NET
         /// <returns>
         /// The <see cref="VehicleState"/> of the <see cref="Vehicle"/> with the specified <see cref="Vehicle.Id"/>.
         /// </returns>
-        Task<MessageResponse<ResponseDataWrapper<VehicleState>>> GetVehicleStateAsync(
+        Task<IMessageResponse<IResponseDataWrapper<IVehicleState>>> GetVehicleStateAsync(
             long vehicleId,
             CancellationToken cancellationToken = default);
 
@@ -131,7 +131,7 @@ namespace Tesla.NET
         /// <returns>
         /// The <see cref="VehicleState"/> of the <see cref="Vehicle"/> with the specified <see cref="Vehicle.Id"/>.
         /// </returns>
-        Task<MessageResponse<ResponseDataWrapper<VehicleState>>> GetVehicleStateAsync(
+        Task<IMessageResponse<IResponseDataWrapper<IVehicleState>>> GetVehicleStateAsync(
             long vehicleId,
             string accessToken,
             CancellationToken cancellationToken = default);
