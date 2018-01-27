@@ -9,7 +9,7 @@ namespace Tesla.NET
     using System.Threading.Tasks;
     using AutoTest.ArgNullEx;
     using AutoTest.ArgNullEx.Xunit;
-    using Tesla.NET.Models;
+    using Tesla.NET.Models.Internal;
     using Xunit;
 
     public class RequiresArgNullEx
@@ -18,6 +18,7 @@ namespace Tesla.NET
         [Substitute(typeof(TeslaClientBase), typeof(TeslaAuthClient))]
         [Substitute(typeof(MessageResponse<>), typeof(MessageResponse<object>))]
         [Substitute(typeof(ResponseDataWrapper<>), typeof(ResponseDataWrapper<Guid>))]
+        [Exclude(Method = "ReadJsonAsAsync", Parameter = "responseTask")]
         public Task TeslaNet(MethodData method)
         {
             return method.Execute();

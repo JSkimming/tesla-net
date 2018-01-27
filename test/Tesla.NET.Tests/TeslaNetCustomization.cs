@@ -9,7 +9,7 @@ namespace Tesla.NET
     using AutoFixture;
     using AutoFixture.AutoMoq;
     using AutoFixture.Xunit2;
-    using Tesla.NET.Models;
+    using Tesla.NET.Models.Internal;
 
     internal class TeslaNetCustomization : CompositeCustomization
     {

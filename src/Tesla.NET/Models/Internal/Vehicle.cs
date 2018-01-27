@@ -1,7 +1,7 @@
 ﻿// Copyright (c) 2018 James Skimming. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
-namespace Tesla.NET.Models
+namespace Tesla.NET.Models.Internal
 {
     using System.Collections.Generic;
     using System.Diagnostics;
@@ -64,72 +64,72 @@ namespace Tesla.NET.Models
         }
 
         /// <summary>
-        /// Gets the unique ID of the <see cref="Vehicle"/>.
+        /// Gets the unique ID of the <see cref="IVehicle"/>.
         /// </summary>
         public long Id { get; }
 
         /// <summary>
-        /// Gets the id of the <see cref="Vehicle"/>.
+        /// Gets the id of the <see cref="IVehicle"/>.
         /// </summary>
         public long VehicleId { get; }
 
         /// <summary>
-        /// Gets the VIN (vehicle identification number) of the <see cref="Vehicle"/>.
+        /// Gets the VIN (vehicle identification number) of the <see cref="IVehicle"/>.
         /// </summary>
         public string Vin { get; }
 
         /// <summary>
-        /// Gets the display name of the <see cref="Vehicle"/>.
+        /// Gets the display name of the <see cref="IVehicle"/>.
         /// </summary>
         public string DisplayName { get; }
 
         /// <summary>
-        /// Gets the option codes of the <see cref="Vehicle"/>.
+        /// Gets the option codes of the <see cref="IVehicle"/>.
         /// </summary>
         public string OptionCodes { get; }
 
         /// <summary>
-        /// Gets the color of the <see cref="Vehicle"/>.
+        /// Gets the color of the <see cref="IVehicle"/>.
         /// </summary>
         public string Color { get; }
 
         /// <summary>
-        /// Gets the tokens of the <see cref="Vehicle"/>.
+        /// Gets the tokens of the <see cref="IVehicle"/>.
         /// </summary>
         public IReadOnlyCollection<string> Tokens { get; }
 
         /// <summary>
-        /// Gets the state of the <see cref="Vehicle"/>.
+        /// Gets the state of the <see cref="IVehicle"/>.
         /// </summary>
         public string State { get; }
 
         /// <summary>
-        /// Gets the in service state of the <see cref="Vehicle"/>.
+        /// Gets the in service state of the <see cref="IVehicle"/>.
         /// </summary>
         public string InService { get; }
 
         /// <summary>
-        /// Gets a value indicating whether remote start is enabled for the <see cref="Vehicle"/>.
+        /// Gets a value indicating whether remote start is enabled for the <see cref="IVehicle"/>.
         /// </summary>
         public bool RemoteStartEnabled { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the calendar is enabled for the <see cref="Vehicle"/>.
+        /// Gets a value indicating whether the calendar is enabled for the <see cref="IVehicle"/>.
         /// </summary>
         public bool CalendarEnabled { get; }
 
         /// <summary>
-        /// Gets a value indicating whether notifications are enabled for the <see cref="Vehicle"/>.
+        /// Gets a value indicating whether notifications are enabled for the <see cref="IVehicle"/>.
         /// </summary>
         public bool NotificationsEnabled { get; }
 
         /// <summary>
-        /// Gets the <see cref="BackseatToken"/> of the <see cref="Vehicle"/>.
+        /// Gets the <see cref="BackseatToken"/> of the <see cref="IVehicle"/>.
         /// </summary>
         public string BackseatToken { get; }
 
         /// <summary>
-        /// Gets the <see cref="BackseatTokenUpdatedAt"/> of the <see cref="Vehicle"/>.
+        /// Gets the <see cref="BackseatTokenUpdatedAt"/> of the <see cref="IVehicle"/>.
         /// </summary>
         public string BackseatTokenUpdatedAt { get; }
 

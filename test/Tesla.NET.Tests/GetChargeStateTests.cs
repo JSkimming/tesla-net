@@ -14,6 +14,7 @@ namespace Tesla.NET
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using Tesla.NET.Models;
+    using Tesla.NET.Models.Internal;
     using Xunit;
     using Xunit.Abstractions;
 
@@ -57,7 +58,7 @@ namespace Tesla.NET
         public async Task Should_return_the_expected_charge_state()
         {
             // Act
-            MessageResponse<ResponseDataWrapper<ChargeState>> actual =
+            IMessageResponse<IResponseDataWrapper<IChargeState>> actual =
                 await Sut.GetChargeStateAsync(_vehicleId, AccessToken).ConfigureAwait(false);
 
             // Assert
@@ -119,8 +120,7 @@ namespace Tesla.NET
         public async Task Should_return_the_error_status_code()
         {
             // Act
-            MessageResponse<ResponseDataWrapper<ChargeState>> actual =
-                await Sut.GetChargeStateAsync(_vehicleId, AccessToken).ConfigureAwait(false);
+            IMessageResponse actual = await Sut.GetChargeStateAsync(_vehicleId, AccessToken).ConfigureAwait(false);
 
             // Assert
             actual.HttpStatusCode.Should().Be(HttpStatusCode.BadGateway);
@@ -169,8 +169,7 @@ namespace Tesla.NET
         public async Task Should_be_passed_through_in_the_response()
         {
             // Act
-            MessageResponse<ResponseDataWrapper<ChargeState>> response =
-                await Sut.GetChargeStateAsync(_vehicleId).ConfigureAwait(false);
+            IMessageResponse response = await Sut.GetChargeStateAsync(_vehicleId).ConfigureAwait(false);
 
             // Assert
             response.RawJsonAsString.Should().Be(_expected.ToString(Formatting.None));

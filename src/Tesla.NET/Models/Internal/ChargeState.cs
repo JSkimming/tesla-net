@@ -1,14 +1,14 @@
 ﻿// Copyright (c) 2018 James Skimming. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
-namespace Tesla.NET.Models
+namespace Tesla.NET.Models.Internal
 {
     using System;
     using System.Diagnostics;
     using System.Globalization;
 
     /// <summary>
-    /// The charge state of a <see cref="Vehicle"/>.
+    /// The charge state of a <see cref="IVehicle"/>.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ChargeState : IChargeState
@@ -144,7 +144,7 @@ namespace Tesla.NET.Models
         }
 
         /// <summary>
-        /// Gets the charging state of a <see cref="Vehicle"/>.
+        /// Gets the charging state of a <see cref="IVehicle"/>.
         /// </summary>
         public string ChargingState { get; }
 
@@ -159,207 +159,207 @@ namespace Tesla.NET.Models
         public string FastChargerBrand { get; }
 
         /// <summary>
-        /// Gets the charge limit <see cref="Vehicle"/>.
+        /// Gets the charge limit <see cref="IVehicle"/>.
         /// </summary>
         public long? ChargeLimitSoc { get; }
 
         /// <summary>
-        /// Gets the standard charge limit of a <see cref="Vehicle"/>.
+        /// Gets the standard charge limit of a <see cref="IVehicle"/>.
         /// </summary>
         public long? ChargeLimitSocStd { get; }
 
         /// <summary>
-        /// Gets the minimum change limit of a <see cref="Vehicle"/>.
+        /// Gets the minimum change limit of a <see cref="IVehicle"/>.
         /// </summary>
         public long? ChargeLimitSocMin { get; }
 
         /// <summary>
-        /// Gets the maximum change limit of a <see cref="Vehicle"/>.
+        /// Gets the maximum change limit of a <see cref="IVehicle"/>.
         /// </summary>
         public long? ChargeLimitSocMax { get; }
 
         /// <summary>
-        /// Gets a value indicating whether a <see cref="Vehicle"/> will change to max range.
+        /// Gets a value indicating whether a <see cref="IVehicle"/> will change to max range.
         /// </summary>
         public bool? ChargeToMaxRange { get; }
 
         /// <summary>
-        /// Gets the counter of haw many times a <see cref="Vehicle"/> has been changed to maximum range.
+        /// Gets the counter of haw many times a <see cref="IVehicle"/> has been changed to maximum range.
         /// </summary>
         public long? MaxRangeChargeCounter { get; }
 
         /// <summary>
-        /// Gets a value indicating whether a <see cref="Vehicle"/> is supercharging.
+        /// Gets a value indicating whether a <see cref="IVehicle"/> is supercharging.
         /// </summary>
         public bool? FastChargerPresent { get; }
 
         /// <summary>
-        /// Gets the batter range of a <see cref="Vehicle"/>.
+        /// Gets the batter range of a <see cref="IVehicle"/>.
         /// </summary>
         public double? BatteryRange { get; }
 
         /// <summary>
-        /// Gets the estimated battery range of a <see cref="Vehicle"/>.
+        /// Gets the estimated battery range of a <see cref="IVehicle"/>.
         /// </summary>
         public double? EstBatteryRange { get; }
 
         /// <summary>
-        /// Gets the ideal battery range of a <see cref="Vehicle"/>.
+        /// Gets the ideal battery range of a <see cref="IVehicle"/>.
         /// </summary>
         public double? IdealBatteryRange { get; }
 
         /// <summary>
-        /// Gets the current battery level of a <see cref="Vehicle"/>.
+        /// Gets the current battery level of a <see cref="IVehicle"/>.
         /// </summary>
         public long? BatteryLevel { get; }
 
         /// <summary>
-        /// Gets the usable battery level of a <see cref="Vehicle"/>.
+        /// Gets the usable battery level of a <see cref="IVehicle"/>.
         /// </summary>
         public long? UsableBatteryLevel { get; }
 
         /// <summary>
-        /// Gets the energy added to a <see cref="Vehicle"/> at the last charge.
+        /// Gets the energy added to a <see cref="IVehicle"/> at the last charge.
         /// </summary>
         public double? ChargeEnergyAdded { get; }
 
         /// <summary>
-        /// Gets the rated miles added to a <see cref="Vehicle"/> at the last charge.
+        /// Gets the rated miles added to a <see cref="IVehicle"/> at the last charge.
         /// </summary>
         public double? ChargeMilesAddedRated { get; }
 
         /// <summary>
-        /// Gets the ideal miles added to a <see cref="Vehicle"/> at the last charge.
+        /// Gets the ideal miles added to a <see cref="IVehicle"/> at the last charge.
         /// </summary>
         public long? ChargeMilesAddedIdeal { get; }
 
         /// <summary>
-        /// Gets the charge voltage of a <see cref="Vehicle"/> when charging.
+        /// Gets the charge voltage of a <see cref="IVehicle"/> when charging.
         /// </summary>
         public long? ChargerVoltage { get; }
 
         /// <summary>
-        /// Gets the charge pilot current of a <see cref="Vehicle"/> when charging.
+        /// Gets the charge pilot current of a <see cref="IVehicle"/> when charging.
         /// </summary>
         public long? ChargerPilotCurrent { get; }
 
         /// <summary>
-        /// Gets the charge actual current of a <see cref="Vehicle"/> when charging.
+        /// Gets the charge actual current of a <see cref="IVehicle"/> when charging.
         /// </summary>
         public long? ChargerActualCurrent { get; }
 
         /// <summary>
-        /// Gets the charge power of a <see cref="Vehicle"/> when charging.
+        /// Gets the charge power of a <see cref="IVehicle"/> when charging.
         /// </summary>
         public long? ChargerPower { get; }
 
         /// <summary>
-        /// Gets the time in minutes to a full charge of a <see cref="Vehicle"/> when charging.
+        /// Gets the time in minutes to a full charge of a <see cref="IVehicle"/> when charging.
         /// </summary>
         public long? TimeToFullCharge { get; }
 
         /// <summary>
-        /// Gets a value indicating whether a <see cref="Vehicle"/> is trip charging.
+        /// Gets a value indicating whether a <see cref="IVehicle"/> is trip charging.
         /// </summary>
         public bool? TripCharging { get; }
 
         /// <summary>
-        /// Gets the charge rate of a <see cref="Vehicle"/> when charging.
+        /// Gets the charge rate of a <see cref="IVehicle"/> when charging.
         /// </summary>
         public long? ChargeRate { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the charge port of a <see cref="Vehicle"/> is open.
+        /// Gets a value indicating whether the charge port of a <see cref="IVehicle"/> is open.
         /// </summary>
         public bool? ChargePortDoorOpen { get; }
 
         /// <summary>
-        /// Gets the type of the charge cable connected to a <see cref="Vehicle"/>.
+        /// Gets the type of the charge cable connected to a <see cref="IVehicle"/>.
         /// </summary>
         public string ConnChargeCable { get; }
 
         /// <summary>
-        /// Gets the schedule charging start time of a <see cref="Vehicle"/>.
+        /// Gets the schedule charging start time of a <see cref="IVehicle"/>.
         /// </summary>
         public long? ScheduledChargingStartTime { get; }
 
         /// <summary>
-        /// Gets the UTC <see cref="DateTime"/> of the schedule charging start time of a <see cref="Vehicle"/>.
+        /// Gets the UTC <see cref="DateTime"/> of the schedule charging start time of a <see cref="IVehicle"/>.
         /// </summary>
         public DateTime? ScheduledChargingStartTimeUtc => EpochConversion.FromSeconds(ScheduledChargingStartTime);
 
         /// <summary>
-        /// Gets a value indicating whether scheduled charging is pending for a <see cref="Vehicle"/>.
+        /// Gets a value indicating whether scheduled charging is pending for a <see cref="IVehicle"/>.
         /// </summary>
         public bool? ScheduledChargingPending { get; }
 
         /// <summary>
-        /// Gets a value indicating whether a user charge enable request has been made for a <see cref="Vehicle"/>.
+        /// Gets a value indicating whether a user charge enable request has been made for a <see cref="IVehicle"/>.
         /// </summary>
         public bool? UserChargeEnableRequest { get; }
 
         /// <summary>
-        /// Gets a value indicating whether a charge enable request has been made for a <see cref="Vehicle"/>.
+        /// Gets a value indicating whether a charge enable request has been made for a <see cref="IVehicle"/>.
         /// </summary>
         public bool? ChargeEnableRequest { get; }
 
         /// <summary>
-        /// Gets the charger phases of a <see cref="Vehicle"/>.
+        /// Gets the charger phases of a <see cref="IVehicle"/>.
         /// </summary>
         public int? ChargerPhases { get; }
 
         /// <summary>
-        /// Gets the charge port latch of a <see cref="Vehicle"/>.
+        /// Gets the charge port latch of a <see cref="IVehicle"/>.
         /// </summary>
         public string ChargePortLatch { get; }
 
         /// <summary>
-        /// Gets the charge current request of a <see cref="Vehicle"/>.
+        /// Gets the charge current request of a <see cref="IVehicle"/>.
         /// </summary>
         public long? ChargeCurrentRequest { get; }
 
         /// <summary>
-        /// Gets the maximum charge current request of a <see cref="Vehicle"/>.
+        /// Gets the maximum charge current request of a <see cref="IVehicle"/>.
         /// </summary>
         public long? ChargeCurrentRequestMax { get; }
 
         /// <summary>
-        /// Gets a value indicating whether managed charging is active for a <see cref="Vehicle"/>.
+        /// Gets a value indicating whether managed charging is active for a <see cref="IVehicle"/>.
         /// </summary>
         public bool? ManagedChargingActive { get; }
 
         /// <summary>
-        /// Gets a value indicating whether managed charging for <see cref="Vehicle"/> has been canceled by a user.
+        /// Gets a value indicating whether managed charging for <see cref="IVehicle"/> has been canceled by a user.
         /// </summary>
         public bool? ManagedChargingUserCanceled { get; }
 
         /// <summary>
-        /// Gets the managed charging start time of a <see cref="Vehicle"/>.
+        /// Gets the managed charging start time of a <see cref="IVehicle"/>.
         /// </summary>
         public long? ManagedChargingStartTime { get; }
 
         /// <summary>
-        /// Gets the UTC <see cref="DateTime"/> of the managed charging start time of a <see cref="Vehicle"/>.
+        /// Gets the UTC <see cref="DateTime"/> of the managed charging start time of a <see cref="IVehicle"/>.
         /// </summary>
         public DateTime? ManagedChargingStartTimeUtc => EpochConversion.FromSeconds(ManagedChargingStartTime);
 
         /// <summary>
-        /// Gets a value indicating whether battery heating is on for a <see cref="Vehicle"/>.
+        /// Gets a value indicating whether battery heating is on for a <see cref="IVehicle"/>.
         /// </summary>
         public bool? BatteryHeaterOn { get; }
 
         /// <summary>
-        /// Gets a value indicating whether there is not enough power to heat a <see cref="Vehicle"/>.
+        /// Gets a value indicating whether there is not enough power to heat a <see cref="IVehicle"/>.
         /// </summary>
         public bool? NotEnoughPowerToHeat { get; }
 
         /// <summary>
-        /// Gets the millisecond Epoch timestamp when the <see cref="ChargeState"/> was captured.
+        /// Gets the millisecond Epoch timestamp when the <see cref="IChargeState"/> was captured.
         /// </summary>
         public long Timestamp { get; }
 
         /// <summary>
-        /// Gets the UTC <see cref="DateTime"/> when the <see cref="ChargeState"/> was captured.
+        /// Gets the UTC <see cref="DateTime"/> when the <see cref="IChargeState"/> was captured.
         /// </summary>
         public DateTime TimestampUtc => EpochConversion.FromMilliseconds(Timestamp);
 

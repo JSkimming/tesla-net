@@ -10,7 +10,6 @@ namespace Tesla.NET
     using AutoFixture;
     using AutoTest.ArgNullEx;
     using AutoTest.ArgNullEx.Xunit;
-    using Tesla.NET.Models;
 
     [AttributeUsage(AttributeTargets.Method)]
     internal class RequiresArgNullExAutoMoqAttribute : RequiresArgumentNullExceptionAttribute

@@ -54,14 +54,14 @@ namespace Tesla.NET
         }
 
         /// <inheritdoc />
-        public Task<MessageResponse<ResponseDataWrapper<IReadOnlyList<Vehicle>>>> GetVehiclesAsync(
+        public Task<IMessageResponse<IResponseDataWrapper<IReadOnlyList<IVehicle>>>> GetVehiclesAsync(
             CancellationToken cancellationToken = default)
         {
             return Client.GetVehiclesAsync(BaseUri, cancellationToken: cancellationToken);
         }
 
         /// <inheritdoc />
-        public Task<MessageResponse<ResponseDataWrapper<IReadOnlyList<Vehicle>>>> GetVehiclesAsync(
+        public Task<IMessageResponse<IResponseDataWrapper<IReadOnlyList<IVehicle>>>> GetVehiclesAsync(
             string accessToken,
             CancellationToken cancellationToken = default)
         {
@@ -72,7 +72,7 @@ namespace Tesla.NET
         }
 
         /// <inheritdoc />
-        public Task<MessageResponse<ResponseDataWrapper<ChargeState>>> GetChargeStateAsync(
+        public Task<IMessageResponse<IResponseDataWrapper<IChargeState>>> GetChargeStateAsync(
             long vehicleId,
             CancellationToken cancellationToken = default)
         {
@@ -80,7 +80,7 @@ namespace Tesla.NET
         }
 
         /// <inheritdoc />
-        public Task<MessageResponse<ResponseDataWrapper<ChargeState>>> GetChargeStateAsync(
+        public Task<IMessageResponse<IResponseDataWrapper<IChargeState>>> GetChargeStateAsync(
             long vehicleId,
             string accessToken,
             CancellationToken cancellationToken = default)
@@ -92,7 +92,7 @@ namespace Tesla.NET
         }
 
         /// <inheritdoc />
-        public Task<MessageResponse<ResponseDataWrapper<DriveState>>> GetDriveStateAsync(
+        public Task<IMessageResponse<IResponseDataWrapper<IDriveState>>> GetDriveStateAsync(
             long vehicleId,
             CancellationToken cancellationToken = default)
         {
@@ -100,7 +100,7 @@ namespace Tesla.NET
         }
 
         /// <inheritdoc />
-        public Task<MessageResponse<ResponseDataWrapper<DriveState>>> GetDriveStateAsync(
+        public Task<IMessageResponse<IResponseDataWrapper<IDriveState>>> GetDriveStateAsync(
             long vehicleId,
             string accessToken,
             CancellationToken cancellationToken = default)
@@ -112,7 +112,7 @@ namespace Tesla.NET
         }
 
         /// <inheritdoc />
-        public Task<MessageResponse<ResponseDataWrapper<VehicleState>>> GetVehicleStateAsync(
+        public Task<IMessageResponse<IResponseDataWrapper<IVehicleState>>> GetVehicleStateAsync(
             long vehicleId,
             CancellationToken cancellationToken = default)
         {
@@ -120,7 +120,7 @@ namespace Tesla.NET
         }
 
         /// <inheritdoc />
-        public Task<MessageResponse<ResponseDataWrapper<VehicleState>>> GetVehicleStateAsync(
+        public Task<IMessageResponse<IResponseDataWrapper<IVehicleState>>> GetVehicleStateAsync(
             long vehicleId,
             string accessToken,
             CancellationToken cancellationToken = default)

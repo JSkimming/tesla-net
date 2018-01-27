@@ -54,7 +54,7 @@ namespace Tesla.NET
         }
 
         /// <inheritdoc />
-        public Task<MessageResponse<AccessTokenResponse>> RequestAccessTokenAsync(
+        public Task<IMessageResponse<IAccessTokenResponse>> RequestAccessTokenAsync(
             string clientId,
             string clientSecret,
             string email,
@@ -65,7 +65,7 @@ namespace Tesla.NET
         }
 
         /// <inheritdoc />
-        public Task<MessageResponse<AccessTokenResponse>> RefreshAccessTokenAsync(
+        public Task<IMessageResponse<IAccessTokenResponse>> RefreshAccessTokenAsync(
             string clientId,
             string clientSecret,
             string refreshToken,

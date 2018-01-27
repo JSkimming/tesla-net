@@ -1,13 +1,13 @@
 ﻿// Copyright (c) 2018 James Skimming. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
-namespace Tesla.NET.Models
+namespace Tesla.NET.Models.Internal
 {
     using System;
     using System.Diagnostics;
 
     /// <summary>
-    /// The drive state of a <see cref="Vehicle"/>.
+    /// The drive state of a <see cref="IVehicle"/>.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class DriveState : IDriveState
@@ -44,32 +44,32 @@ namespace Tesla.NET.Models
         }
 
         /// <summary>
-        /// Gets the shift state of a <see cref="Vehicle"/>.
+        /// Gets the shift state of a <see cref="IVehicle"/>.
         /// </summary>
         public string ShiftState { get; }
 
         /// <summary>
-        /// Gets the speed <see cref="Vehicle"/>.
+        /// Gets the speed <see cref="IVehicle"/>.
         /// </summary>
         public string Speed { get; }
 
         /// <summary>
-        /// Gets the power <see cref="Vehicle"/>.
+        /// Gets the power <see cref="IVehicle"/>.
         /// </summary>
         public long Power { get; }
 
         /// <summary>
-        /// Gets the GPS latitude <see cref="Vehicle"/>.
+        /// Gets the GPS latitude <see cref="IVehicle"/>.
         /// </summary>
         public double Latitude { get; }
 
         /// <summary>
-        /// Gets the GPS longitude <see cref="Vehicle"/>.
+        /// Gets the GPS longitude <see cref="IVehicle"/>.
         /// </summary>
         public double Longitude { get; }
 
         /// <summary>
-        /// Gets the heading <see cref="Vehicle"/>.
+        /// Gets the heading <see cref="IVehicle"/>.
         /// </summary>
         public long Heading { get; }
 
@@ -84,12 +84,12 @@ namespace Tesla.NET.Models
         public DateTime GpsAsOfUtc => EpochConversion.FromSeconds(GpsAsOf);
 
         /// <summary>
-        /// Gets the millisecond Epoch timestamp when the <see cref="DriveState"/> was captured.
+        /// Gets the millisecond Epoch timestamp when the <see cref="IDriveState"/> was captured.
         /// </summary>
         public long Timestamp { get; }
 
         /// <summary>
-        /// Gets the UTC <see cref="DateTime"/> when the <see cref="DriveState"/> was captured.
+        /// Gets the UTC <see cref="DateTime"/> when the <see cref="IDriveState"/> was captured.
         /// </summary>
         public DateTime TimestampUtc => EpochConversion.FromMilliseconds(Timestamp);
 
