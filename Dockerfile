@@ -15,7 +15,7 @@ RUN dotnet restore
 COPY . .
 
 # Build to ensure the tests are their own distinct step
-RUN dotnet build -f netcoreapp2.0 -c Debug ./test/Tesla.NET.Tests/Tesla.NET.Tests.csproj
+RUN dotnet build --no-restore -f netcoreapp2.0 -c Debug ./test/Tesla.NET.Tests/Tesla.NET.Tests.csproj
 
 # Run unit tests
 RUN dotnet test --no-restore --no-build -c Debug -f netcoreapp2.0 test/Tesla.NET.Tests/Tesla.NET.Tests.csproj
