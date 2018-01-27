@@ -7,7 +7,7 @@ namespace Tesla.NET.Models
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Information about the physical state of a <see cref="Vehicle"/>.
+    /// Information about the physical state of a <see cref="IVehicle"/>.
     /// </summary>
     public interface IVehicleState : IState
     {
@@ -162,7 +162,7 @@ namespace Tesla.NET.Models
         bool ValetPinNeeded { get; }
 
         /// <summary>
-        /// Gets the name of the <see cref="Vehicle"/>.
+        /// Gets the name of the <see cref="IVehicle"/>.
         /// </summary>
         [JsonProperty("vehicle_name")]
         string VehicleName { get; }

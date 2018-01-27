@@ -152,12 +152,12 @@ namespace Tesla.NET.Requests
         }
 
         /// <summary>
-        /// Gets the <see cref="ChargeState"/> of the <see cref="Vehicle"/> with the specified
-        /// <see cref="Vehicle.Id"/>.
+        /// Gets the <see cref="IChargeState"/> of the <see cref="IVehicle"/> with the specified
+        /// <see cref="IVehicle.Id"/>.
         /// </summary>
         /// <param name="client">The <see cref="HttpClient"/>.</param>
         /// <param name="baseUri">The base <see cref="Uri"/> of the Tesla Owner API.</param>
-        /// <param name="vehicleId">The unique <see cref="Vehicle.Id"/> of a <see cref="Vehicle"/>.</param>
+        /// <param name="vehicleId">The unique <see cref="IVehicle.Id"/> of a <see cref="IVehicle"/>.</param>
         /// <param name="accessToken">
         /// The access token used to authenticate the request; can be <see langword="null"/> if the authentication is
         /// added by default.
@@ -165,7 +165,7 @@ namespace Tesla.NET.Requests
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
         /// complete.</param>
         /// <returns>
-        /// The <see cref="ChargeState"/> of the <see cref="Vehicle"/> with the specified <see cref="Vehicle.Id"/>.
+        /// The <see cref="IChargeState"/> of the <see cref="IVehicle"/> with the specified <see cref="IVehicle.Id"/>.
         /// </returns>
         public static Task<IMessageResponse<IResponseDataWrapper<IChargeState>>> GetChargeStateAsync(
             this HttpClient client,
@@ -189,12 +189,12 @@ namespace Tesla.NET.Requests
         }
 
         /// <summary>
-        /// Gets the <see cref="DriveState"/> of the <see cref="Vehicle"/> with the specified
-        /// <see cref="Vehicle.Id"/>.
+        /// Gets the <see cref="IDriveState"/> of the <see cref="IVehicle"/> with the specified
+        /// <see cref="IVehicle.Id"/>.
         /// </summary>
         /// <param name="client">The <see cref="HttpClient"/>.</param>
         /// <param name="baseUri">The base <see cref="Uri"/> of the Tesla Owner API.</param>
-        /// <param name="vehicleId">The unique <see cref="Vehicle.Id"/> of a <see cref="Vehicle"/>.</param>
+        /// <param name="vehicleId">The unique <see cref="IVehicle.Id"/> of a <see cref="IVehicle"/>.</param>
         /// <param name="accessToken">
         /// The access token used to authenticate the request; can be <see langword="null"/> if the authentication is
         /// added by default.
@@ -202,7 +202,7 @@ namespace Tesla.NET.Requests
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
         /// complete.</param>
         /// <returns>
-        /// The <see cref="DriveState"/> of the <see cref="Vehicle"/> with the specified <see cref="Vehicle.Id"/>.
+        /// The <see cref="IDriveState"/> of the <see cref="IVehicle"/> with the specified <see cref="IVehicle.Id"/>.
         /// </returns>
         public static Task<IMessageResponse<IResponseDataWrapper<IDriveState>>> GetDriveStateAsync(
             this HttpClient client,
@@ -226,12 +226,12 @@ namespace Tesla.NET.Requests
         }
 
         /// <summary>
-        /// Gets the <see cref="VehicleState"/> of the <see cref="Vehicle"/> with the specified
-        /// <see cref="Vehicle.Id"/>.
+        /// Gets the <see cref="IVehicleState"/> of the <see cref="IVehicle"/> with the specified
+        /// <see cref="IVehicle.Id"/>.
         /// </summary>
         /// <param name="client">The <see cref="HttpClient"/>.</param>
         /// <param name="baseUri">The base <see cref="Uri"/> of the Tesla Owner API.</param>
-        /// <param name="vehicleId">The unique <see cref="Vehicle.Id"/> of a <see cref="Vehicle"/>.</param>
+        /// <param name="vehicleId">The unique <see cref="IVehicle.Id"/> of a <see cref="IVehicle"/>.</param>
         /// <param name="accessToken">
         /// The access token used to authenticate the request; can be <see langword="null"/> if the authentication is
         /// added by default.
@@ -239,7 +239,7 @@ namespace Tesla.NET.Requests
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
         /// complete.</param>
         /// <returns>
-        /// The <see cref="VehicleState"/> of the <see cref="Vehicle"/> with the specified <see cref="Vehicle.Id"/>.
+        /// The <see cref="IVehicleState"/> of the <see cref="IVehicle"/> with the specified <see cref="IVehicle.Id"/>.
         /// </returns>
         public static Task<IMessageResponse<IResponseDataWrapper<IVehicleState>>> GetVehicleStateAsync(
             this HttpClient client,
@@ -376,7 +376,7 @@ namespace Tesla.NET.Requests
         /// <param name="responseMessage">The <see cref="HttpResponseMessage"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
         /// complete.</param>
-        /// <returns>The <see cref="MessageResponse{T}"/>.</returns>
+        /// <returns>The <see cref="IMessageResponse{T}"/>.</returns>
         private static async Task<IMessageResponse<T>> ReadSuccessResponseAsync<T>(
             this HttpResponseMessage responseMessage,
             CancellationToken cancellationToken)
@@ -395,14 +395,14 @@ namespace Tesla.NET.Requests
         }
 
         /// <summary>
-        /// Creates an error <see cref="MessageResponse{T}"/> from the <paramref name="responseMessage"/>, extracting
-        /// the <see cref="MessageResponse{T}.RawJson"/> if the content of the response is JSON.
+        /// Creates an error <see cref="IMessageResponse{T}"/> from the <paramref name="responseMessage"/>, extracting
+        /// the <see cref="IMessageResponse.RawJson"/> if the content of the response is JSON.
         /// </summary>
         /// <typeparam name="T">The <see cref="Type"/> of the object to deserialize.</typeparam>
         /// <param name="responseMessage">The <see cref="HttpResponseMessage"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
         /// complete.</param>
-        /// <returns>The <see cref="MessageResponse{T}"/>.</returns>
+        /// <returns>The <see cref="IMessageResponse{T}"/>.</returns>
         private static async Task<IMessageResponse<T>> ReadFailureResponseAsync<T>(
             this HttpResponseMessage responseMessage,
             CancellationToken cancellationToken)

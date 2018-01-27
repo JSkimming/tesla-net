@@ -7,42 +7,42 @@ namespace Tesla.NET.Models
     using Newtonsoft.Json;
 
     /// <summary>
-    /// The drive state of a <see cref="Vehicle"/>.
+    /// The drive state of a <see cref="IVehicle"/>.
     /// </summary>
     public interface IDriveState : IState
     {
         /// <summary>
-        /// Gets the shift state of a <see cref="Vehicle"/>.
+        /// Gets the shift state of a <see cref="IVehicle"/>.
         /// </summary>
         [JsonProperty("shift_state")]
         string ShiftState { get; }
 
         /// <summary>
-        /// Gets the speed <see cref="Vehicle"/>.
+        /// Gets the speed <see cref="IVehicle"/>.
         /// </summary>
         [JsonProperty("speed")]
         string Speed { get; }
 
         /// <summary>
-        /// Gets the power <see cref="Vehicle"/>.
+        /// Gets the power <see cref="IVehicle"/>.
         /// </summary>
         [JsonProperty("power")]
         long Power { get; }
 
         /// <summary>
-        /// Gets the GPS latitude <see cref="Vehicle"/>.
+        /// Gets the GPS latitude <see cref="IVehicle"/>.
         /// </summary>
         [JsonProperty("latitude")]
         double Latitude { get; }
 
         /// <summary>
-        /// Gets the GPS longitude <see cref="Vehicle"/>.
+        /// Gets the GPS longitude <see cref="IVehicle"/>.
         /// </summary>
         [JsonProperty("longitude")]
         double Longitude { get; }
 
         /// <summary>
-        /// Gets the heading <see cref="Vehicle"/>.
+        /// Gets the heading <see cref="IVehicle"/>.
         /// </summary>
         [JsonProperty("heading")]
         long Heading { get; }

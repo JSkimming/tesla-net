@@ -7,7 +7,7 @@ namespace Tesla.NET.Models
     using System.Diagnostics;
 
     /// <summary>
-    /// Information about the physical state of a <see cref="Vehicle"/>.
+    /// Information about the physical state of a <see cref="IVehicle"/>.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class VehicleState : IVehicleState
@@ -216,12 +216,12 @@ namespace Tesla.NET.Models
         public string SunRoofState { get; }
 
         /// <summary>
-        /// Gets the millisecond Epoch timestamp when the <see cref="VehicleState"/> was captured.
+        /// Gets the millisecond Epoch timestamp when the <see cref="IVehicleState"/> was captured.
         /// </summary>
         public long Timestamp { get; }
 
         /// <summary>
-        /// Gets the UTC <see cref="DateTime"/> when the <see cref="VehicleState"/> was captured.
+        /// Gets the UTC <see cref="DateTime"/> when the <see cref="IVehicleState"/> was captured.
         /// </summary>
         public DateTime TimestampUtc => EpochConversion.FromMilliseconds(Timestamp);
 
@@ -236,7 +236,7 @@ namespace Tesla.NET.Models
         public bool ValetPinNeeded { get; }
 
         /// <summary>
-        /// Gets the name of the <see cref="Vehicle"/>.
+        /// Gets the name of the <see cref="IVehicle"/>.
         /// </summary>
         public string VehicleName { get; }
 
