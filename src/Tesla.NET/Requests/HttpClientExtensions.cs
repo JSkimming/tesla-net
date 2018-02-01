@@ -7,6 +7,7 @@ namespace Tesla.NET.Requests
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Net;
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Threading;
@@ -412,10 +413,20 @@ namespace Tesla.NET.Requests
             if (responseMessage == null)
                 throw new ArgumentNullException(nameof(responseMessage));
 
-            JObject rawJson =
-                IsContentJson(responseMessage)
-                    ? await ReadJsonAsync(responseMessage, cancellationToken).ConfigureAwait(false)
-                    : null;
+            JObject rawJson = null;
+            try
+            {
+                // Check the content is JSON, and the response was not Unauthorized as the API returns a Content-Type
+                // of application/json, but not JSON content.
+                rawJson =
+                    IsContentJson(responseMessage) && responseMessage.StatusCode != HttpStatusCode.Unauthorized
+                        ? await ReadJsonAsync(responseMessage, cancellationToken).ConfigureAwait(false)
+                        : null;
+            }
+            catch
+            {
+                // ignored to allow the error code to be returned.
+            }
 
             IMessageResponse<T> response = new MessageResponse<T>(responseMessage.StatusCode, rawJson);
             return response;
