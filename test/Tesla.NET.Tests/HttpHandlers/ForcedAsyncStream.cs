@@ -11,7 +11,7 @@ namespace Tesla.NET.HttpHandlers
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Adds a yield to <see cref="ReadAsync"/> to ensure streams are read asynchronously.
+    /// Adds a <see cref="Task.Yield"/> to <see cref="ReadAsync"/> to ensure streams are read asynchronously.
     /// </summary>
     internal class ForcedAsyncStream : Stream
     {
