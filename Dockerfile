@@ -1,4 +1,4 @@
-FROM microsoft/aspnetcore-build:2.0.0
+FROM microsoft/dotnet:2.1-sdk
 
 ENV DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
 
@@ -15,7 +15,7 @@ RUN dotnet restore
 COPY . .
 
 # Build to ensure the tests are their own distinct step
-RUN dotnet build --no-restore -f netcoreapp2.0 -c Debug ./test/Tesla.NET.Tests/Tesla.NET.Tests.csproj
+RUN dotnet build --no-restore -f netcoreapp2.1 -c Debug ./test/Tesla.NET.Tests/Tesla.NET.Tests.csproj
 
 # Run unit tests
-RUN dotnet test --no-restore --no-build -c Debug -f netcoreapp2.0 test/Tesla.NET.Tests/Tesla.NET.Tests.csproj
+RUN dotnet test --no-restore --no-build -c Debug -f netcoreapp2.1 test/Tesla.NET.Tests/Tesla.NET.Tests.csproj
