@@ -1,0 +1,16 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: microsoft/dotnet:2.1-sdk
+    steps:
+      - checkout
+      - run:
+          name: Restore
+          command: dotnet restore
+      - run:
+          name: Build
+          command: dotnet build --no-restore -f netcoreapp2.1 -c Release ./test/Tesla.NET.Tests/Tesla.NET.Tests.csproj
+      - run:
+          name: Test
+          command: dotnet test --no-restore --no-build -c Release -f netcoreapp2.1 test/Tesla.NET.Tests/Tesla.NET.Tests.csproj /p:CollectCoverage=true
