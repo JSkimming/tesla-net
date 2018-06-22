@@ -139,7 +139,7 @@ namespace Tesla.NET
             Action action = () => TeslaClientBase.CreatePipeline(_handlers);
 
             // Assert
-            action.ShouldThrowExactly<ArgumentException>();
+            action.Should().ThrowExactly<ArgumentException>();
         }
     }
 
