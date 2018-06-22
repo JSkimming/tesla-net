@@ -76,7 +76,7 @@ namespace Tesla.NET
             Func<Task> action = () => Sut.GetVehicleStateAsync(_vehicleId, AccessToken);
 
             // Assert
-            action.ShouldNotThrow();
+            action.Should().NotThrow();
         }
     }
 

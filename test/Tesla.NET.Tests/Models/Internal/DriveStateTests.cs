@@ -72,7 +72,7 @@ namespace Tesla.NET.Models.Internal
         }
 
         [Fact]
-        public void Should_retain_all_properties() => _actual.ShouldBeEquivalentTo(_expected, WithStrictOrdering);
+        public void Should_retain_all_properties() => _actual.Should().BeEquivalentTo(_expected, WithStrictOrdering);
     }
 
     public class When_deserializing_DriveState_Should_deserialize : FixtureContext

@@ -73,7 +73,7 @@ namespace Tesla.NET
 
             // Assert
             actual.HttpStatusCode.Should().Be(HttpStatusCode.OK);
-            actual.Data.ShouldBeEquivalentTo(_expected, WithStrictOrdering);
+            actual.Data.Should().BeEquivalentTo(_expected, WithStrictOrdering);
         }
 
         [Fact]
