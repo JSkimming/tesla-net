@@ -11,7 +11,7 @@ namespace Tesla.NET.Models.Internal
     internal static class EpochConversion
     {
         /// <summary>
-        /// The Unix Epoch which is 1970-01-01T00:00:00.000Z
+        /// The Unix Epoch which is 1970-01-01T00:00:00.000Z.
         /// </summary>
         public static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
