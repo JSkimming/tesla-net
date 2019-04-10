@@ -226,7 +226,7 @@ namespace Tesla.NET.Models.Internal
         public DateTime TimestampUtc => EpochConversion.FromMilliseconds(Timestamp);
 
         /// <summary>
-        /// Gets a value indicating whether valet mode is enabled,
+        /// Gets a value indicating whether valet mode is enabled.
         /// </summary>
         public bool ValetMode { get; }
 

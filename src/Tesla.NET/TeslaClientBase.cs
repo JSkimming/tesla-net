@@ -77,7 +77,7 @@ namespace Tesla.NET
         /// Chain of <see cref="HttpMessageHandler" /> instances.
         /// All but the last should be <see cref="DelegatingHandler"/>s.
         /// </param>
-        /// <returns>A chain of <see cref="HttpMessageHandler"/>s</returns>
+        /// <returns>A chain of <see cref="HttpMessageHandler"/>s.</returns>
         public static HttpMessageHandler CreatePipeline(IReadOnlyCollection<HttpMessageHandler> handlers)
         {
             if (handlers == null)

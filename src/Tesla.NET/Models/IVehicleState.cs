@@ -150,7 +150,7 @@ namespace Tesla.NET.Models
         string SunRoofState { get; }
 
         /// <summary>
-        /// Gets a value indicating whether valet mode is enabled,
+        /// Gets a value indicating whether valet mode is enabled.
         /// </summary>
         [JsonProperty("valet_mode")]
         bool ValetMode { get; }
