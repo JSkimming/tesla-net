@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoFixture.AutoMoq" Version="4.4.0" />
+    <PackageReference Include="AutoFixture.AutoMoq" Version="4.8.0" />
     <PackageReference Include="AutoFixture.SeedExtensions" Version="4.4.0" />
     <PackageReference Include="AutoFixture.Xunit2" Version="4.4.0" />
     <PackageReference Include="AutoTest.ArgumentNullException.Xunit" Version="0.9.0" />
