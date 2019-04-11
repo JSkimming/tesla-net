@@ -13,7 +13,8 @@ namespace Tesla.NET.Models.Internal
         /// <summary>
         /// The Unix Epoch which is 1970-01-01T00:00:00.000Z.
         /// </summary>
-        public static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        public static readonly DateTime Epoch =
+            new DateTime(year: 1970, month: 1, day: 1, hour: 0, minute: 0, second: 0, DateTimeKind.Utc);
 
         /// <summary>
         /// Returns the UTC <see cref="DateTime"/> of the <paramref name="epoch"/> seconds.

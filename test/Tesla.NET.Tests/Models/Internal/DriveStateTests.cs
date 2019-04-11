@@ -184,7 +184,8 @@ namespace Tesla.NET.Models.Internal
 
     public class DriveState_Should_calculate
     {
-        private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        private static readonly DateTime Epoch =
+            new DateTime(year: 1970, month: 1, day: 1, hour: 0, minute: 0, second: 0, DateTimeKind.Utc);
 
         private readonly DriveState _sut;
 
