@@ -140,7 +140,7 @@ namespace Tesla.NET.Models
         /// <summary>
         /// Gets the percentage the sun roof is open.
         /// </summary>
-        [JsonProperty("sun_roof_percent_open")]
+        [JsonProperty("sun_roof_percent_open", NullValueHandling = NullValueHandling.Ignore)]
         long SunRoofPercentOpen { get; }
 
         /// <summary>
