@@ -140,8 +140,8 @@ namespace Tesla.NET.Models
         /// <summary>
         /// Gets the percentage the sun roof is open.
         /// </summary>
-        [JsonProperty("sun_roof_percent_open", NullValueHandling = NullValueHandling.Ignore)]
-        long SunRoofPercentOpen { get; }
+        [JsonProperty("sun_roof_percent_open")]
+        long? SunRoofPercentOpen { get; }
 
         /// <summary>
         /// Gets the state of the sunroof.
@@ -150,7 +150,7 @@ namespace Tesla.NET.Models
         string SunRoofState { get; }
 
         /// <summary>
-        /// Gets a value indicating whether valet mode is enabled,
+        /// Gets a value indicating whether valet mode is enabled.
         /// </summary>
         [JsonProperty("valet_mode")]
         bool ValetMode { get; }

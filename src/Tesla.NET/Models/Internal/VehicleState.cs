@@ -208,7 +208,7 @@ namespace Tesla.NET.Models.Internal
         /// <summary>
         /// Gets the percentage the sun roof is open.
         /// </summary>
-        public long SunRoofPercentOpen { get; }
+        public long? SunRoofPercentOpen { get; }
 
         /// <summary>
         /// Gets the state of the sunroof.
@@ -226,7 +226,7 @@ namespace Tesla.NET.Models.Internal
         public DateTime TimestampUtc => EpochConversion.FromMilliseconds(Timestamp);
 
         /// <summary>
-        /// Gets a value indicating whether valet mode is enabled,
+        /// Gets a value indicating whether valet mode is enabled.
         /// </summary>
         public bool ValetMode { get; }
 

@@ -1,0 +1,45 @@
+﻿{
+  "response": {
+    "api_version": 6,
+    "autopark_state_v2": "ready",
+    "autopark_style": "dead_man",
+    "calendar_supported": true,
+    "car_version": "2019.8.4 530d1d3",
+    "center_display_state": 0,
+    "df": 0,
+    "dr": 0,
+    "ft": 0,
+    "homelink_nearby": false,
+    "is_user_present": false,
+    "last_autopark_error": "no_error",
+    "locked": true,
+    "media_state": { "remote_control_enabled": true },
+    "notifications_supported": true,
+    "odometer": 1541.56235,
+    "parsed_calendar_supported": true,
+    "pf": 0,
+    "pr": 0,
+    "remote_start": false,
+    "remote_start_enabled": true,
+    "remote_start_supported": true,
+    "rt": 0,
+    "sentry_mode": false,
+    "software_update": {
+      "expected_duration_sec": 2700,
+      "status": ""
+    },
+    "speed_limit_mode": {
+      "active": false,
+      "current_limit_mph": 87.485484,
+      "max_limit_mph": 90,
+      "min_limit_mph": 50,
+      "pin_code_set": false
+    },
+    "sun_roof_percent_open": null,
+    "sun_roof_state": "unknown",
+    "timestamp": 1556546887099,
+    "valet_mode": false,
+    "valet_pin_needed": true,
+    "vehicle_name": ""
+  }
+}

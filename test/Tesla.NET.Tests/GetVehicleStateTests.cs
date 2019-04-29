@@ -175,4 +175,35 @@ namespace Tesla.NET
             response.RawJsonAsString.Should().Be(_expected.ToString(Formatting.None));
         }
     }
+
+    public class When_getting_the_vehicle_state_for_a_vehicle_the_raw_JSON_V6 : ClientRequestContext
+    {
+        private readonly JObject _expected;
+        private readonly long _vehicleId;
+
+        public When_getting_the_vehicle_state_for_a_vehicle_the_raw_JSON_V6(ITestOutputHelper output)
+            : base(output, useCustomBaseUri: false)
+        {
+            // Arrange
+            _expected = SampleJson.GetVehicleStateResponseV6;
+            _vehicleId = Fixture.Create<long>();
+
+            // Add random values to test whether it is correctly passed through.
+            _expected["randomValue1"] = Fixture.Create("randomValue1");
+            _expected["randomValue2"] = JObject.FromObject(new { fakeId = Guid.NewGuid() });
+            _expected["response"]["randomValue3"] = Fixture.Create("randomValue3");
+
+            Handler.SetResponseContent(_expected);
+        }
+
+        [Fact]
+        public async Task Should_be_passed_through_in_the_response()
+        {
+            // Act
+            IMessageResponse response = await Sut.GetVehicleStateAsync(_vehicleId).ConfigureAwait(false);
+
+            // Assert
+            response.RawJsonAsString.Should().Be(_expected.ToString(Formatting.None));
+        }
+    }
 }
