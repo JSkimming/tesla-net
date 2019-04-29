@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Models\GetVehicleStateResponseV6.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoFixture.AutoMoq" Version="4.8.0" />
     <PackageReference Include="AutoFixture.SeedExtensions" Version="4.8.0" />
     <PackageReference Include="AutoFixture.Xunit2" Version="4.8.0" />
