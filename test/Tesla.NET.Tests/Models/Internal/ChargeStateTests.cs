@@ -492,6 +492,9 @@ namespace Tesla.NET.Models.Internal
         public void scheduled_charging_start_time() => _sut.ScheduledChargingStartTime.Should().BeNull();
 
         [Fact]
+        public void scheduled_charging_start_time_UTC() => _sut.ScheduledChargingStartTimeUtc.Should().BeNull();
+
+        [Fact]
         public void scheduled_charging_pending() => _sut.ScheduledChargingPending.Should().BeNull();
 
         [Fact]
@@ -520,6 +523,9 @@ namespace Tesla.NET.Models.Internal
 
         [Fact]
         public void managed_charging_start_time() => _sut.ManagedChargingStartTime.Should().BeNull();
+
+        [Fact]
+        public void managed_charging_start_time_UTC() => _sut.ManagedChargingStartTimeUtc.Should().BeNull();
 
         [Fact]
         public void battery_heater_on() => _sut.BatteryHeaterOn.Should().BeNull();
