@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net47;netcoreapp2.1</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
     <RootNamespace>Tesla.NET</RootNamespace>
     <IsPackable>false</IsPackable>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -13,8 +14,8 @@
     <PackageReference Include="AutoFixture.Xunit2" Version="4.8.0" />
     <PackageReference Include="AutoTest.ArgumentNullException.Xunit" Version="0.9.0" />
     <PackageReference Include="coverlet.msbuild" Version="2.0.1" />
-    <PackageReference Include="FluentAssertions" Version="5.4.1" />
-    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.1.1" />
+    <PackageReference Include="FluentAssertions" Version="5.6.0" />
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
     <PackageReference Include="Moq" Version="4.10.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
@@ -32,6 +33,16 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Tesla.NET\Tesla.NET.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="xunit.runner.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
 
 </Project>
