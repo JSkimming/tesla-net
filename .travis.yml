@@ -18,4 +18,4 @@ branches:
   - master
 
 script:
-  - dotnet test -c Release -f netcoreapp2.1 test/Tesla.NET.Tests/Tesla.NET.Tests.csproj /p:CollectCoverage=true
+  - dotnet test -c Release -f netcoreapp2.1 test/Tesla.NET.Tests/Tesla.NET.Tests.csproj /p:CollectCoverage=true /p:Include="[Tesla.NET]*" /p:Exclude="[*.Tests]*"
