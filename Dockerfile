@@ -18,4 +18,4 @@ COPY . .
 RUN dotnet build --no-restore -f netcoreapp2.1 -c Debug ./test/Tesla.NET.Tests/Tesla.NET.Tests.csproj
 
 # Run unit tests.
-RUN dotnet test --no-restore --no-build -c Debug -f netcoreapp2.1 test/Tesla.NET.Tests/Tesla.NET.Tests.csproj /p:CollectCoverage=true
+RUN dotnet test --no-restore --no-build -c Debug -f netcoreapp2.1 test/Tesla.NET.Tests/Tesla.NET.Tests.csproj /p:CollectCoverage=true /p:Include="[Tesla.NET*]*" /p:Exclude="[*.Tests]*"
