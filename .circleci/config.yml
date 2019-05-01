@@ -29,7 +29,7 @@ orbs:
               command: dotnet build --no-restore -f << parameters.framework >> -c << parameters.build-config >> ./test/Tesla.NET.Tests/Tesla.NET.Tests.csproj
           - run:
               name: Test
-              command: dotnet test --no-restore --no-build -f << parameters.framework >> -c << parameters.build-config >> ./test/Tesla.NET.Tests/Tesla.NET.Tests.csproj /p:CollectCoverage=true
+              command: dotnet test --no-restore --no-build -f << parameters.framework >> -c << parameters.build-config >> ./test/Tesla.NET.Tests/Tesla.NET.Tests.csproj /p:CollectCoverage=true /p:Include="[Tesla.NET]*" /p:Exclude="[*.Tests]*"
           - store_artifacts:
               path: ./test/Tesla.NET.Tests/coverage.json
               destination: coverage.json
