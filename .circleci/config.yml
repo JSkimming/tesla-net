@@ -2,6 +2,8 @@ version: 2.1
 
 orbs:
 
+  shellcheck: circleci/shellcheck@1
+
   build:
     jobs:
 
@@ -22,17 +24,19 @@ orbs:
         steps:
           - checkout
           - run:
-              name: Restore
-              command: dotnet restore
-          - run:
-              name: Build
-              command: dotnet build --no-restore -f << parameters.framework >> -c << parameters.build-config >> ./test/Tesla.NET.Tests/Tesla.NET.Tests.csproj
-          - run:
-              name: Test
-              command: dotnet test --no-restore --no-build -f << parameters.framework >> -c << parameters.build-config >> ./test/Tesla.NET.Tests/Tesla.NET.Tests.csproj /p:CollectCoverage=true /p:Include="[Tesla.NET]*" /p:Exclude="[*.Tests]*"
+              name: Test Coverage
+              command: ./coverage.sh << parameters.framework >> << parameters.build-config >>
           - store_artifacts:
-              path: ./test/Tesla.NET.Tests/coverage.json
+              path: ./test/TestResults/coverage.json
               destination: coverage.json
+          - store_artifacts:
+              path: ./test/TestResults/coverage.opencover.xml
+              destination: coverage.opencover.xml
+          - store_artifacts:
+              path: ./test/TestResults/Report/
+              destination: report
+          - store_test_results:
+              path: ./test/TestResults/output/
 
     executors:
 
@@ -48,6 +52,8 @@ workflows:
 
   "Build All Frameworks":
     jobs:
+      - shellcheck/check:
+          name: shellcheck
       - build/run-build:
           name: 2.1 Debug Build
           image-tag: "2.1"
