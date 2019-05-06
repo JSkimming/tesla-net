@@ -10,7 +10,7 @@ matrix:
       dotnet: 2.1
       mono: none
     - os: osx
-      dotnet: 2.1.301
+      dotnet: 2.1.506
       mono: none
 
 branches:
@@ -18,4 +18,4 @@ branches:
   - master
 
 script:
-  - dotnet test -c Release -f netcoreapp2.1 test/Tesla.NET.Tests/Tesla.NET.Tests.csproj /p:CollectCoverage=true /p:Include="[Tesla.NET]*" /p:Exclude="[*.Tests]*"
+  - ./coverage.sh netcoreapp2.1 Release
