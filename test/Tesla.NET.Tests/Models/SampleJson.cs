@@ -49,6 +49,8 @@ namespace Tesla.NET.Models
 
         public static JObject GetVehicleStateResponse => Load<JObject>(nameof(GetVehicleStateResponse));
 
+        public static JObject GetVehicleStateResponse2 => Load<JObject>(nameof(GetVehicleStateResponse2));
+
         public static JObject Vehicle => (JObject)GetVehiclesResponse["response"][0];
 
         public static JObject VehicleMinimal => new JObject();
