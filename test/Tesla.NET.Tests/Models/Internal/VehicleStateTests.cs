@@ -320,7 +320,7 @@ namespace Tesla.NET.Models.Internal
         public void rt() => _sut.Rt.Should().Be(default(long));
 
         [Fact]
-        public void sun_roof_percent_open() => _sut.SunRoofPercentOpen.Should().Be(default(long));
+        public void sun_roof_percent_open() => _sut.SunRoofPercentOpen.Should().Be(default(long?));
 
         [Fact]
         public void sun_roof_state() => _sut.SunRoofState.Should().NotBeNull().And.BeEmpty();

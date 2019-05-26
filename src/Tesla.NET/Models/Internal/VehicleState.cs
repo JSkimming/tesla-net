@@ -64,7 +64,7 @@ namespace Tesla.NET.Models.Internal
             bool remoteStart = default,
             bool remoteStartSupported = default,
             long rt = default,
-            long sunRoofPercentOpen = default,
+            long? sunRoofPercentOpen = default,
             string sunRoofState = default,
             long timestamp = default,
             bool valetMode = default,
@@ -208,7 +208,7 @@ namespace Tesla.NET.Models.Internal
         /// <summary>
         /// Gets the percentage the sun roof is open.
         /// </summary>
-        public long SunRoofPercentOpen { get; }
+        public long? SunRoofPercentOpen { get; }
 
         /// <summary>
         /// Gets the state of the sunroof.
