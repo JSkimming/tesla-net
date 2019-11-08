@@ -366,16 +366,15 @@ namespace Tesla.NET.Requests
                 throw new ArgumentNullException(nameof(requestUri));
             if (parameters == null)
                 throw new ArgumentNullException(nameof(parameters));
+            if (string.IsNullOrWhiteSpace(accessToken))
+                throw new ArgumentNullException(nameof(accessToken));
 
             var requestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri)
             {
                 Content = new FormUrlEncodedContent(parameters),
             };
 
-            if (!string.IsNullOrWhiteSpace(accessToken))
-            {
-                requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            }
+            requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             using (requestMessage)
             {
