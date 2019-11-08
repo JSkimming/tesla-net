@@ -122,6 +122,50 @@ namespace Tesla.NET.Requests
         }
 
         /// <summary>
+        /// Revokes an access token.
+        /// </summary>
+        /// <param name="client">The <see cref="HttpClient"/>.</param>
+        /// <param name="baseUri">The base <see cref="Uri"/> of the Tesla Owner API.</param>
+        /// <param name="clientId">The unique ID of the client.</param>
+        /// <param name="clientSecret">The secret for the <paramref name="clientId"/>.</param>
+        /// <param name="accessToken">The access token give by the token request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
+        /// complete.</param>
+        /// <returns>The response to the request for an access token.</returns>
+        public static Task<IMessageResponse> RevokeAccessTokenAsync (
+            this HttpClient client,
+            Uri baseUri,
+            string clientId,
+            string clientSecret,
+            string accessToken,
+            CancellationToken cancellationToken = default)
+        {
+            if (client == null)
+                throw new ArgumentNullException(nameof(client));
+            if (baseUri == null)
+                throw new ArgumentNullException(nameof(baseUri));
+            if (string.IsNullOrWhiteSpace(clientId))
+                throw new ArgumentNullException(nameof(clientId));
+            if (string.IsNullOrWhiteSpace(clientSecret))
+                throw new ArgumentNullException(nameof(clientSecret));
+            if (string.IsNullOrWhiteSpace(accessToken))
+                throw new ArgumentNullException(nameof(accessToken));
+
+            Uri requestUri = new Uri(baseUri, "oauth/revoke");
+            IEnumerable<KeyValuePair<string, string>> parameters = GetRefreshAccessTokenParameters();
+
+            return
+                client
+                    .PostFormAsync(requestUri, parameters, cancellationToken)
+                    .ReadJsonAsAsync(cancellationToken);
+
+            IEnumerable<KeyValuePair<string, string>> GetRefreshAccessTokenParameters()
+            {
+                yield return new KeyValuePair<string, string>("token", accessToken);
+            }
+        }
+
+        /// <summary>
         /// Gets the vehicles associated with an account.
         /// </summary>
         /// <param name="client">The <see cref="HttpClient"/>.</param>
@@ -368,6 +412,25 @@ namespace Tesla.NET.Requests
                 IMessageResponse<TModel> response = await messageTask.ConfigureAwait(false);
                 return response;
             }
+        }
+
+        /// <summary>
+        /// Reads the JSON from the <paramref name="responseTask"/> and deserializes it to the type.
+        /// </summary>
+        /// <param name="responseTask">
+        /// The asynchronous <see cref="Task{T}"/> of a <see cref="HttpResponseMessage"/>.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
+        /// complete.</param>
+        /// <returns>The deserialized object of type <typeparamref/>.</returns>
+        private static async Task<IMessageResponse> ReadJsonAsAsync(
+            this Task<HttpResponseMessage> responseTask,
+            CancellationToken cancellationToken)
+        {
+            HttpResponseMessage responseMessage = await responseTask.ConfigureAwait(false);
+            using HttpResponseMessage message = responseMessage;
+            IMessageResponse response = new MessageResponse<object>(message.StatusCode);
+            return response;
         }
 
         /// <summary>
