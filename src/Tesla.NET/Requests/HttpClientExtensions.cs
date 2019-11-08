@@ -470,9 +470,11 @@ namespace Tesla.NET.Requests
             CancellationToken cancellationToken)
         {
             HttpResponseMessage responseMessage = await responseTask.ConfigureAwait(false);
-            using HttpResponseMessage message = responseMessage;
-            IMessageResponse response = new MessageResponse<object>(message.StatusCode);
-            return response;
+            using (HttpResponseMessage message = responseMessage)
+            {
+                IMessageResponse response = new MessageResponse<object>(message.StatusCode);
+                return response;
+            }
         }
 
         /// <summary>
