@@ -126,17 +126,13 @@ namespace Tesla.NET.Requests
         /// </summary>
         /// <param name="client">The <see cref="HttpClient"/>.</param>
         /// <param name="baseUri">The base <see cref="Uri"/> of the Tesla Owner API.</param>
-        /// <param name="clientId">The unique ID of the client.</param>
-        /// <param name="clientSecret">The secret for the <paramref name="clientId"/>.</param>
         /// <param name="accessToken">The access token give by the token request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
         /// complete.</param>
         /// <returns>The response to the request for an access token.</returns>
-        public static Task<IMessageResponse> RevokeAccessTokenAsync (
+        public static Task<IMessageResponse> RevokeAccessTokenAsync(
             this HttpClient client,
             Uri baseUri,
-            string clientId,
-            string clientSecret,
             string accessToken,
             CancellationToken cancellationToken = default)
         {
@@ -144,10 +140,6 @@ namespace Tesla.NET.Requests
                 throw new ArgumentNullException(nameof(client));
             if (baseUri == null)
                 throw new ArgumentNullException(nameof(baseUri));
-            if (string.IsNullOrWhiteSpace(clientId))
-                throw new ArgumentNullException(nameof(clientId));
-            if (string.IsNullOrWhiteSpace(clientSecret))
-                throw new ArgumentNullException(nameof(clientSecret));
             if (string.IsNullOrWhiteSpace(accessToken))
                 throw new ArgumentNullException(nameof(accessToken));
 

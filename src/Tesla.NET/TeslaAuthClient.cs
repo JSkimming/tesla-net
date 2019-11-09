@@ -76,12 +76,10 @@ namespace Tesla.NET
 
         /// <inheritdoc />
         public Task<IMessageResponse> RevokeAccessTokenAsync(
-            string clientId,
-            string clientSecret,
             string accessToken,
             CancellationToken cancellationToken = default)
         {
-            return Client.RevokeAccessTokenAsync(BaseUri, clientId, clientSecret, accessToken, cancellationToken);
+            return Client.RevokeAccessTokenAsync(BaseUri, accessToken, cancellationToken);
         }
     }
 }

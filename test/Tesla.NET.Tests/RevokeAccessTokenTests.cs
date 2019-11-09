@@ -22,8 +22,6 @@ namespace Tesla.NET
     {
         private readonly AccessTokenResponse _expected;
         private readonly Uri _expectedRequestUri;
-        private readonly string _clientId;
-        private readonly string _clientSecret;
         private readonly string _accessToken;
 
         protected RevokeAccessTokenTests(ITestOutputHelper output, bool useCustomBaseUri)
@@ -34,8 +32,6 @@ namespace Tesla.NET
             Handler.SetResponseContent(_expected);
             _expectedRequestUri = new Uri(BaseUri, "oauth/revoke");
 
-            _clientId = Fixture.Create("clientId");
-            _clientSecret = Fixture.Create("clientSecret");
             _accessToken = Fixture.Create("accessToken");
         }
 
@@ -43,8 +39,7 @@ namespace Tesla.NET
         public async Task Should_make_a_POST_request()
         {
             // Act
-            await Sut.RevokeAccessTokenAsync(_clientId, _clientSecret, _accessToken)
-                .ConfigureAwait(false);
+            await Sut.RevokeAccessTokenAsync(_accessToken).ConfigureAwait(false);
 
             // Assert
             Handler.Request.Method.Should().Be(HttpMethod.Post);
@@ -54,8 +49,7 @@ namespace Tesla.NET
         public async Task Should_request_the_OAuth_Token_endpoint()
         {
             // Act
-            await Sut.RevokeAccessTokenAsync(_clientId, _clientSecret, _accessToken)
-                .ConfigureAwait(false);
+            await Sut.RevokeAccessTokenAsync(_accessToken).ConfigureAwait(false);
 
             // Assert
             Handler.Request.RequestUri.Should().Be(_expectedRequestUri);
@@ -65,9 +59,7 @@ namespace Tesla.NET
         public async Task Should_return_the_expected_access_token()
         {
             // Act
-            IMessageResponse actual =
-                await Sut.RevokeAccessTokenAsync(_clientId, _clientSecret, _accessToken)
-                    .ConfigureAwait(false);
+            IMessageResponse actual = await Sut.RevokeAccessTokenAsync(_accessToken).ConfigureAwait(false);
 
             // Assert
             actual.HttpStatusCode.Should().Be(HttpStatusCode.OK);
@@ -77,8 +69,7 @@ namespace Tesla.NET
         public async Task Should_POST_1_parameters()
         {
             // Act
-            await Sut.RevokeAccessTokenAsync(_clientId, _clientSecret, _accessToken)
-                .ConfigureAwait(false);
+            await Sut.RevokeAccessTokenAsync(_accessToken).ConfigureAwait(false);
 
             // Assert
             string requestContent = Handler.RequestContents[0];
@@ -91,8 +82,7 @@ namespace Tesla.NET
         public async Task Should_POST_the_token_parameter()
         {
             // Act
-            await Sut.RevokeAccessTokenAsync(_clientId, _clientSecret, _accessToken)
-                .ConfigureAwait(false);
+            await Sut.RevokeAccessTokenAsync(_accessToken).ConfigureAwait(false);
 
             // Assert
             string requestContent = Handler.RequestContents[0];
@@ -123,8 +113,6 @@ namespace Tesla.NET
 
     public abstract class RevokeAccessTokenFailureTestsBase : AuthRequestContext
     {
-        private readonly string _clientId;
-        private readonly string _clientSecret;
         private readonly string _accessToken;
 
         protected RevokeAccessTokenFailureTestsBase(ITestOutputHelper output, bool useCustomBaseUri)
@@ -133,8 +121,6 @@ namespace Tesla.NET
             // Arrange
             Handler.SetResponseContent(new { response = "authorization_required" }, HttpStatusCode.Unauthorized);
 
-            _clientId = Fixture.Create("clientId");
-            _clientSecret = Fixture.Create("clientSecret");
             _accessToken = Fixture.Create("accessToken");
         }
 
@@ -142,8 +128,7 @@ namespace Tesla.NET
         public async Task  Should_return_the_error_status_code()
         {
             // Act
-            IMessageResponse actual =
-                await Sut.RevokeAccessTokenAsync(_clientId, _clientSecret, _accessToken).ConfigureAwait(false);
+            IMessageResponse actual = await Sut.RevokeAccessTokenAsync(_accessToken).ConfigureAwait(false);
 
             // Assert
             actual.HttpStatusCode.Should().Be(HttpStatusCode.Unauthorized);
