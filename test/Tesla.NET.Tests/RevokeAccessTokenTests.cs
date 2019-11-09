@@ -13,8 +13,6 @@ namespace Tesla.NET
     using FluentAssertions;
     using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Extensions.Primitives;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
     using Tesla.NET.Models;
     using Tesla.NET.Models.Internal;
     using Xunit;
@@ -89,41 +87,6 @@ namespace Tesla.NET
             formParameters.Should().HaveCount(1);
         }
 
-
-        [Fact]
-        public async Task Should_POST_the_client_id_parameter()
-        {
-            // Act
-            await Sut.RevokeAccessTokenAsync(_clientId, _clientSecret, _accessToken)
-                .ConfigureAwait(false);
-
-            // Assert
-            string requestContent = Handler.RequestContents[0];
-            Dictionary<string, StringValues> formParameters = QueryHelpers.ParseQuery(requestContent);
-
-            formParameters
-                .Should().ContainKey("client_id")
-                .WhichValue.Should().HaveCount(1)
-                .And.ContainSingle(_clientId);
-        }
-
-        [Fact]
-        public async Task Should_POST_the_client_secret_parameter()
-        {
-            // Act
-            await Sut.RevokeAccessTokenAsync(_clientId, _clientSecret, _accessToken)
-                .ConfigureAwait(false);
-
-            // Assert
-            string requestContent = Handler.RequestContents[0];
-            Dictionary<string, StringValues> formParameters = QueryHelpers.ParseQuery(requestContent);
-
-            formParameters
-                .Should().ContainKey("client_secret")
-                .WhichValue.Should().HaveCount(1)
-                .And.ContainSingle(_clientSecret);
-        }
-
         [Fact]
         public async Task Should_POST_the_token_parameter()
         {
@@ -136,12 +99,27 @@ namespace Tesla.NET
             Dictionary<string, StringValues> formParameters = QueryHelpers.ParseQuery(requestContent);
 
             formParameters
-                .Should().ContainKey("^token")
+                .Should().ContainKey("token")
                 .WhichValue.Should().HaveCount(1)
                 .And.ContainSingle(_accessToken);
         }
     }
 
+    public class When_revoking_an_access_token_using_the_default_base_Uri : RevokeAccessTokenTests
+    {
+        public When_revoking_an_access_token_using_the_default_base_Uri(ITestOutputHelper output)
+            : base(output, useCustomBaseUri: false)
+        {
+        }
+    }
+
+    public class When_revoking_an_access_token_using_a_custom_base_Uri : RevokeAccessTokenTests
+    {
+        public When_revoking_an_access_token_using_a_custom_base_Uri(ITestOutputHelper output)
+            : base(output, useCustomBaseUri: true)
+        {
+        }
+    }
 
     public abstract class RevokeAccessTokenFailureTestsBase : AuthRequestContext
     {
@@ -169,6 +147,24 @@ namespace Tesla.NET
 
             // Assert
             actual.HttpStatusCode.Should().Be(HttpStatusCode.Unauthorized);
+        }
+    }
+
+    public class When_failing_to_revoke_an_access_token_using_the_default_base_Uri
+        : RevokeAccessTokenFailureTestsBase
+    {
+        public When_failing_to_revoke_an_access_token_using_the_default_base_Uri(ITestOutputHelper output)
+            : base(output, useCustomBaseUri: false)
+        {
+        }
+    }
+
+    public class When_failing_to_revoke_an_access_token_using_a_custom_base_Uri
+        : RevokeAccessTokenFailureTestsBase
+    {
+        public When_failing_to_revoke_an_access_token_using_a_custom_base_Uri(ITestOutputHelper output)
+            : base(output, useCustomBaseUri: true)
+        {
         }
     }
 }
