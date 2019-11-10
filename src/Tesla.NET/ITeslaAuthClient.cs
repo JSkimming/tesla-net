@@ -46,5 +46,16 @@ namespace Tesla.NET
             string clientSecret,
             string refreshToken,
             CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Revokes the <paramref name="accessToken"/> issued by a token request.
+        /// </summary>
+        /// <param name="accessToken">The access token issued by a token request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
+        /// complete.</param>
+        /// <returns>The response to the request to revoke the <paramref name="accessToken"/>.</returns>
+        Task<IMessageResponse<object>> RevokeAccessTokenAsync(
+            string accessToken,
+            CancellationToken cancellationToken = default);
     }
 }

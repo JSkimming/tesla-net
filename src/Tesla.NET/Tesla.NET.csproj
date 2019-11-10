@@ -7,7 +7,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <CodeAnalysisRuleSet>..\stylecop.ruleset</CodeAnalysisRuleSet>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <Authors>James Skimming</Authors>
+    <Authors>James Skimming, Patrik Pfaffenbauer</Authors>
     <Description>A .NET client library for the Tesla Owner API</Description>
     <Copyright>Copyright © 2018 James Skimming</Copyright>
     <PackageLicenseUrl>https://github.com/JSkimming/tesla-net/blob/master/LICENSE</PackageLicenseUrl>

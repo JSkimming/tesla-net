@@ -61,7 +61,7 @@ namespace Tesla.NET.Requests
 
             return
                 client
-                    .PostFormAsync(requestUri, parameters, cancellationToken)
+                    .PostFormAsync(requestUri, parameters, cancellationToken: cancellationToken)
                     .ReadJsonAsAsync<IAccessTokenResponse, AccessTokenResponse>(cancellationToken);
 
             IEnumerable<KeyValuePair<string, string>> GetRequestAccessTokenParameters()
@@ -109,7 +109,7 @@ namespace Tesla.NET.Requests
 
             return
                 client
-                    .PostFormAsync(requestUri, parameters, cancellationToken)
+                    .PostFormAsync(requestUri, parameters, cancellationToken: cancellationToken)
                     .ReadJsonAsAsync<IAccessTokenResponse, AccessTokenResponse>(cancellationToken);
 
             IEnumerable<KeyValuePair<string, string>> GetRefreshAccessTokenParameters()
@@ -118,6 +118,43 @@ namespace Tesla.NET.Requests
                 yield return new KeyValuePair<string, string>("client_id", clientId);
                 yield return new KeyValuePair<string, string>("client_secret", clientSecret);
                 yield return new KeyValuePair<string, string>("refresh_token", refreshToken);
+            }
+        }
+
+        /// <summary>
+        /// Revokes the <paramref name="accessToken"/> issued by a token request.
+        /// </summary>
+        /// <param name="client">The <see cref="HttpClient"/>.</param>
+        /// <param name="baseUri">The base <see cref="Uri"/> of the Tesla Owner API.</param>
+        /// <param name="accessToken">The access token issued by a token request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
+        /// complete.</param>
+        /// <returns>The response to the request to revoke the <paramref name="accessToken"/>.</returns>
+        public static Task<IMessageResponse<object>> RevokeAccessTokenAsync(
+            this HttpClient client,
+            Uri baseUri,
+            string accessToken,
+            CancellationToken cancellationToken = default)
+        {
+            if (client == null)
+                throw new ArgumentNullException(nameof(client));
+            if (baseUri == null)
+                throw new ArgumentNullException(nameof(baseUri));
+            if (string.IsNullOrWhiteSpace(accessToken))
+                throw new ArgumentNullException(nameof(accessToken));
+
+            Uri requestUri = new Uri(baseUri, "oauth/revoke");
+
+            IEnumerable<KeyValuePair<string, string>> parameters = GetRevokeAccessTokenParameters();
+
+            return
+                client
+                    .PostFormAsync(requestUri, parameters, accessToken, cancellationToken)
+                    .ReadJsonAsAsync<object, object>(cancellationToken);
+
+            IEnumerable<KeyValuePair<string, string>> GetRevokeAccessTokenParameters()
+            {
+                yield return new KeyValuePair<string, string>("token", accessToken);
             }
         }
 
@@ -270,6 +307,10 @@ namespace Tesla.NET.Requests
         /// <param name="client">The <see cref="HttpClient"/>.</param>
         /// <param name="requestUri">The request <see cref="Uri"/>.</param>
         /// <param name="parameters">The form parameters to post.</param>
+        /// <param name="accessToken">
+        /// The access token used to authenticate the request; can be <see langword="null"/> if the authentication is
+        /// added by default or not required.
+        /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
         /// complete.</param>
         /// <returns>The <see cref="HttpResponseMessage"/> to the request.</returns>
@@ -277,7 +318,8 @@ namespace Tesla.NET.Requests
             this HttpClient client,
             Uri requestUri,
             IEnumerable<KeyValuePair<string, string>> parameters,
-            CancellationToken cancellationToken)
+            string accessToken = null,
+            CancellationToken cancellationToken = default)
         {
             if (client == null)
                 throw new ArgumentNullException(nameof(client));
@@ -290,6 +332,10 @@ namespace Tesla.NET.Requests
             {
                 Content = new FormUrlEncodedContent(parameters),
             };
+            if (!string.IsNullOrWhiteSpace(accessToken))
+            {
+                requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            }
 
             using (requestMessage)
             {
