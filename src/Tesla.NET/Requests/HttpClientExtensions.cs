@@ -61,7 +61,7 @@ namespace Tesla.NET.Requests
 
             return
                 client
-                    .PostFormAsync(requestUri, parameters, cancellationToken)
+                    .PostFormAsync(requestUri, parameters, cancellationToken: cancellationToken)
                     .ReadJsonAsAsync<IAccessTokenResponse, AccessTokenResponse>(cancellationToken);
 
             IEnumerable<KeyValuePair<string, string>> GetRequestAccessTokenParameters()
@@ -109,7 +109,7 @@ namespace Tesla.NET.Requests
 
             return
                 client
-                    .PostFormAsync(requestUri, parameters, cancellationToken)
+                    .PostFormAsync(requestUri, parameters, cancellationToken: cancellationToken)
                     .ReadJsonAsAsync<IAccessTokenResponse, AccessTokenResponse>(cancellationToken);
 
             IEnumerable<KeyValuePair<string, string>> GetRefreshAccessTokenParameters()
@@ -145,14 +145,14 @@ namespace Tesla.NET.Requests
 
             Uri requestUri = new Uri(baseUri, "oauth/revoke");
 
-            IEnumerable<KeyValuePair<string, string>> parameters = GetRefreshAccessTokenParameters();
+            IEnumerable<KeyValuePair<string, string>> parameters = GetRevokeAccessTokenParameters();
 
             return
                 client
-                    .PostFormWithAuthAsync(requestUri, parameters, accessToken, cancellationToken)
+                    .PostFormAsync(requestUri, parameters, accessToken, cancellationToken)
                     .ReadJsonAsAsync<object, object>(cancellationToken);
 
-            IEnumerable<KeyValuePair<string, string>> GetRefreshAccessTokenParameters()
+            IEnumerable<KeyValuePair<string, string>> GetRevokeAccessTokenParameters()
             {
                 yield return new KeyValuePair<string, string>("token", accessToken);
             }
@@ -307,6 +307,10 @@ namespace Tesla.NET.Requests
         /// <param name="client">The <see cref="HttpClient"/>.</param>
         /// <param name="requestUri">The request <see cref="Uri"/>.</param>
         /// <param name="parameters">The form parameters to post.</param>
+        /// <param name="accessToken">
+        /// The access token used to authenticate the request; can be <see langword="null"/> if the authentication is
+        /// added by default or not required.
+        /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
         /// complete.</param>
         /// <returns>The <see cref="HttpResponseMessage"/> to the request.</returns>
@@ -314,7 +318,8 @@ namespace Tesla.NET.Requests
             this HttpClient client,
             Uri requestUri,
             IEnumerable<KeyValuePair<string, string>> parameters,
-            CancellationToken cancellationToken)
+            string accessToken = null,
+            CancellationToken cancellationToken = default)
         {
             if (client == null)
                 throw new ArgumentNullException(nameof(client));
@@ -327,48 +332,10 @@ namespace Tesla.NET.Requests
             {
                 Content = new FormUrlEncodedContent(parameters),
             };
-
-            using (requestMessage)
+            if (!string.IsNullOrWhiteSpace(accessToken))
             {
-                return await client.SendAsync(
-                    requestMessage,
-                    HttpCompletionOption.ResponseHeadersRead,
-                    cancellationToken).ConfigureAwait(false);
+                requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             }
-        }
-
-        /// <summary>
-        /// Posts the form <paramref name="parameters"/> to the <paramref name="requestUri"/> with the given accessToken as Bearer header.
-        /// </summary>
-        /// <param name="client">The <see cref="HttpClient"/>.</param>
-        /// <param name="requestUri">The request <see cref="Uri"/>.</param>
-        /// <param name="parameters">The form parameters to post.</param>
-        /// <param name="accessToken">The access token.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
-        /// complete.</param>
-        /// <returns>The <see cref="HttpResponseMessage"/> to the request.</returns>
-        private static async Task<HttpResponseMessage> PostFormWithAuthAsync(
-            this HttpClient client,
-            Uri requestUri,
-            IEnumerable<KeyValuePair<string, string>> parameters,
-            string accessToken,
-            CancellationToken cancellationToken)
-        {
-            if (client == null)
-                throw new ArgumentNullException(nameof(client));
-            if (requestUri == null)
-                throw new ArgumentNullException(nameof(requestUri));
-            if (parameters == null)
-                throw new ArgumentNullException(nameof(parameters));
-            if (string.IsNullOrWhiteSpace(accessToken))
-                throw new ArgumentNullException(nameof(accessToken));
-
-            var requestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri)
-            {
-                Content = new FormUrlEncodedContent(parameters),
-            };
-
-            requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             using (requestMessage)
             {
