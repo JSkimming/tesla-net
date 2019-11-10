@@ -122,15 +122,15 @@ namespace Tesla.NET.Requests
         }
 
         /// <summary>
-        /// Revokes an access token.
+        /// Revokes the <paramref name="accessToken"/> issued by a token request.
         /// </summary>
         /// <param name="client">The <see cref="HttpClient"/>.</param>
         /// <param name="baseUri">The base <see cref="Uri"/> of the Tesla Owner API.</param>
-        /// <param name="accessToken">The access token give by the token request.</param>
+        /// <param name="accessToken">The access token issued by a token request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
         /// complete.</param>
-        /// <returns>The response to the request for an access token.</returns>
-        public static Task<IMessageResponse> RevokeAccessTokenAsync(
+        /// <returns>The response to the request to revoke the <paramref name="accessToken"/>.</returns>
+        public static Task<IMessageResponse<object>> RevokeAccessTokenAsync(
             this HttpClient client,
             Uri baseUri,
             string accessToken,
@@ -150,7 +150,7 @@ namespace Tesla.NET.Requests
             return
                 client
                     .PostFormWithAuthAsync(requestUri, parameters, accessToken, cancellationToken)
-                    .ReadJsonAsAsync(cancellationToken);
+                    .ReadJsonAsAsync<object, object>(cancellationToken);
 
             IEnumerable<KeyValuePair<string, string>> GetRefreshAccessTokenParameters()
             {
@@ -445,27 +445,6 @@ namespace Tesla.NET.Requests
                         : responseMessage.ReadFailureResponseAsync<TModel>(cancellationToken);
 
                 IMessageResponse<TModel> response = await messageTask.ConfigureAwait(false);
-                return response;
-            }
-        }
-
-        /// <summary>
-        /// Reads the JSON from the <paramref name="responseTask"/> and deserializes it to the type.
-        /// </summary>
-        /// <param name="responseTask">
-        /// The asynchronous <see cref="Task{T}"/> of a <see cref="HttpResponseMessage"/>.
-        /// </param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
-        /// complete.</param>
-        /// <returns>The deserialized object of type <typeparamref/>.</returns>
-        private static async Task<IMessageResponse> ReadJsonAsAsync(
-            this Task<HttpResponseMessage> responseTask,
-            CancellationToken cancellationToken)
-        {
-            HttpResponseMessage responseMessage = await responseTask.ConfigureAwait(false);
-            using (HttpResponseMessage message = responseMessage)
-            {
-                IMessageResponse response = new MessageResponse<object>(message.StatusCode);
                 return response;
             }
         }

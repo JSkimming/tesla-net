@@ -20,7 +20,6 @@ namespace Tesla.NET
 
     public abstract class RevokeAccessTokenTests : AuthRequestContext
     {
-        private readonly AccessTokenResponse _expected;
         private readonly Uri _expectedRequestUri;
         private readonly string _accessToken;
 
@@ -28,8 +27,7 @@ namespace Tesla.NET
             : base(output, useCustomBaseUri)
         {
             // Arrange
-            _expected = Fixture.Create<AccessTokenResponse>();
-            Handler.SetResponseContent(_expected);
+            Handler.SetResponseContent(new object());
             _expectedRequestUri = new Uri(BaseUri, "oauth/revoke");
 
             _accessToken = Fixture.Create("accessToken");
@@ -56,13 +54,25 @@ namespace Tesla.NET
         }
 
         [Fact]
-        public async Task Should_return_the_expected_access_token()
+        public async Task Should_set_the_bearer_token_with_the_specified_access_token()
+        {
+            // Act
+            await Sut.RevokeAccessTokenAsync(_accessToken).ConfigureAwait(false);
+
+            // Assert
+            Handler.Request.Headers.Authorization.Scheme.Should().Be("Bearer");
+            Handler.Request.Headers.Authorization.Parameter.Should().Be(_accessToken);
+        }
+
+        [Fact]
+        public async Task Should_return_the_expected_response()
         {
             // Act
             IMessageResponse actual = await Sut.RevokeAccessTokenAsync(_accessToken).ConfigureAwait(false);
 
             // Assert
             actual.HttpStatusCode.Should().Be(HttpStatusCode.OK);
+            actual.RawJsonAsString.Should().Be("{}");
         }
 
         [Fact]

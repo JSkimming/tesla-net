@@ -75,7 +75,7 @@ namespace Tesla.NET
         }
 
         /// <inheritdoc />
-        public Task<IMessageResponse> RevokeAccessTokenAsync(
+        public Task<IMessageResponse<object>> RevokeAccessTokenAsync(
             string accessToken,
             CancellationToken cancellationToken = default)
         {

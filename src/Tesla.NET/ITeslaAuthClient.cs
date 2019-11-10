@@ -48,12 +48,13 @@ namespace Tesla.NET
             CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Revokes the accessToken issued by the token request.
+        /// Revokes the <paramref name="accessToken"/> issued by a token request.
         /// </summary>
-        /// <param name="accessToken">The access token issued by the token request.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to complete.</param>
-        /// <returns>200 for ok. </returns>
-        Task<IMessageResponse> RevokeAccessTokenAsync(
+        /// <param name="accessToken">The access token issued by a token request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
+        /// complete.</param>
+        /// <returns>The response to the request to revoke the <paramref name="accessToken"/>.</returns>
+        Task<IMessageResponse<object>> RevokeAccessTokenAsync(
             string accessToken,
             CancellationToken cancellationToken = default);
     }
