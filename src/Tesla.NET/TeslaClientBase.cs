@@ -62,12 +62,12 @@ namespace Tesla.NET
         /// <summary>
         /// Gets the base <see cref="Uri"/> of the Tesla Owner API.
         /// </summary>
-        public Uri BaseUri { get; private set; }
+        public Uri BaseUri { get; }
 
         /// <summary>
         /// Gets the underlying HttpClient used to make requests.
         /// </summary>
-        public HttpClient Client { get; private set; }
+        public HttpClient Client { get; }
 
         /// <summary>
         /// Transform a collection of <see cref="HttpMessageHandler"/>s into a chain of
@@ -94,16 +94,15 @@ namespace Tesla.NET
             IEnumerable<HttpMessageHandler> reversedHandlers = handlers.Reverse().Skip(1);
             foreach (HttpMessageHandler handler in reversedHandlers)
             {
-                dHandler = handler as DelegatingHandler;
-                if (dHandler == null)
+                if (!(handler is DelegatingHandler next))
                 {
                     throw new ArgumentException(
                         $"All message handlers except the last must be of type '{typeof(DelegatingHandler).Name}'.",
                         nameof(handlers));
                 }
 
-                dHandler.InnerHandler = pipeline;
-                pipeline = dHandler;
+                next.InnerHandler = pipeline;
+                pipeline = next;
             }
 
             return pipeline;

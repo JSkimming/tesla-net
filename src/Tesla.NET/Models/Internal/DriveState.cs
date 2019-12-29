@@ -24,8 +24,8 @@ namespace Tesla.NET.Models.Internal
         /// <param name="gpsAsOf">The <see cref="GpsAsOf"/>.</param>
         /// <param name="timestamp">The <see cref="Timestamp"/>.</param>
         public DriveState(
-            string shiftState = null,
-            string speed = null,
+            string? shiftState = null,
+            string? speed = null,
             long power = 0L,
             double latitude = 0D,
             double longitude = 0D,
@@ -46,12 +46,12 @@ namespace Tesla.NET.Models.Internal
         /// <summary>
         /// Gets the shift state of a <see cref="IVehicle"/>.
         /// </summary>
-        public string ShiftState { get; }
+        public string? ShiftState { get; }
 
         /// <summary>
         /// Gets the speed <see cref="IVehicle"/>.
         /// </summary>
-        public string Speed { get; }
+        public string? Speed { get; }
 
         /// <summary>
         /// Gets the power <see cref="IVehicle"/>.

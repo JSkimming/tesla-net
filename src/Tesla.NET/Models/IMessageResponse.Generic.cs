@@ -15,6 +15,6 @@ namespace Tesla.NET.Models
         /// <summary>
         /// Gets the <typeparamref name="TData"/> object.
         /// </summary>
-        TData Data { get; }
+        TData? Data { get; }
     }
 }

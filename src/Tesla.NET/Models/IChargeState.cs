@@ -15,19 +15,19 @@ namespace Tesla.NET.Models
         /// Gets the charging state of a <see cref="IVehicle"/>.
         /// </summary>
         [JsonProperty("charging_state")]
-        string ChargingState { get; }
+        string? ChargingState { get; }
 
         /// <summary>
         /// Gets the type of fast charging.
         /// </summary>
         [JsonProperty("fast_charger_type")]
-        string FastChargerType { get; }
+        string? FastChargerType { get; }
 
         /// <summary>
         /// Gets the brand of fast charging.
         /// </summary>
         [JsonProperty("fast_charger_brand")]
-        string FastChargerBrand { get; }
+        string? FastChargerBrand { get; }
 
         /// <summary>
         /// Gets the charge limit <see cref="IVehicle"/>.
@@ -171,7 +171,7 @@ namespace Tesla.NET.Models
         /// Gets the type of the charge cable connected to a <see cref="IVehicle"/>.
         /// </summary>
         [JsonProperty("conn_charge_cable")]
-        string ConnChargeCable { get; }
+        string? ConnChargeCable { get; }
 
         /// <summary>
         /// Gets the schedule charging start time of a <see cref="IVehicle"/>.
@@ -213,7 +213,7 @@ namespace Tesla.NET.Models
         /// Gets the charge port latch of a <see cref="IVehicle"/>.
         /// </summary>
         [JsonProperty("charge_port_latch")]
-        string ChargePortLatch { get; }
+        string? ChargePortLatch { get; }
 
         /// <summary>
         /// Gets the charge current request of a <see cref="IVehicle"/>.

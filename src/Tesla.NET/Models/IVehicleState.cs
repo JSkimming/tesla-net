@@ -21,19 +21,19 @@ namespace Tesla.NET.Models
         /// Gets the state of auto-park.
         /// </summary>
         [JsonProperty("autopark_state")]
-        string AutoparkState { get; }
+        string? AutoparkState { get; }
 
         /// <summary>
         /// Gets the state of V2 auto-park.
         /// </summary>
         [JsonProperty("autopark_state_v2")]
-        string AutoparkStateV2 { get; }
+        string? AutoparkStateV2 { get; }
 
         /// <summary>
         /// Gets the style of auto-park.
         /// </summary>
         [JsonProperty("autopark_style")]
-        string AutoparkStyle { get; }
+        string? AutoparkStyle { get; }
 
         /// <summary>
         /// Gets a value indicating whether the Calendar is supported.
@@ -45,7 +45,7 @@ namespace Tesla.NET.Models
         /// Gets the car firmware version.
         /// </summary>
         [JsonProperty("car_version")]
-        string CarVersion { get; }
+        string? CarVersion { get; }
 
         /// <summary>
         /// Gets the state of the center display.
@@ -81,7 +81,7 @@ namespace Tesla.NET.Models
         /// Gets the last auto-park error.
         /// </summary>
         [JsonProperty("last_autopark_error")]
-        string LastAutoparkError { get; }
+        string? LastAutoparkError { get; }
 
         /// <summary>
         /// Gets a value indicating whether the car is locked.
@@ -147,7 +147,7 @@ namespace Tesla.NET.Models
         /// Gets the state of the sunroof.
         /// </summary>
         [JsonProperty("sun_roof_state")]
-        string SunRoofState { get; }
+        string? SunRoofState { get; }
 
         /// <summary>
         /// Gets a value indicating whether valet mode is enabled.
@@ -165,6 +165,6 @@ namespace Tesla.NET.Models
         /// Gets the name of the <see cref="IVehicle"/>.
         /// </summary>
         [JsonProperty("vehicle_name")]
-        string VehicleName { get; }
+        string? VehicleName { get; }
     }
 }

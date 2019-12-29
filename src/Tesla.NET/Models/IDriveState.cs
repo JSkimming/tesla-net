@@ -15,13 +15,13 @@ namespace Tesla.NET.Models
         /// Gets the shift state of a <see cref="IVehicle"/>.
         /// </summary>
         [JsonProperty("shift_state")]
-        string ShiftState { get; }
+        string? ShiftState { get; }
 
         /// <summary>
         /// Gets the speed <see cref="IVehicle"/>.
         /// </summary>
         [JsonProperty("speed")]
-        string Speed { get; }
+        string? Speed { get; }
 
         /// <summary>
         /// Gets the power <see cref="IVehicle"/>.

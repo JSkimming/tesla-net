@@ -34,18 +34,18 @@ namespace Tesla.NET.Models.Internal
         public Vehicle(
             long id = 0,
             long vehicleId = 0,
-            string vin = null,
-            string displayName = null,
-            string optionCodes = null,
-            string color = null,
-            IReadOnlyCollection<string> tokens = null,
-            string state = null,
-            string inService = null,
+            string? vin = null,
+            string? displayName = null,
+            string? optionCodes = null,
+            string? color = null,
+            IReadOnlyCollection<string>? tokens = null,
+            string? state = null,
+            string? inService = null,
             bool remoteStartEnabled = false,
             bool calendarEnabled = false,
             bool notificationsEnabled = false,
-            string backseatToken = null,
-            string backseatTokenUpdatedAt = null)
+            string? backseatToken = null,
+            string? backseatTokenUpdatedAt = null)
         {
             Id = id;
             VehicleId = vehicleId;
@@ -76,22 +76,22 @@ namespace Tesla.NET.Models.Internal
         /// <summary>
         /// Gets the VIN (vehicle identification number) of the <see cref="IVehicle"/>.
         /// </summary>
-        public string Vin { get; }
+        public string? Vin { get; }
 
         /// <summary>
         /// Gets the display name of the <see cref="IVehicle"/>.
         /// </summary>
-        public string DisplayName { get; }
+        public string? DisplayName { get; }
 
         /// <summary>
         /// Gets the option codes of the <see cref="IVehicle"/>.
         /// </summary>
-        public string OptionCodes { get; }
+        public string? OptionCodes { get; }
 
         /// <summary>
         /// Gets the color of the <see cref="IVehicle"/>.
         /// </summary>
-        public string Color { get; }
+        public string? Color { get; }
 
         /// <summary>
         /// Gets the tokens of the <see cref="IVehicle"/>.
@@ -101,12 +101,12 @@ namespace Tesla.NET.Models.Internal
         /// <summary>
         /// Gets the state of the <see cref="IVehicle"/>.
         /// </summary>
-        public string State { get; }
+        public string? State { get; }
 
         /// <summary>
         /// Gets the in service state of the <see cref="IVehicle"/>.
         /// </summary>
-        public string InService { get; }
+        public string? InService { get; }
 
         /// <summary>
         /// Gets a value indicating whether remote start is enabled for the <see cref="IVehicle"/>.
@@ -126,12 +126,12 @@ namespace Tesla.NET.Models.Internal
         /// <summary>
         /// Gets the <see cref="BackseatToken"/> of the <see cref="IVehicle"/>.
         /// </summary>
-        public string BackseatToken { get; }
+        public string? BackseatToken { get; }
 
         /// <summary>
         /// Gets the <see cref="BackseatTokenUpdatedAt"/> of the <see cref="IVehicle"/>.
         /// </summary>
-        public string BackseatTokenUpdatedAt { get; }
+        public string? BackseatTokenUpdatedAt { get; }
 
         private string DebuggerDisplay => $"{GetType().Name}: {DisplayName} VIN={Vin}";
     }

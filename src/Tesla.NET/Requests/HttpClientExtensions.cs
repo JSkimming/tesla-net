@@ -173,7 +173,7 @@ namespace Tesla.NET.Requests
         public static Task<IMessageResponse<IResponseDataWrapper<IReadOnlyList<IVehicle>>>> GetVehiclesAsync(
             this HttpClient client,
             Uri baseUri,
-            string accessToken = null,
+            string? accessToken = null,
             CancellationToken cancellationToken = default)
         {
             if (client == null)
@@ -210,7 +210,7 @@ namespace Tesla.NET.Requests
             this HttpClient client,
             Uri baseUri,
             long vehicleId,
-            string accessToken = null,
+            string? accessToken = null,
             CancellationToken cancellationToken = default)
         {
             if (client == null)
@@ -247,7 +247,7 @@ namespace Tesla.NET.Requests
             this HttpClient client,
             Uri baseUri,
             long vehicleId,
-            string accessToken = null,
+            string? accessToken = null,
             CancellationToken cancellationToken = default)
         {
             if (client == null)
@@ -284,7 +284,7 @@ namespace Tesla.NET.Requests
             this HttpClient client,
             Uri baseUri,
             long vehicleId,
-            string accessToken = null,
+            string? accessToken = null,
             CancellationToken cancellationToken = default)
         {
             if (client == null)
@@ -318,7 +318,7 @@ namespace Tesla.NET.Requests
             this HttpClient client,
             Uri requestUri,
             IEnumerable<KeyValuePair<string, string>> parameters,
-            string accessToken = null,
+            string? accessToken = null,
             CancellationToken cancellationToken = default)
         {
             if (client == null)
@@ -362,7 +362,7 @@ namespace Tesla.NET.Requests
         private static async Task<HttpResponseMessage> GetWithAuthAsync(
             this HttpClient client,
             Uri requestUri,
-            string accessToken = null,
+            string? accessToken = null,
             CancellationToken cancellationToken = default)
         {
             if (client == null)
@@ -436,7 +436,7 @@ namespace Tesla.NET.Requests
             JObject rawJson = await ReadJsonAsync(responseMessage, cancellationToken).ConfigureAwait(false);
 
             JsonSerializer serializer = JsonSerializer.CreateDefault();
-            T data = rawJson.ToObject<T>(serializer);
+            T? data = rawJson.ToObject<T>(serializer);
 
             IMessageResponse<T> response = new MessageResponse<T>(responseMessage.StatusCode, rawJson, data);
             return response;
@@ -459,7 +459,7 @@ namespace Tesla.NET.Requests
             if (responseMessage == null)
                 throw new ArgumentNullException(nameof(responseMessage));
 
-            JObject rawJson = null;
+            JObject? rawJson = null;
             try
             {
                 // Check the content is JSON, and the response was not Unauthorized as the API returns a Content-Type
@@ -492,7 +492,7 @@ namespace Tesla.NET.Requests
             if (responseMessage == null)
                 throw new ArgumentNullException(nameof(responseMessage));
 
-            string mediaType = responseMessage.Content?.Headers.ContentType.MediaType;
+            string? mediaType = responseMessage.Content?.Headers.ContentType.MediaType;
             return string.Equals(mediaType, "application/json", StringComparison.OrdinalIgnoreCase);
         }
 
