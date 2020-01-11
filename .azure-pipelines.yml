@@ -71,4 +71,4 @@ jobs:
     displayName: Publish code coverage
     inputs:
       codeCoverageTool: Cobertura
-      summaryFileLocation: ./test/TestResults/output/coverage.cobertura.xml
+      summaryFileLocation: ./test/TestResults/output/coverage.$(framework).cobertura.xml
