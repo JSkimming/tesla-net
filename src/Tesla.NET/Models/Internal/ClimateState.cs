@@ -228,7 +228,7 @@ namespace Tesla.NET.Models.Internal
         public long Timestamp { get; }
 
         /// <summary>
-        /// Gets the UTC <see cref="DateTime"/> when the <see cref="IChargeState"/> was captured.
+        /// Gets the UTC <see cref="DateTime"/> when the <see cref="IClimateState"/> was captured.
         /// </summary>
         public DateTime TimestampUtc => EpochConversion.FromMilliseconds(Timestamp);
 
