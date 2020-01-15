@@ -135,5 +135,38 @@ namespace Tesla.NET
             long vehicleId,
             string accessToken,
             CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Gets the <see cref="IClimateState"/> of the <see cref="IVehicle"/> with the specified
+        /// <see cref="IVehicle.Id"/>.
+        /// </summary>
+        /// <param name="vehicleId">The unique <see cref="IVehicle.Id"/> of a <see cref="IVehicle"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
+        /// complete.</param>
+        /// <returns>
+        /// The <see cref="IClimateState"/> of the <see cref="IVehicle"/> with the specified <see cref="IVehicle.Id"/>.
+        /// </returns>
+        Task<IMessageResponse<IResponseDataWrapper<IClimateState>>> GetClimateStateAsync(
+            long vehicleId,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Gets the <see cref="IClimateState"/> of the <see cref="IVehicle"/> with the specified
+        /// <see cref="IVehicle.Id"/>.
+        /// </summary>
+        /// <param name="vehicleId">The unique <see cref="IVehicle.Id"/> of a <see cref="IVehicle"/>.</param>
+        /// <param name="accessToken">
+        /// The access token used to authenticate the request; can be <see langword="null"/> if the authentication is
+        /// added by default.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
+        /// complete.</param>
+        /// <returns>
+        /// The <see cref="IClimateState"/> of the <see cref="IVehicle"/> with the specified <see cref="IVehicle.Id"/>.
+        /// </returns>
+        Task<IMessageResponse<IResponseDataWrapper<IClimateState>>> GetClimateStateAsync(
+            long vehicleId,
+            string accessToken,
+            CancellationToken cancellationToken = default);
     }
 }
