@@ -82,7 +82,7 @@ namespace Tesla.NET
             await Sut.RevokeAccessTokenAsync(_accessToken).ConfigureAwait(false);
 
             // Assert
-            string requestContent = Handler.RequestContents[0];
+            string? requestContent = Handler.RequestContents[0];
             Dictionary<string, StringValues> formParameters = QueryHelpers.ParseQuery(requestContent);
 
             formParameters.Should().HaveCount(1);
@@ -95,7 +95,7 @@ namespace Tesla.NET
             await Sut.RevokeAccessTokenAsync(_accessToken).ConfigureAwait(false);
 
             // Assert
-            string requestContent = Handler.RequestContents[0];
+            string? requestContent = Handler.RequestContents[0];
             Dictionary<string, StringValues> formParameters = QueryHelpers.ParseQuery(requestContent);
 
             formParameters

@@ -24,11 +24,11 @@ namespace Tesla.NET
             Dispose(false);
         }
 
-        protected IFixture Fixture { get; private set; } = new Fixture().Customize(new TeslaNetCustomization());
+        protected IFixture Fixture { get; } = new Fixture().Customize(new TeslaNetCustomization());
 
-        public StringBuilderTraceWriter TraceWriter { get; private set; } = new StringBuilderTraceWriter();
+        public StringBuilderTraceWriter TraceWriter { get; } = new StringBuilderTraceWriter();
 
-        public ITestOutputHelper Output { get; private set; }
+        public ITestOutputHelper Output { get; }
 
         protected virtual void Dispose(bool disposing)
         {
@@ -42,10 +42,6 @@ namespace Tesla.NET
                     Output.WriteLine(faTrace);
                 }
             }
-
-            Fixture = null;
-            TraceWriter = null;
-            Output = null;
         }
 
         public void Dispose()
@@ -65,7 +61,7 @@ namespace Tesla.NET
         protected AuthRequestContext(ITestOutputHelper output, bool useCustomBaseUri)
             : base(output)
         {
-            Uri baseUri = useCustomBaseUri ? Fixture.Create<Uri>() : null;
+            Uri? baseUri = useCustomBaseUri ? Fixture.Create<Uri>() : null;
 
             Handler = new TestHttpHandler(output);
             Sut = baseUri == null
@@ -75,11 +71,11 @@ namespace Tesla.NET
             BaseUri = baseUri ?? TeslaClientBase.DefaultBaseUri;
         }
 
-        protected TestHttpHandler Handler { get; private set; }
+        protected TestHttpHandler Handler { get; }
 
-        protected TeslaAuthClient Sut { get; private set; }
+        protected TeslaAuthClient Sut { get; }
 
-        protected Uri BaseUri { get; private set; }
+        protected Uri BaseUri { get; }
 
         protected override void Dispose(bool disposing)
         {
@@ -88,10 +84,6 @@ namespace Tesla.NET
                 Handler?.Dispose();
                 Sut?.Dispose();
             }
-
-            Handler = null;
-            Sut = null;
-            BaseUri = null;
 
             base.Dispose(disposing);
         }
@@ -102,7 +94,7 @@ namespace Tesla.NET
         protected ClientRequestContext(ITestOutputHelper output, bool useCustomBaseUri)
             : base(output)
         {
-            Uri baseUri = useCustomBaseUri ? Fixture.Create<Uri>() : null;
+            Uri? baseUri = useCustomBaseUri ? Fixture.Create<Uri>() : null;
 
             Handler = new TestHttpHandler(output);
             Sut = baseUri == null
@@ -114,13 +106,13 @@ namespace Tesla.NET
             VehicleId = Fixture.Create<long>();
         }
 
-        protected TestHttpHandler Handler { get; private set; }
+        protected TestHttpHandler Handler { get; }
 
-        protected TeslaClient Sut { get; private set; }
+        protected TeslaClient Sut { get; }
 
-        protected Uri BaseUri { get; private set; }
+        protected Uri BaseUri { get; }
 
-        protected string AccessToken { get; private set; }
+        protected string AccessToken { get; }
 
         protected long VehicleId { get; }
 
@@ -131,11 +123,6 @@ namespace Tesla.NET
                 Handler?.Dispose();
                 Sut?.Dispose();
             }
-
-            Handler = null;
-            Sut = null;
-            BaseUri = null;
-            AccessToken = null;
 
             base.Dispose(disposing);
         }

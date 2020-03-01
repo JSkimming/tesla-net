@@ -31,28 +31,30 @@ namespace Tesla.NET.Models.Internal
         public void eight_properties() => _json.Count.Should().Be(8);
 
         [Fact]
-        public void shift_state() => _json["shift_state"].Value<string>().Should().Be(_sut.ShiftState);
+        public void shift_state() => Get("shift_state").Value<string>().Should().Be(_sut.ShiftState);
 
         [Fact]
-        public void speed() => _json["speed"].Value<string>().Should().Be(_sut.Speed);
+        public void speed() => Get("speed").Value<string>().Should().Be(_sut.Speed);
 
         [Fact]
-        public void power() => _json["power"].Value<long>().Should().Be(_sut.Power);
+        public void power() => Get("power").Value<long>().Should().Be(_sut.Power);
 
         [Fact]
-        public void latitude() => _json["latitude"].Value<double>().Should().Be(_sut.Latitude);
+        public void latitude() => Get("latitude").Value<double>().Should().Be(_sut.Latitude);
 
         [Fact]
-        public void longitude() => _json["longitude"].Value<double>().Should().Be(_sut.Longitude);
+        public void longitude() => Get("longitude").Value<double>().Should().Be(_sut.Longitude);
 
         [Fact]
-        public void heading() => _json["heading"].Value<long>().Should().Be(_sut.Heading);
+        public void heading() => Get("heading").Value<long>().Should().Be(_sut.Heading);
 
         [Fact]
-        public void gps_as_of() => _json["gps_as_of"].Value<long>().Should().Be(_sut.GpsAsOf);
+        public void gps_as_of() => Get("gps_as_of").Value<long>().Should().Be(_sut.GpsAsOf);
 
         [Fact]
-        public void timestamp() => _json["timestamp"].Value<long>().Should().Be(_sut.Timestamp);
+        public void timestamp() => Get("timestamp").Value<long>().Should().Be(_sut.Timestamp);
+
+        private JToken Get(string name) => _json[name] ?? throw new InvalidOperationException($"'{name}' is null.");
     }
 
     public class When_serializing_and_deserializing_DriveState : FixtureContext
@@ -68,7 +70,7 @@ namespace Tesla.NET.Models.Internal
 
             output.WriteLine("Serialized JSON:" + Environment.NewLine + json);
 
-            _actual = json.ToObject<DriveState>();
+            _actual = json.ToObject<DriveState>() ?? throw new InvalidOperationException();
         }
 
         [Fact]
@@ -84,34 +86,36 @@ namespace Tesla.NET.Models.Internal
             : base(output)
         {
             _json = SampleJson.DriveState;
-            _sut = _json.ToObject<DriveState>();
+            _sut = _json.ToObject<DriveState>() ?? throw new InvalidOperationException();
 
             output.WriteLine("Serialized JSON:" + Environment.NewLine + _json);
         }
 
         [Fact]
-        public void shift_state() => _sut.ShiftState.Should().Be(_json["shift_state"].Value<string>());
+        public void shift_state() => _sut.ShiftState.Should().Be(Get("shift_state").Value<string>());
 
         [Fact]
-        public void speed() => _sut.Speed.Should().Be(_json["speed"].Value<string>());
+        public void speed() => _sut.Speed.Should().Be(Get("speed").Value<string>());
 
         [Fact]
-        public void power() => _sut.Power.Should().Be(_json["power"].Value<long>());
+        public void power() => _sut.Power.Should().Be(Get("power").Value<long>());
 
         [Fact]
-        public void latitude() => _sut.Latitude.Should().Be(_json["latitude"].Value<double>());
+        public void latitude() => _sut.Latitude.Should().Be(Get("latitude").Value<double>());
 
         [Fact]
-        public void longitude() => _sut.Longitude.Should().Be(_json["longitude"].Value<double>());
+        public void longitude() => _sut.Longitude.Should().Be(Get("longitude").Value<double>());
 
         [Fact]
-        public void heading() => _sut.Heading.Should().Be(_json["heading"].Value<long>());
+        public void heading() => _sut.Heading.Should().Be(Get("heading").Value<long>());
 
         [Fact]
-        public void gps_as_of() => _sut.GpsAsOf.Should().Be(_json["gps_as_of"].Value<long>());
+        public void gps_as_of() => _sut.GpsAsOf.Should().Be(Get("gps_as_of").Value<long>());
 
         [Fact]
-        public void timestamp() => _sut.Timestamp.Should().Be(_json["timestamp"].Value<long>());
+        public void timestamp() => _sut.Timestamp.Should().Be(Get("timestamp").Value<long>());
+
+        private JToken Get(string name) => _json[name] ?? throw new InvalidOperationException($"'{name}' is null.");
     }
 
     public class When_deserializing_DriveState_with_minimal_data_Should_default
@@ -122,7 +126,7 @@ namespace Tesla.NET.Models.Internal
         public When_deserializing_DriveState_with_minimal_data_Should_default(ITestOutputHelper output)
         {
             _json = SampleJson.DriveStateMinimal;
-            _sut = _json.ToObject<DriveState>();
+            _sut = _json.ToObject<DriveState>() ?? throw new InvalidOperationException();
 
             output.WriteLine("Serialized JSON:" + Environment.NewLine + _json);
         }
@@ -134,22 +138,22 @@ namespace Tesla.NET.Models.Internal
         public void speed() => _sut.Speed.Should().NotBeNull().And.BeEmpty();
 
         [Fact]
-        public void power() => _sut.Power.Should().Be(default(long));
+        public void power() => _sut.Power.Should().Be(default);
 
         [Fact]
-        public void latitude() => _sut.Latitude.Should().Be(default(double));
+        public void latitude() => _sut.Latitude.Should().Be(default);
 
         [Fact]
-        public void longitude() => _sut.Longitude.Should().Be(default(double));
+        public void longitude() => _sut.Longitude.Should().Be(default);
 
         [Fact]
-        public void heading() => _sut.Heading.Should().Be(default(long));
+        public void heading() => _sut.Heading.Should().Be(default);
 
         [Fact]
-        public void gps_as_of() => _sut.GpsAsOf.Should().Be(default(long));
+        public void gps_as_of() => _sut.GpsAsOf.Should().Be(default);
 
         [Fact]
-        public void timestamp() => _sut.Timestamp.Should().Be(default(long));
+        public void timestamp() => _sut.Timestamp.Should().Be(default);
     }
 
     public class When_running_in_the_debugger_DriveState_Should : DebuggerDisplayTestsBase
@@ -192,7 +196,7 @@ namespace Tesla.NET.Models.Internal
         public DriveState_Should_calculate(ITestOutputHelper output)
         {
             JObject json = SampleJson.DriveState;
-            _sut = json.ToObject<DriveState>();
+            _sut = json.ToObject<DriveState>() ?? throw new InvalidOperationException();
 
             output.WriteLine("Serialized JSON:" + Environment.NewLine + json);
         }

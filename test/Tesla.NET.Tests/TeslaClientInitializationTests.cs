@@ -54,32 +54,17 @@ namespace Tesla.NET
         }
 
         [Fact]
-        public void Dispose_The_HttpClient()
-        {
-            // Arrange
-            var sut = new TeslaClient();
-
-            // Act
-            sut.Dispose();
-
-            // Assert
-            sut.Client.Should().BeNull();
-            sut.BaseUri.Should().BeNull();
-        }
-
-        [Fact]
         public void Dispose_Is_Idempotent()
         {
             // Arrange
             var sut = new TeslaClient();
+            Action action = () => sut.Dispose();
 
             // Act
-            sut.Dispose();
-            sut.Dispose();
+            action();
 
             // Assert
-            sut.Client.Should().BeNull();
-            sut.BaseUri.Should().BeNull();
+            action.Should().NotThrow();
         }
     }
 }

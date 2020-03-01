@@ -32,167 +32,169 @@ namespace Tesla.NET.Models.Internal
 
         [Fact]
         public void charging_state() =>
-            _json["charging_state"].Value<string>().Should().Be(_sut.ChargingState);
+            Get("charging_state").Value<string>().Should().Be(_sut.ChargingState);
 
         [Fact]
         public void fast_charger_type() =>
-            _json["fast_charger_type"].Value<string>().Should().Be(_sut.FastChargerType);
+            Get("fast_charger_type").Value<string>().Should().Be(_sut.FastChargerType);
 
         [Fact]
         public void fast_charger_brand() =>
-            _json["fast_charger_brand"].Value<string>().Should().Be(_sut.FastChargerBrand);
+            Get("fast_charger_brand").Value<string>().Should().Be(_sut.FastChargerBrand);
 
         [Fact]
         public void charge_limit_soc() =>
-            _json["charge_limit_soc"].Value<long?>().Should().Be(_sut.ChargeLimitSoc);
+            Get("charge_limit_soc").Value<long?>().Should().Be(_sut.ChargeLimitSoc);
 
         [Fact]
         public void charge_limit_soc_std() =>
-            _json["charge_limit_soc_std"].Value<long?>().Should().Be(_sut.ChargeLimitSocStd);
+            Get("charge_limit_soc_std").Value<long?>().Should().Be(_sut.ChargeLimitSocStd);
 
         [Fact]
         public void charge_limit_soc_min() =>
-            _json["charge_limit_soc_min"].Value<long?>().Should().Be(_sut.ChargeLimitSocMin);
+            Get("charge_limit_soc_min").Value<long?>().Should().Be(_sut.ChargeLimitSocMin);
 
         [Fact]
         public void charge_limit_soc_max() =>
-            _json["charge_limit_soc_max"].Value<long?>().Should().Be(_sut.ChargeLimitSocMax);
+            Get("charge_limit_soc_max").Value<long?>().Should().Be(_sut.ChargeLimitSocMax);
 
         [Fact]
         public void charge_to_max_range() =>
-            _json["charge_to_max_range"].Value<bool?>().Should().Be(_sut.ChargeToMaxRange);
+            Get("charge_to_max_range").Value<bool?>().Should().Be(_sut.ChargeToMaxRange);
 
         [Fact]
         public void max_range_charge_counter() =>
-            _json["max_range_charge_counter"].Value<long?>().Should().Be(_sut.MaxRangeChargeCounter);
+            Get("max_range_charge_counter").Value<long?>().Should().Be(_sut.MaxRangeChargeCounter);
 
         [Fact]
         public void fast_charger_present() =>
-            _json["fast_charger_present"].Value<bool?>().Should().Be(_sut.FastChargerPresent);
+            Get("fast_charger_present").Value<bool?>().Should().Be(_sut.FastChargerPresent);
 
         [Fact]
         public void battery_range() =>
-            _json["battery_range"].Value<double?>().Should().Be(_sut.BatteryRange);
+            Get("battery_range").Value<double?>().Should().Be(_sut.BatteryRange);
 
         [Fact]
         public void est_battery_range() =>
-            _json["est_battery_range"].Value<double?>().Should().Be(_sut.EstBatteryRange);
+            Get("est_battery_range").Value<double?>().Should().Be(_sut.EstBatteryRange);
 
         [Fact]
         public void ideal_battery_range() =>
-            _json["ideal_battery_range"].Value<double?>().Should().Be(_sut.IdealBatteryRange);
+            Get("ideal_battery_range").Value<double?>().Should().Be(_sut.IdealBatteryRange);
 
         [Fact]
         public void battery_level() =>
-            _json["battery_level"].Value<long?>().Should().Be(_sut.BatteryLevel);
+            Get("battery_level").Value<long?>().Should().Be(_sut.BatteryLevel);
 
         [Fact]
         public void usable_battery_level() =>
-            _json["usable_battery_level"].Value<long?>().Should().Be(_sut.UsableBatteryLevel);
+            Get("usable_battery_level").Value<long?>().Should().Be(_sut.UsableBatteryLevel);
 
         [Fact]
         public void charge_energy_added() =>
-            _json["charge_energy_added"].Value<double?>().Should().Be(_sut.ChargeEnergyAdded);
+            Get("charge_energy_added").Value<double?>().Should().Be(_sut.ChargeEnergyAdded);
 
         [Fact]
         public void charge_miles_added_rated() =>
-            _json["charge_miles_added_rated"].Value<double?>().Should().Be(_sut.ChargeMilesAddedRated);
+            Get("charge_miles_added_rated").Value<double?>().Should().Be(_sut.ChargeMilesAddedRated);
 
         [Fact]
         public void charge_miles_added_ideal() =>
-            _json["charge_miles_added_ideal"].Value<long?>().Should().Be(_sut.ChargeMilesAddedIdeal);
+            Get("charge_miles_added_ideal").Value<long?>().Should().Be(_sut.ChargeMilesAddedIdeal);
 
         [Fact]
         public void charger_voltage() =>
-            _json["charger_voltage"].Value<long?>().Should().Be(_sut.ChargerVoltage);
+            Get("charger_voltage").Value<long?>().Should().Be(_sut.ChargerVoltage);
 
         [Fact]
         public void charger_pilot_current() =>
-            _json["charger_pilot_current"].Value<long?>().Should().Be(_sut.ChargerPilotCurrent);
+            Get("charger_pilot_current").Value<long?>().Should().Be(_sut.ChargerPilotCurrent);
 
         [Fact]
         public void charger_actual_current() =>
-            _json["charger_actual_current"].Value<long?>().Should().Be(_sut.ChargerActualCurrent);
+            Get("charger_actual_current").Value<long?>().Should().Be(_sut.ChargerActualCurrent);
 
         [Fact]
         public void charger_power() =>
-            _json["charger_power"].Value<long?>().Should().Be(_sut.ChargerPower);
+            Get("charger_power").Value<long?>().Should().Be(_sut.ChargerPower);
 
         [Fact]
         public void time_to_full_charge() =>
-            _json["time_to_full_charge"].Value<long?>().Should().Be(_sut.TimeToFullCharge);
+            Get("time_to_full_charge").Value<long?>().Should().Be(_sut.TimeToFullCharge);
 
         [Fact]
         public void trip_charging() =>
-            _json["trip_charging"].Value<bool?>().Should().Be(_sut.TripCharging);
+            Get("trip_charging").Value<bool?>().Should().Be(_sut.TripCharging);
 
         [Fact]
         public void charge_rate() =>
-            _json["charge_rate"].Value<long?>().Should().Be(_sut.ChargeRate);
+            Get("charge_rate").Value<long?>().Should().Be(_sut.ChargeRate);
 
         [Fact]
         public void charge_port_door_open() =>
-            _json["charge_port_door_open"].Value<bool?>().Should().Be(_sut.ChargePortDoorOpen);
+            Get("charge_port_door_open").Value<bool?>().Should().Be(_sut.ChargePortDoorOpen);
 
         [Fact]
         public void conn_charge_cable() =>
-            _json["conn_charge_cable"].Value<string>().Should().Be(_sut.ConnChargeCable);
+            Get("conn_charge_cable").Value<string>().Should().Be(_sut.ConnChargeCable);
 
         [Fact]
         public void scheduled_charging_start_time() =>
-            _json["scheduled_charging_start_time"].Value<long?>().Should().Be(_sut.ScheduledChargingStartTime);
+            Get("scheduled_charging_start_time").Value<long?>().Should().Be(_sut.ScheduledChargingStartTime);
 
         [Fact]
         public void scheduled_charging_pending() =>
-            _json["scheduled_charging_pending"].Value<bool?>().Should().Be(_sut.ScheduledChargingPending);
+            Get("scheduled_charging_pending").Value<bool?>().Should().Be(_sut.ScheduledChargingPending);
 
         [Fact]
         public void user_charge_enable_request() =>
-            _json["user_charge_enable_request"].Value<bool?>().Should().Be(_sut.UserChargeEnableRequest);
+            Get("user_charge_enable_request").Value<bool?>().Should().Be(_sut.UserChargeEnableRequest);
 
         [Fact]
         public void charge_enable_request() =>
-            _json["charge_enable_request"].Value<bool?>().Should().Be(_sut.ChargeEnableRequest);
+            Get("charge_enable_request").Value<bool?>().Should().Be(_sut.ChargeEnableRequest);
 
         [Fact]
         public void charger_phases() =>
-            _json["charger_phases"].Value<int?>().Should().Be(_sut.ChargerPhases);
+            Get("charger_phases").Value<int?>().Should().Be(_sut.ChargerPhases);
 
         [Fact]
         public void charge_port_latch() =>
-            _json["charge_port_latch"].Value<string>().Should().Be(_sut.ChargePortLatch);
+            Get("charge_port_latch").Value<string>().Should().Be(_sut.ChargePortLatch);
 
         [Fact]
         public void charge_current_request() =>
-            _json["charge_current_request"].Value<long?>().Should().Be(_sut.ChargeCurrentRequest);
+            Get("charge_current_request").Value<long?>().Should().Be(_sut.ChargeCurrentRequest);
 
         [Fact]
         public void charge_current_request_max() =>
-            _json["charge_current_request_max"].Value<long?>().Should().Be(_sut.ChargeCurrentRequestMax);
+            Get("charge_current_request_max").Value<long?>().Should().Be(_sut.ChargeCurrentRequestMax);
 
         [Fact]
         public void managed_charging_active() =>
-            _json["managed_charging_active"].Value<bool?>().Should().Be(_sut.ManagedChargingActive);
+            Get("managed_charging_active").Value<bool?>().Should().Be(_sut.ManagedChargingActive);
 
         [Fact]
         public void managed_charging_user_canceled() =>
-            _json["managed_charging_user_canceled"].Value<bool?>().Should().Be(_sut.ManagedChargingUserCanceled);
+            Get("managed_charging_user_canceled").Value<bool?>().Should().Be(_sut.ManagedChargingUserCanceled);
 
         [Fact]
         public void managed_charging_start_time() =>
-            _json["managed_charging_start_time"].Value<long?>().Should().Be(_sut.ManagedChargingStartTime);
+            Get("managed_charging_start_time").Value<long?>().Should().Be(_sut.ManagedChargingStartTime);
 
         [Fact]
         public void battery_heater_on() =>
-            _json["battery_heater_on"].Value<bool?>().Should().Be(_sut.BatteryHeaterOn);
+            Get("battery_heater_on").Value<bool?>().Should().Be(_sut.BatteryHeaterOn);
 
         [Fact]
         public void not_enough_power_to_heat() =>
-            _json["not_enough_power_to_heat"].Value<bool?>().Should().Be(_sut.NotEnoughPowerToHeat);
+            Get("not_enough_power_to_heat").Value<bool?>().Should().Be(_sut.NotEnoughPowerToHeat);
 
         [Fact]
         public void timestamp() =>
-            _json["timestamp"].Value<long>().Should().Be(_sut.Timestamp);
+            Get("timestamp").Value<long>().Should().Be(_sut.Timestamp);
+
+        private JToken Get(string name) => _json[name] ?? throw new InvalidOperationException($"'{name}' is null.");
     }
 
     public class When_serializing_and_deserializing_ChargeState : FixtureContext
@@ -208,7 +210,7 @@ namespace Tesla.NET.Models.Internal
 
             output.WriteLine("Serialized JSON:" + Environment.NewLine + json);
 
-            _actual = json.ToObject<ChargeState>();
+            _actual = json.ToObject<ChargeState>() ?? throw new InvalidOperationException();
         }
 
         [Fact]
@@ -224,174 +226,176 @@ namespace Tesla.NET.Models.Internal
             : base(output)
         {
             _json = SampleJson.ChargeState;
-            _sut = _json.ToObject<ChargeState>();
+            _sut = _json.ToObject<ChargeState>() ?? throw new InvalidOperationException();
 
             output.WriteLine("Serialized JSON:" + Environment.NewLine + _json);
         }
 
         [Fact]
         public void charging_state() =>
-            _sut.ChargingState.Should().Be(_json["charging_state"].Value<string>());
+            _sut.ChargingState.Should().Be(Get("charging_state").Value<string>());
 
         [Fact]
         public void fast_charger_type() =>
-            _sut.FastChargerType.Should().Be(_json["fast_charger_type"].Value<string>());
+            _sut.FastChargerType.Should().Be(Get("fast_charger_type").Value<string>());
 
         [Fact]
         public void fast_charger_brand() =>
-            _sut.FastChargerBrand.Should().Be(_json["fast_charger_brand"].Value<string>());
+            _sut.FastChargerBrand.Should().Be(Get("fast_charger_brand").Value<string>());
 
         [Fact]
         public void charge_limit_soc() =>
-            _sut.ChargeLimitSoc.Should().Be(_json["charge_limit_soc"].Value<long?>());
+            _sut.ChargeLimitSoc.Should().Be(Get("charge_limit_soc").Value<long?>());
 
         [Fact]
         public void charge_limit_soc_std() =>
-            _sut.ChargeLimitSocStd.Should().Be(_json["charge_limit_soc_std"].Value<long?>());
+            _sut.ChargeLimitSocStd.Should().Be(Get("charge_limit_soc_std").Value<long?>());
 
         [Fact]
         public void charge_limit_soc_min() =>
-            _sut.ChargeLimitSocMin.Should().Be(_json["charge_limit_soc_min"].Value<long?>());
+            _sut.ChargeLimitSocMin.Should().Be(Get("charge_limit_soc_min").Value<long?>());
 
         [Fact]
         public void charge_limit_soc_max() =>
-            _sut.ChargeLimitSocMax.Should().Be(_json["charge_limit_soc_max"].Value<long?>());
+            _sut.ChargeLimitSocMax.Should().Be(Get("charge_limit_soc_max").Value<long?>());
 
         [Fact]
         public void charge_to_max_range() =>
-            _sut.ChargeToMaxRange.Should().Be(_json["charge_to_max_range"].Value<bool?>());
+            _sut.ChargeToMaxRange.Should().Be(Get("charge_to_max_range").Value<bool?>());
 
         [Fact]
         public void max_range_charge_counter() =>
-            _sut.MaxRangeChargeCounter.Should().Be(_json["max_range_charge_counter"].Value<long?>());
+            _sut.MaxRangeChargeCounter.Should().Be(Get("max_range_charge_counter").Value<long?>());
 
         [Fact]
         public void fast_charger_present() =>
-            _sut.FastChargerPresent.Should().Be(_json["fast_charger_present"].Value<bool?>());
+            _sut.FastChargerPresent.Should().Be(Get("fast_charger_present").Value<bool?>());
 
         [Fact]
         public void battery_range() =>
-            _sut.BatteryRange.Should().Be(_json["battery_range"].Value<double?>());
+            _sut.BatteryRange.Should().Be(Get("battery_range").Value<double?>());
 
         [Fact]
         public void est_battery_range() =>
-            _sut.EstBatteryRange.Should().Be(_json["est_battery_range"].Value<double?>());
+            _sut.EstBatteryRange.Should().Be(Get("est_battery_range").Value<double?>());
 
         [Fact]
         public void ideal_battery_range() =>
-            _sut.IdealBatteryRange.Should().Be(_json["ideal_battery_range"].Value<double?>());
+            _sut.IdealBatteryRange.Should().Be(Get("ideal_battery_range").Value<double?>());
 
         [Fact]
         public void battery_level() =>
-            _sut.BatteryLevel.Should().Be(_json["battery_level"].Value<long?>());
+            _sut.BatteryLevel.Should().Be(Get("battery_level").Value<long?>());
 
         [Fact]
         public void usable_battery_level() =>
-            _sut.UsableBatteryLevel.Should().Be(_json["usable_battery_level"].Value<long?>());
+            _sut.UsableBatteryLevel.Should().Be(Get("usable_battery_level").Value<long?>());
 
         [Fact]
         public void charge_energy_added() =>
-            _sut.ChargeEnergyAdded.Should().Be(_json["charge_energy_added"].Value<double?>());
+            _sut.ChargeEnergyAdded.Should().Be(Get("charge_energy_added").Value<double?>());
 
         [Fact]
         public void charge_miles_added_rated() =>
-            _sut.ChargeMilesAddedRated.Should().Be(_json["charge_miles_added_rated"].Value<double?>());
+            _sut.ChargeMilesAddedRated.Should().Be(Get("charge_miles_added_rated").Value<double?>());
 
         [Fact]
         public void charge_miles_added_ideal() =>
-            _sut.ChargeMilesAddedIdeal.Should().Be(_json["charge_miles_added_ideal"].Value<long?>());
+            _sut.ChargeMilesAddedIdeal.Should().Be(Get("charge_miles_added_ideal").Value<long?>());
 
         [Fact]
         public void charger_voltage() =>
-            _sut.ChargerVoltage.Should().Be(_json["charger_voltage"].Value<long?>());
+            _sut.ChargerVoltage.Should().Be(Get("charger_voltage").Value<long?>());
 
         [Fact]
         public void charger_pilot_current() =>
-            _sut.ChargerPilotCurrent.Should().Be(_json["charger_pilot_current"].Value<long?>());
+            _sut.ChargerPilotCurrent.Should().Be(Get("charger_pilot_current").Value<long?>());
 
         [Fact]
         public void charger_actual_current() =>
-            _sut.ChargerActualCurrent.Should().Be(_json["charger_actual_current"].Value<long?>());
+            _sut.ChargerActualCurrent.Should().Be(Get("charger_actual_current").Value<long?>());
 
         [Fact]
         public void charger_power() =>
-            _sut.ChargerPower.Should().Be(_json["charger_power"].Value<long?>());
+            _sut.ChargerPower.Should().Be(Get("charger_power").Value<long?>());
 
         [Fact]
         public void time_to_full_charge() =>
-            _sut.TimeToFullCharge.Should().Be(_json["time_to_full_charge"].Value<long?>());
+            _sut.TimeToFullCharge.Should().Be(Get("time_to_full_charge").Value<long?>());
 
         [Fact]
         public void trip_charging() =>
-            _sut.TripCharging.Should().Be(_json["trip_charging"].Value<bool?>());
+            _sut.TripCharging.Should().Be(Get("trip_charging").Value<bool?>());
 
         [Fact]
         public void charge_rate() =>
-            _sut.ChargeRate.Should().Be(_json["charge_rate"].Value<long?>());
+            _sut.ChargeRate.Should().Be(Get("charge_rate").Value<long?>());
 
         [Fact]
         public void charge_port_door_open() =>
-            _sut.ChargePortDoorOpen.Should().Be(_json["charge_port_door_open"].Value<bool?>());
+            _sut.ChargePortDoorOpen.Should().Be(Get("charge_port_door_open").Value<bool?>());
 
         [Fact]
         public void conn_charge_cable() =>
-            _sut.ConnChargeCable.Should().Be(_json["conn_charge_cable"].Value<string>());
+            _sut.ConnChargeCable.Should().Be(Get("conn_charge_cable").Value<string>());
 
         [Fact]
         public void scheduled_charging_start_time() =>
-            _sut.ScheduledChargingStartTime.Should().Be(_json["scheduled_charging_start_time"].Value<long?>());
+            _sut.ScheduledChargingStartTime.Should().Be(Get("scheduled_charging_start_time").Value<long?>());
 
         [Fact]
         public void scheduled_charging_pending() =>
-            _sut.ScheduledChargingPending.Should().Be(_json["scheduled_charging_pending"].Value<bool?>());
+            _sut.ScheduledChargingPending.Should().Be(Get("scheduled_charging_pending").Value<bool?>());
 
         [Fact]
         public void user_charge_enable_request() =>
-            _sut.UserChargeEnableRequest.Should().Be(_json["user_charge_enable_request"].Value<bool?>());
+            _sut.UserChargeEnableRequest.Should().Be(Get("user_charge_enable_request").Value<bool?>());
 
         [Fact]
         public void charge_enable_request() =>
-            _sut.ChargeEnableRequest.Should().Be(_json["charge_enable_request"].Value<bool?>());
+            _sut.ChargeEnableRequest.Should().Be(Get("charge_enable_request").Value<bool?>());
 
         [Fact]
         public void charger_phases() =>
-            _sut.ChargerPhases.Should().Be(_json["charger_phases"].Value<int?>());
+            _sut.ChargerPhases.Should().Be(Get("charger_phases").Value<int?>());
 
         [Fact]
         public void charge_port_latch() =>
-            _sut.ChargePortLatch.Should().Be(_json["charge_port_latch"].Value<string>());
+            _sut.ChargePortLatch.Should().Be(Get("charge_port_latch").Value<string>());
 
         [Fact]
         public void charge_current_request() =>
-            _sut.ChargeCurrentRequest.Should().Be(_json["charge_current_request"].Value<long?>());
+            _sut.ChargeCurrentRequest.Should().Be(Get("charge_current_request").Value<long?>());
 
         [Fact]
         public void charge_current_request_max() =>
-            _sut.ChargeCurrentRequestMax.Should().Be(_json["charge_current_request_max"].Value<long?>());
+            _sut.ChargeCurrentRequestMax.Should().Be(Get("charge_current_request_max").Value<long?>());
 
         [Fact]
         public void managed_charging_active() =>
-            _sut.ManagedChargingActive.Should().Be(_json["managed_charging_active"].Value<bool?>());
+            _sut.ManagedChargingActive.Should().Be(Get("managed_charging_active").Value<bool?>());
 
         [Fact]
         public void managed_charging_user_canceled() =>
-            _sut.ManagedChargingUserCanceled.Should().Be(_json["managed_charging_user_canceled"].Value<bool?>());
+            _sut.ManagedChargingUserCanceled.Should().Be(Get("managed_charging_user_canceled").Value<bool?>());
 
         [Fact]
         public void managed_charging_start_time() =>
-            _sut.ManagedChargingStartTime.Should().Be(_json["managed_charging_start_time"].Value<long?>());
+            _sut.ManagedChargingStartTime.Should().Be(Get("managed_charging_start_time").Value<long?>());
 
         [Fact]
         public void battery_heater_on() =>
-            _sut.BatteryHeaterOn.Should().Be(_json["battery_heater_on"].Value<bool?>());
+            _sut.BatteryHeaterOn.Should().Be(Get("battery_heater_on").Value<bool?>());
 
         [Fact]
         public void not_enough_power_to_heat() =>
-            _sut.NotEnoughPowerToHeat.Should().Be(_json["not_enough_power_to_heat"].Value<bool?>());
+            _sut.NotEnoughPowerToHeat.Should().Be(Get("not_enough_power_to_heat").Value<bool?>());
 
         [Fact]
         public void timestamp() =>
-            _sut.Timestamp.Should().Be(_json["timestamp"].Value<long?>());
+            _sut.Timestamp.Should().Be(Get("timestamp").Value<long?>());
+
+        private JToken Get(string name) => _json[name] ?? throw new InvalidOperationException($"'{name}' is null.");
     }
 
     public class When_deserializing_ChargeState_with_minimal_data_Should_default
@@ -402,7 +406,7 @@ namespace Tesla.NET.Models.Internal
         public When_deserializing_ChargeState_with_minimal_data_Should_default(ITestOutputHelper output)
         {
             _json = SampleJson.ChargeStateMinimal;
-            _sut = _json.ToObject<ChargeState>();
+            _sut = _json.ToObject<ChargeState>() ?? throw new InvalidOperationException();
 
             output.WriteLine("Serialized JSON:" + Environment.NewLine + _json);
         }
@@ -534,7 +538,9 @@ namespace Tesla.NET.Models.Internal
         public void not_enough_power_to_heat() => _sut.NotEnoughPowerToHeat.Should().BeNull();
 
         [Fact]
-        public void timestamp() => _sut.Timestamp.Should().Be(_json["timestamp"].Value<long>());
+        public void timestamp() => _sut.Timestamp.Should().Be(Get("timestamp").Value<long>());
+
+        private JToken Get(string name) => _json[name] ?? throw new InvalidOperationException($"'{name}' is null.");
     }
 
     public class When_running_in_the_debugger_ChargeState_Should : DebuggerDisplayTestsBase
@@ -578,7 +584,7 @@ namespace Tesla.NET.Models.Internal
         public ChargeState_Should_calculate(ITestOutputHelper output)
         {
             JObject json = SampleJson.ChargeState;
-            _sut = json.ToObject<ChargeState>();
+            _sut = json.ToObject<ChargeState>() ?? throw new InvalidOperationException();
 
             output.WriteLine("Serialized JSON:" + Environment.NewLine + json);
         }

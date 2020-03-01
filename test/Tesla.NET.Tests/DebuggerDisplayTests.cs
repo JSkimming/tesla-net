@@ -12,12 +12,12 @@ namespace Tesla.NET
 
     public abstract class DebuggerDisplayTestsBase : FixtureContext
     {
-        private Type _sutType;
-        private DebuggerDisplayAttribute _debuggerDisplay;
-        private PropertyInfo _debuggerDisplayPropertyInfo;
-        private MethodInfo _debuggerDisplayGetMethod;
-        private object _debuggerDisplayValue;
-        protected string DebuggerDisplayText;
+        private Type? _sutType;
+        private DebuggerDisplayAttribute? _debuggerDisplay;
+        private PropertyInfo? _debuggerDisplayPropertyInfo;
+        private MethodInfo? _debuggerDisplayGetMethod;
+        private object? _debuggerDisplayValue;
+        protected string? DebuggerDisplayText;
 
         protected DebuggerDisplayTestsBase(ITestOutputHelper output)
             : base(output)
@@ -26,18 +26,18 @@ namespace Tesla.NET
 
         protected void GetDebuggerDisplay<TSut>(TSut sut)
         {
-            _sutType = sut.GetType();
+            _sutType = sut?.GetType();
 
-            _debuggerDisplay = _sutType.GetTypeInfo().GetCustomAttribute<DebuggerDisplayAttribute>(inherit: false);
+            _debuggerDisplay = _sutType?.GetCustomAttribute<DebuggerDisplayAttribute>(inherit: false);
 
             _debuggerDisplayPropertyInfo =
-                _sutType.GetProperty("DebuggerDisplay", BindingFlags.NonPublic | BindingFlags.Instance);
+                _sutType?.GetProperty("DebuggerDisplay", BindingFlags.NonPublic | BindingFlags.Instance);
 
-            _debuggerDisplayGetMethod = _debuggerDisplayPropertyInfo.GetGetMethod(true);
+            _debuggerDisplayGetMethod = _debuggerDisplayPropertyInfo?.GetGetMethod(true);
 
-            _debuggerDisplayValue = _debuggerDisplayGetMethod.Invoke(sut, new object[] { });
+            _debuggerDisplayValue = _debuggerDisplayGetMethod?.Invoke(sut, new object[] { });
 
-            DebuggerDisplayText = _debuggerDisplayValue.ToString();
+            DebuggerDisplayText = _debuggerDisplayValue?.ToString();
         }
 
         [Fact]
@@ -49,6 +49,8 @@ namespace Tesla.NET
         [Fact]
         public void specify_the_debugger_display_property()
         {
+            if (_debuggerDisplay is null) throw new InvalidOperationException(nameof(_debuggerDisplay) + " is null");
+
             _debuggerDisplay.Value.Should().BeEquivalentTo("{DebuggerDisplay,nq}");
         }
 
@@ -73,6 +75,8 @@ namespace Tesla.NET
         [Fact]
         public void include_the_type_in_the_debugger_display()
         {
+            if (_sutType is null) throw new InvalidOperationException(nameof(_sutType) + " is null");
+
             DebuggerDisplayText.Should().StartWith($"{_sutType.Name}:");
         }
     }

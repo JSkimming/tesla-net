@@ -55,7 +55,7 @@ namespace Tesla.NET
 
             // Assert
             HttpMessageHandler current = result;
-            DelegatingHandler @delegate;
+            DelegatingHandler? @delegate;
             while ((@delegate = current as DelegatingHandler) != null)
             {
                 current = @delegate.InnerHandler;
@@ -111,7 +111,7 @@ namespace Tesla.NET
 
             // Assert
             HttpMessageHandler current = result;
-            DelegatingHandler @delegate;
+            DelegatingHandler? @delegate;
             while ((@delegate = current as DelegatingHandler) != null)
             {
                 current = @delegate.InnerHandler;

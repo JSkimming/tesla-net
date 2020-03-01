@@ -79,7 +79,6 @@ namespace Tesla.NET.HttpHandlers
                 _inner?.Dispose();
             }
 
-            _inner = null;
             base.Dispose(disposing);
         }
     }

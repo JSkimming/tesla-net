@@ -46,10 +46,12 @@ namespace Tesla.NET.Models.Internal
             _rawJson = SampleJson.GetDriveStateResponse;
             _rawJson["randomValue1"] = Fixture.Create("randomValue1");
             _rawJson["randomValue2"] = JObject.FromObject(new { fakeId = Guid.NewGuid() });
-            _rawJson["response"]["randomValue3"] = Fixture.Create("randomValue3");
+            JToken response = _rawJson["response"] ?? throw new InvalidOperationException("response is null.");
+            response["randomValue3"] = Fixture.Create("randomValue3");
             _rawJsonString = _rawJson.ToString(Formatting.Indented);
 
-            ResponseDataWrapper<DriveState> data = _rawJson.ToObject<ResponseDataWrapper<DriveState>>();
+            ResponseDataWrapper<DriveState> data =
+                _rawJson.ToObject<ResponseDataWrapper<DriveState>>() ?? throw new InvalidOperationException();
 
             _sut = new MessageResponse<ResponseDataWrapper<DriveState>>(HttpStatusCode.OK, _rawJson, data);
 
@@ -60,7 +62,7 @@ namespace Tesla.NET.Models.Internal
         public void return_a_deep_clone_of_the_raw_JSON()
         {
             // Act
-            JObject clone = _sut.RawJson;
+            JObject clone = _sut.RawJson ?? throw new InvalidOperationException();
 
             _output.WriteLine("Cloned JSON:" + Environment.NewLine + clone);
 
@@ -73,8 +75,9 @@ namespace Tesla.NET.Models.Internal
         public void not_change_the_original_JSON()
         {
             // Act
-            JObject clone = _sut.RawJson;
-            clone["response"]["randomValue3"] = Fixture.Create("updatedRandomValue3");
+            JObject clone = _sut.RawJson ?? throw new InvalidOperationException();
+            JToken response = clone["response"] ?? throw new InvalidOperationException("response is null.");
+            response["randomValue3"] = Fixture.Create("updatedRandomValue3");
 
             _output.WriteLine("Modified JSON:" + Environment.NewLine + clone);
 
@@ -87,7 +90,7 @@ namespace Tesla.NET.Models.Internal
         public void return_a_new_clone_every_time()
         {
             // Act
-            JObject clone1 = _sut.RawJson;
+            JObject clone1 = _sut.RawJson ?? throw new InvalidOperationException();
             JObject clone2 = _sut.RawJson;
 
             // Assert

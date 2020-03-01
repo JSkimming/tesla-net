@@ -30,19 +30,21 @@ namespace Tesla.NET.Models.Internal
         public void five_properties() => _json.Count.Should().Be(5);
 
         [Fact]
-        public void access_token() => _json["access_token"].Value<string>().Should().Be(_sut.AccessToken);
+        public void access_token() => Get("access_token").Value<string>().Should().Be(_sut.AccessToken);
 
         [Fact]
-        public void token_type() => _json["token_type"].Value<string>().Should().Be(_sut.TokenType);
+        public void token_type() => Get("token_type").Value<string>().Should().Be(_sut.TokenType);
 
         [Fact]
-        public void expires_in() => _json["expires_in"].Value<long>().Should().Be(_sut.ExpiresIn);
+        public void expires_in() => Get("expires_in").Value<long>().Should().Be(_sut.ExpiresIn);
 
         [Fact]
-        public void refresh_token() => _json["refresh_token"].Value<string>().Should().Be(_sut.RefreshToken);
+        public void refresh_token() => Get("refresh_token").Value<string>().Should().Be(_sut.RefreshToken);
 
         [Fact]
-        public void created_at() => _json["created_at"].Value<long>().Should().Be(_sut.CreatedAt);
+        public void created_at() => Get("created_at").Value<long>().Should().Be(_sut.CreatedAt);
+
+        private JToken Get(string name) => _json[name] ?? throw new InvalidOperationException($"'{name}' is null.");
     }
 
     public class When_serializing_and_deserializing_AccessTokenResponse : FixtureContext
@@ -58,7 +60,7 @@ namespace Tesla.NET.Models.Internal
 
             output.WriteLine("Serialized JSON:" + Environment.NewLine + json);
 
-            _actual = json.ToObject<AccessTokenResponse>();
+            _actual = json.ToObject<AccessTokenResponse>() ?? throw new InvalidOperationException();
         }
 
         [Fact]
@@ -73,25 +75,27 @@ namespace Tesla.NET.Models.Internal
         public When_deserializing_AccessTokenResponse_Should_deserialize(ITestOutputHelper output)
         {
             _json = SampleJson.AccessTokenResponse;
-            _sut = _json.ToObject<AccessTokenResponse>();
+            _sut = _json.ToObject<AccessTokenResponse>() ?? throw new InvalidOperationException();
 
             output.WriteLine("Serialized JSON:" + Environment.NewLine + _json);
         }
 
         [Fact]
-        public void access_token() => _sut.AccessToken.Should().Be(_json["access_token"].Value<string>());
+        public void access_token() => _sut.AccessToken.Should().Be(Get("access_token").Value<string>());
 
         [Fact]
-        public void token_type() => _sut.TokenType.Should().Be(_json["token_type"].Value<string>());
+        public void token_type() => _sut.TokenType.Should().Be(Get("token_type").Value<string>());
 
         [Fact]
-        public void expires_in() => _sut.ExpiresIn.Should().Be(_json["expires_in"].Value<long>());
+        public void expires_in() => _sut.ExpiresIn.Should().Be(Get("expires_in").Value<long>());
 
         [Fact]
-        public void refresh_token() => _sut.RefreshToken.Should().Be(_json["refresh_token"].Value<string>());
+        public void refresh_token() => _sut.RefreshToken.Should().Be(Get("refresh_token").Value<string>());
 
         [Fact]
-        public void created_at() => _sut.CreatedAt.Should().Be(_json["created_at"].Value<long>());
+        public void created_at() => _sut.CreatedAt.Should().Be(Get("created_at").Value<long>());
+
+        private JToken Get(string name) => _json[name] ?? throw new InvalidOperationException($"'{name}' is null.");
     }
 
     public class When_running_in_the_debugger_AccessTokenResponse_Should : DebuggerDisplayTestsBase
@@ -128,7 +132,7 @@ namespace Tesla.NET.Models.Internal
         public AccessTokenResponse_Should_calculate(ITestOutputHelper output)
         {
             JObject json = SampleJson.AccessTokenResponse;
-            _sut = json.ToObject<AccessTokenResponse>();
+            _sut = json.ToObject<AccessTokenResponse>() ?? throw new InvalidOperationException();
 
             output.WriteLine("Serialized JSON:" + Environment.NewLine + json);
         }

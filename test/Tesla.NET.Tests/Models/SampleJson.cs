@@ -9,12 +9,12 @@ namespace Tesla.NET.Models
     using System.Linq;
     using Newtonsoft.Json.Linq;
 
-    internal class SampleJson
+    internal static class SampleJson
     {
         public static TJson Load<TJson>(string fileName)
             where TJson : JToken
         {
-            Stream stream =
+            Stream? stream =
                 typeof(SampleJson).Assembly.GetManifestResourceStream(typeof(SampleJson), $"{fileName}.json");
 
             if (stream == null)
@@ -22,20 +22,18 @@ namespace Tesla.NET.Models
                     $"Unable to load Sample JSON file '{fileName}'" +
                     " - did you mark the file as an 'embedded resource'?");
 
-            using (var sr = new StreamReader(stream))
-            {
-                string json = sr.ReadToEnd();
-                return (TJson)JToken.Parse(json);
-            }
+            using var sr = new StreamReader(stream);
+            string json = sr.ReadToEnd();
+            return (TJson)JToken.Parse(json);
         }
 
         public static JObject AccessTokenResponse => Load<JObject>(nameof(AccessTokenResponse));
 
-        public static JObject ChargeState => (JObject)GetChargeStateResponse["response"];
+        public static JObject ChargeState => GetChargeStateResponse.Response();
 
-        public static JObject ChargeStateMinimal => (JObject)GetChargeStateMinimalResponse["response"];
+        public static JObject ChargeStateMinimal => GetChargeStateMinimalResponse.Response();
 
-        public static JObject DriveState => (JObject)GetDriveStateResponse["response"];
+        public static JObject DriveState => GetDriveStateResponse.Response();
 
         public static JObject DriveStateMinimal => new JObject();
 
@@ -51,12 +49,25 @@ namespace Tesla.NET.Models
 
         public static JObject GetVehicleStateResponse2 => Load<JObject>(nameof(GetVehicleStateResponse2));
 
-        public static JObject Vehicle => (JObject)GetVehiclesResponse["response"][0];
+        public static JObject Vehicle => GetVehiclesResponse.FirstVehicle();
 
         public static JObject VehicleMinimal => new JObject();
 
-        public static JObject VehicleState => (JObject)GetVehicleStateResponse["response"];
+        public static JObject VehicleState => GetVehicleStateResponse.Response();
 
         public static JObject VehicleStateMinimal => new JObject();
+
+        private static JObject Response(this JToken data)
+        {
+            JObject response = (JObject?)data["response"] ?? throw new InvalidOperationException("response is null.");
+            return response;
+        }
+
+        private static JObject FirstVehicle(this JToken data)
+        {
+            JArray response = (JArray?)data["response"] ?? throw new InvalidOperationException("response is null.");
+            JObject vehicle = (JObject?)response[0] ?? throw new InvalidOperationException("vehicle is null.");
+            return vehicle;
+        }
     }
 }

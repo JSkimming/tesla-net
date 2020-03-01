@@ -160,7 +160,8 @@ namespace Tesla.NET
             // Add random values to test whether it is correctly passed through.
             _expected["randomValue1"] = Fixture.Create("randomValue1");
             _expected["randomValue2"] = JObject.FromObject(new { fakeId = Guid.NewGuid() });
-            _expected["response"]["randomValue3"] = Fixture.Create("randomValue3");
+            JToken response = _expected["response"] ?? throw new InvalidOperationException("response is null.");
+            response["randomValue3"] = Fixture.Create("randomValue3");
 
             Handler.SetResponseContent(_expected);
         }
@@ -191,7 +192,8 @@ namespace Tesla.NET
             // Add random values to test whether it is correctly passed through.
             _expected["randomValue1"] = Fixture.Create("randomValue1");
             _expected["randomValue2"] = JObject.FromObject(new { fakeId = Guid.NewGuid() });
-            _expected["response"]["randomValue3"] = Fixture.Create("randomValue3");
+            JToken response = _expected["response"] ?? throw new InvalidOperationException("response is null.");
+            response["randomValue3"] = Fixture.Create("randomValue3");
 
             Handler.SetResponseContent(_expected);
         }
@@ -201,6 +203,8 @@ namespace Tesla.NET
         {
             // Act
             IMessageResponse<IResponseDataWrapper<IVehicleState>> response = await Sut.GetVehicleStateAsync(_vehicleId).ConfigureAwait(false);
+
+            if (response.Data is null) throw new InvalidOperationException("response data is null.");
 
             response.Data.Response.SunRoofPercentOpen.Should().Be(null);
 
