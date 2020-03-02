@@ -24,11 +24,22 @@ namespace Tesla.NET
             Dispose(false);
         }
 
-        protected IFixture Fixture { get; } = new Fixture().Customize(new TeslaNetCustomization());
-
         public StringBuilderTraceWriter TraceWriter { get; } = new StringBuilderTraceWriter();
 
         public ITestOutputHelper Output { get; }
+
+        protected IFixture Fixture { get; } = new Fixture().Customize(new TeslaNetCustomization());
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        public EquivalencyAssertionOptions<T> WithStrictOrdering<T>(EquivalencyAssertionOptions<T> config)
+        {
+            return config.WithStrictOrdering().WithTracing(TraceWriter);
+        }
 
         protected virtual void Dispose(bool disposing)
         {
@@ -42,17 +53,6 @@ namespace Tesla.NET
                     Output.WriteLine(faTrace);
                 }
             }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        public EquivalencyAssertionOptions<T> WithStrictOrdering<T>(EquivalencyAssertionOptions<T> config)
-        {
-            return config.WithStrictOrdering().WithTracing(TraceWriter);
         }
     }
 

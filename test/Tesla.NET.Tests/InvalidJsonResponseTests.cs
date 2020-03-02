@@ -25,38 +25,12 @@ namespace Tesla.NET
         private readonly HttpStatusCode _statusCode;
 
         protected InvalidJsonResponseTestsBase(ITestOutputHelper output, HttpStatusCode statusCode)
-            : base(output, useCustomBaseUri : false)
+            : base(output, useCustomBaseUri: false)
         {
             // Arrange
             _statusCode = statusCode;
             _vehicleId = Fixture.Create<long>();
             Handler.Response = CreateResponse(statusCode);
-        }
-
-        private static HttpResponseMessage CreateResponse(HttpStatusCode statusCode)
-        {
-            string stringContent = "0" + Environment.NewLine + Environment.NewLine;
-            var stream = new MemoryStream(32);
-            using (var streamWriter = new StreamWriter(stream, Encoding.UTF8, 10240, leaveOpen: true))
-            {
-                streamWriter.Write(stringContent);
-                streamWriter.Close();
-            }
-
-            stream.Seek(0, SeekOrigin.Begin);
-            var httpContent = new ForcedAsyncStreamContent(stream)
-            {
-                Headers =
-                {
-                    ContentType = new MediaTypeHeaderValue("application/json"),
-                }
-            };
-
-            HttpResponseMessage response = new HttpResponseMessage(statusCode)
-            {
-                Content = httpContent,
-            };
-            return response;
         }
 
         [Fact]
@@ -77,6 +51,32 @@ namespace Tesla.NET
 
             // Assert
             action.Should().NotThrow();
+        }
+
+        private static HttpResponseMessage CreateResponse(HttpStatusCode statusCode)
+        {
+            string stringContent = "0" + Environment.NewLine + Environment.NewLine;
+            var stream = new MemoryStream(32);
+            using (var streamWriter = new StreamWriter(stream, Encoding.UTF8, 10240, leaveOpen: true))
+            {
+                streamWriter.Write(stringContent);
+                streamWriter.Close();
+            }
+
+            stream.Seek(0, SeekOrigin.Begin);
+            var httpContent = new ForcedAsyncStreamContent(stream)
+            {
+                Headers =
+                {
+                    ContentType = new MediaTypeHeaderValue("application/json"),
+                },
+            };
+
+            HttpResponseMessage response = new HttpResponseMessage(statusCode)
+            {
+                Content = httpContent,
+            };
+            return response;
         }
     }
 

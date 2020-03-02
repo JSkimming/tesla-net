@@ -72,6 +72,6 @@ namespace Tesla.NET.Models.Internal
         }
 
         [Fact]
-        public void response() =>_sut.Response.Should().BeEquivalentTo(_expectedResponse, WithStrictOrdering);
+        public void response() => _sut.Response.Should().BeEquivalentTo(_expectedResponse, WithStrictOrdering);
     }
 }

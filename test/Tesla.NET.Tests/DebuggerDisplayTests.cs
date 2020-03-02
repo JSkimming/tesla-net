@@ -17,28 +17,13 @@ namespace Tesla.NET
         private PropertyInfo? _debuggerDisplayPropertyInfo;
         private MethodInfo? _debuggerDisplayGetMethod;
         private object? _debuggerDisplayValue;
-        protected string? DebuggerDisplayText;
 
         protected DebuggerDisplayTestsBase(ITestOutputHelper output)
             : base(output)
         {
         }
 
-        protected void GetDebuggerDisplay<TSut>(TSut sut)
-        {
-            _sutType = sut?.GetType();
-
-            _debuggerDisplay = _sutType?.GetCustomAttribute<DebuggerDisplayAttribute>(inherit: false);
-
-            _debuggerDisplayPropertyInfo =
-                _sutType?.GetProperty("DebuggerDisplay", BindingFlags.NonPublic | BindingFlags.Instance);
-
-            _debuggerDisplayGetMethod = _debuggerDisplayPropertyInfo?.GetGetMethod(true);
-
-            _debuggerDisplayValue = _debuggerDisplayGetMethod?.Invoke(sut, new object[] { });
-
-            DebuggerDisplayText = _debuggerDisplayValue?.ToString();
-        }
+        protected string? DebuggerDisplayText { get; private set; }
 
         [Fact]
         public void have_the_debugger_display_attribute()
@@ -78,6 +63,22 @@ namespace Tesla.NET
             if (_sutType is null) throw new InvalidOperationException(nameof(_sutType) + " is null");
 
             DebuggerDisplayText.Should().StartWith($"{_sutType.Name}:");
+        }
+
+        protected void GetDebuggerDisplay<TSut>(TSut sut)
+        {
+            _sutType = sut?.GetType();
+
+            _debuggerDisplay = _sutType?.GetCustomAttribute<DebuggerDisplayAttribute>(inherit: false);
+
+            _debuggerDisplayPropertyInfo =
+                _sutType?.GetProperty("DebuggerDisplay", BindingFlags.NonPublic | BindingFlags.Instance);
+
+            _debuggerDisplayGetMethod = _debuggerDisplayPropertyInfo?.GetGetMethod(true);
+
+            _debuggerDisplayValue = _debuggerDisplayGetMethod?.Invoke(sut, new object[] { });
+
+            DebuggerDisplayText = _debuggerDisplayValue?.ToString();
         }
     }
 }

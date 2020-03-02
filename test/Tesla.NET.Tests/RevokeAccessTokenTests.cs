@@ -135,7 +135,7 @@ namespace Tesla.NET
         }
 
         [Fact]
-        public async Task  Should_return_the_error_status_code()
+        public async Task Should_return_the_error_status_code()
         {
             // Act
             IMessageResponse actual = await Sut.RevokeAccessTokenAsync(_accessToken).ConfigureAwait(false);

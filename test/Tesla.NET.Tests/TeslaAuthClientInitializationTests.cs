@@ -22,7 +22,8 @@ namespace Tesla.NET
             sut.Should().BeAssignableTo<ITeslaAuthClient>();
         }
 
-        [Theory, AutoMoqData]
+        [Theory]
+        [AutoMoqData]
         public void Use_the_specified_Base_Uri(Uri baseUri)
         {
             // Arrange/Act
@@ -32,7 +33,8 @@ namespace Tesla.NET
             sut.BaseUri.Should().BeSameAs(baseUri);
         }
 
-        [Theory, AutoMoqData]
+        [Theory]
+        [AutoMoqData]
         public void Use_the_specified_HTTP_Client_and_Base_Uri(Uri baseUri, HttpClient client)
         {
             // Arrange/Act
@@ -43,7 +45,8 @@ namespace Tesla.NET
             sut.Client.Should().BeSameAs(client);
         }
 
-        [Theory, AutoMoqData]
+        [Theory]
+        [AutoMoqData]
         public void Use_the_specified_HTTP_Client(HttpClient client)
         {
             // Arrange/Act

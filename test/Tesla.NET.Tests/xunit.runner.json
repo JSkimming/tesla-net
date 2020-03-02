@@ -1,4 +1,5 @@
 {
-  "$schema": "https://xunit.github.io/schema/current/xunit.runner.schema.json",
-  "methodDisplayOptions": "replaceUnderscoreWithSpace, useOperatorMonikers, useEscapeSequences"
+  "$schema": "https://xunit.net/schema/current/xunit.runner.schema.json",
+  "methodDisplay": "method",
+  "methodDisplayOptions": "all"
 }

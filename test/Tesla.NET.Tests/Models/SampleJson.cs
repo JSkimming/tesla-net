@@ -11,22 +11,6 @@ namespace Tesla.NET.Models
 
     internal static class SampleJson
     {
-        public static TJson Load<TJson>(string fileName)
-            where TJson : JToken
-        {
-            Stream? stream =
-                typeof(SampleJson).Assembly.GetManifestResourceStream(typeof(SampleJson), $"{fileName}.json");
-
-            if (stream == null)
-                throw new InvalidOperationException(
-                    $"Unable to load Sample JSON file '{fileName}'" +
-                    " - did you mark the file as an 'embedded resource'?");
-
-            using var sr = new StreamReader(stream);
-            string json = sr.ReadToEnd();
-            return (TJson)JToken.Parse(json);
-        }
-
         public static JObject AccessTokenResponse => Load<JObject>(nameof(AccessTokenResponse));
 
         public static JObject ChargeState => GetChargeStateResponse.Response();
@@ -56,6 +40,23 @@ namespace Tesla.NET.Models
         public static JObject VehicleState => GetVehicleStateResponse.Response();
 
         public static JObject VehicleStateMinimal => new JObject();
+
+        public static TJson Load<TJson>(string fileName)
+            where TJson : JToken
+        {
+            Stream? stream =
+                typeof(SampleJson).Assembly.GetManifestResourceStream(typeof(SampleJson), $"{fileName}.json");
+
+            if (stream == null)
+            {
+                throw new InvalidOperationException(
+                    $"Unable to load Sample JSON file '{fileName}' - did you mark the file as an 'embedded resource'?");
+            }
+
+            using var sr = new StreamReader(stream);
+            string json = sr.ReadToEnd();
+            return (TJson)JToken.Parse(json);
+        }
 
         private static JObject Response(this JToken data)
         {
