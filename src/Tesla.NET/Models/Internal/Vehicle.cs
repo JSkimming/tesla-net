@@ -3,6 +3,7 @@
 
 namespace Tesla.NET.Models.Internal
 {
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics;
 
@@ -12,7 +13,7 @@ namespace Tesla.NET.Models.Internal
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Vehicle : IVehicle
     {
-        private static readonly string[] EmptyTokens = { };
+        private static readonly string[] EmptyTokens = Array.Empty<string>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vehicle"/> class.

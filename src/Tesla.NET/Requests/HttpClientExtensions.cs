@@ -5,6 +5,7 @@ namespace Tesla.NET.Requests
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
     using System.Net;
@@ -451,6 +452,10 @@ namespace Tesla.NET.Requests
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
         /// complete.</param>
         /// <returns>The <see cref="IMessageResponse{T}"/>.</returns>
+        [SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "Exception swallowed to return error code.")]
         private static async Task<IMessageResponse<T>> ReadFailureResponseAsync<T>(
             this HttpResponseMessage responseMessage,
             CancellationToken cancellationToken)
