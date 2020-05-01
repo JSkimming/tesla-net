@@ -302,6 +302,43 @@ namespace Tesla.NET.Requests
         }
 
         /// <summary>
+        /// Gets the <see cref="IVehicleState"/> of the <see cref="IVehicle"/> with the specified
+        /// <see cref="IVehicle.Id"/>.
+        /// </summary>
+        /// <param name="client">The <see cref="HttpClient"/>.</param>
+        /// <param name="baseUri">The base <see cref="Uri"/> of the Tesla Owner API.</param>
+        /// <param name="vehicleId">The unique <see cref="IVehicle.Id"/> of a <see cref="IVehicle"/>.</param>
+        /// <param name="accessToken">
+        /// The access token used to authenticate the request; can be <see langword="null"/> if the authentication is
+        /// added by default.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
+        /// complete.</param>
+        /// <returns>
+        /// The <see cref="IVehicleState"/> of the <see cref="IVehicle"/> with the specified <see cref="IVehicle.Id"/>.
+        /// </returns>
+        public static Task<IMessageResponse<IResponseDataWrapper<IClimateState>>> GetClimateStateAsync(
+            this HttpClient client,
+            Uri baseUri,
+            long vehicleId,
+            string accessToken = null,
+            CancellationToken cancellationToken = default)
+        {
+            if (client == null)
+                throw new ArgumentNullException(nameof(client));
+            if (baseUri == null)
+                throw new ArgumentNullException(nameof(baseUri));
+
+            Uri requestUri = new Uri(baseUri, $"api/1/vehicles/{vehicleId}/data_request/climate_state");
+
+            return
+                client
+                    .GetWithAuthAsync(requestUri, accessToken, cancellationToken)
+                    .ReadJsonAsAsync<IResponseDataWrapper<IClimateState>, ResponseDataWrapper<ClimateState>>(
+                        cancellationToken);
+        }
+
+        /// <summary>
         /// Posts the form <paramref name="parameters"/> to the <paramref name="requestUri"/>.
         /// </summary>
         /// <param name="client">The <see cref="HttpClient"/>.</param>

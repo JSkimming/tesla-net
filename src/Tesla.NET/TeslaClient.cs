@@ -130,5 +130,20 @@ namespace Tesla.NET
 
             return Client.GetVehicleStateAsync(BaseUri, vehicleId, accessToken, cancellationToken);
         }
+
+        /// <inheritdoc />
+        public Task<IMessageResponse<IResponseDataWrapper<IClimateState>>> GetClimateStateAsync(long vehicleId, CancellationToken cancellationToken = default)
+        {
+            return Client.GetClimateStateAsync(BaseUri, vehicleId, cancellationToken: cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public Task<IMessageResponse<IResponseDataWrapper<IClimateState>>> GetClimateStateAsync(long vehicleId, string accessToken, CancellationToken cancellationToken = default)
+        {
+            if (string.IsNullOrWhiteSpace(accessToken))
+                throw new ArgumentNullException(nameof(accessToken));
+
+            return Client.GetClimateStateAsync(BaseUri, vehicleId, accessToken, cancellationToken);
+        }
     }
 }

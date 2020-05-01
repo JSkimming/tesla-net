@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Models\GetClimateStateResponse.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoFixture.AutoMoq" Version="4.11.0" />
     <PackageReference Include="AutoFixture.SeedExtensions" Version="4.11.0" />
     <PackageReference Include="AutoFixture.Xunit2" Version="4.11.0" />
@@ -33,6 +37,7 @@
     <EmbeddedResource Include="Models\AccessTokenResponse.json" />
     <EmbeddedResource Include="Models\GetChargeStateMinimalResponse.json" />
     <EmbeddedResource Include="Models\GetChargeStateResponse.json" />
+    <EmbeddedResource Include="Models\GetClimateStateResponse.json" />
     <EmbeddedResource Include="Models\GetDriveStateResponse.json" />
     <EmbeddedResource Include="Models\GetVehiclesResponse.json" />
     <EmbeddedResource Include="Models\GetVehicleStateResponse.json" />
