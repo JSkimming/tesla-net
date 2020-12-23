@@ -58,20 +58,20 @@ namespace Tesla.NET.Requests
                 throw new ArgumentNullException(nameof(password));
 
             Uri requestUri = new Uri(baseUri, "oauth/token");
-            IEnumerable<KeyValuePair<string, string>> parameters = GetRequestAccessTokenParameters();
+            IEnumerable<KeyValuePair<string?, string?>> parameters = GetRequestAccessTokenParameters();
 
             return
                 client
                     .PostFormAsync(requestUri, parameters, cancellationToken: cancellationToken)
                     .ReadJsonAsAsync<IAccessTokenResponse, AccessTokenResponse>(cancellationToken);
 
-            IEnumerable<KeyValuePair<string, string>> GetRequestAccessTokenParameters()
+            IEnumerable<KeyValuePair<string?, string?>> GetRequestAccessTokenParameters()
             {
-                yield return new KeyValuePair<string, string>("grant_type", "password");
-                yield return new KeyValuePair<string, string>("client_id", clientId);
-                yield return new KeyValuePair<string, string>("client_secret", clientSecret);
-                yield return new KeyValuePair<string, string>("email", email);
-                yield return new KeyValuePair<string, string>("password", password);
+                yield return new KeyValuePair<string?, string?>("grant_type", "password");
+                yield return new KeyValuePair<string?, string?>("client_id", clientId);
+                yield return new KeyValuePair<string?, string?>("client_secret", clientSecret);
+                yield return new KeyValuePair<string?, string?>("email", email);
+                yield return new KeyValuePair<string?, string?>("password", password);
             }
         }
 
@@ -106,19 +106,19 @@ namespace Tesla.NET.Requests
                 throw new ArgumentNullException(nameof(refreshToken));
 
             Uri requestUri = new Uri(baseUri, "oauth/token");
-            IEnumerable<KeyValuePair<string, string>> parameters = GetRefreshAccessTokenParameters();
+            IEnumerable<KeyValuePair<string?, string?>> parameters = GetRefreshAccessTokenParameters();
 
             return
                 client
                     .PostFormAsync(requestUri, parameters, cancellationToken: cancellationToken)
                     .ReadJsonAsAsync<IAccessTokenResponse, AccessTokenResponse>(cancellationToken);
 
-            IEnumerable<KeyValuePair<string, string>> GetRefreshAccessTokenParameters()
+            IEnumerable<KeyValuePair<string?, string?>> GetRefreshAccessTokenParameters()
             {
-                yield return new KeyValuePair<string, string>("grant_type", "refresh_token");
-                yield return new KeyValuePair<string, string>("client_id", clientId);
-                yield return new KeyValuePair<string, string>("client_secret", clientSecret);
-                yield return new KeyValuePair<string, string>("refresh_token", refreshToken);
+                yield return new KeyValuePair<string?, string?>("grant_type", "refresh_token");
+                yield return new KeyValuePair<string?, string?>("client_id", clientId);
+                yield return new KeyValuePair<string?, string?>("client_secret", clientSecret);
+                yield return new KeyValuePair<string?, string?>("refresh_token", refreshToken);
             }
         }
 
@@ -146,16 +146,16 @@ namespace Tesla.NET.Requests
 
             Uri requestUri = new Uri(baseUri, "oauth/revoke");
 
-            IEnumerable<KeyValuePair<string, string>> parameters = GetRevokeAccessTokenParameters();
+            IEnumerable<KeyValuePair<string?, string?>> parameters = GetRevokeAccessTokenParameters();
 
             return
                 client
                     .PostFormAsync(requestUri, parameters, accessToken, cancellationToken)
                     .ReadJsonAsAsync<object, object>(cancellationToken);
 
-            IEnumerable<KeyValuePair<string, string>> GetRevokeAccessTokenParameters()
+            IEnumerable<KeyValuePair<string?, string?>> GetRevokeAccessTokenParameters()
             {
-                yield return new KeyValuePair<string, string>("token", accessToken);
+                yield return new KeyValuePair<string?, string?>("token", accessToken);
             }
         }
 
@@ -318,7 +318,7 @@ namespace Tesla.NET.Requests
         private static async Task<HttpResponseMessage> PostFormAsync(
             this HttpClient client,
             Uri requestUri,
-            IEnumerable<KeyValuePair<string, string>> parameters,
+            IEnumerable<KeyValuePair<string?, string?>> parameters,
             string? accessToken = null,
             CancellationToken cancellationToken = default)
         {
@@ -497,7 +497,7 @@ namespace Tesla.NET.Requests
             if (responseMessage == null)
                 throw new ArgumentNullException(nameof(responseMessage));
 
-            string? mediaType = responseMessage.Content?.Headers.ContentType.MediaType;
+            string? mediaType = responseMessage.Content.Headers.ContentType?.MediaType;
             return string.Equals(mediaType, "application/json", StringComparison.OrdinalIgnoreCase);
         }
 

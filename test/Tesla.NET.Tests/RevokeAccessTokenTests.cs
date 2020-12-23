@@ -60,8 +60,8 @@ namespace Tesla.NET
             await Sut.RevokeAccessTokenAsync(_accessToken).ConfigureAwait(false);
 
             // Assert
-            Handler.Request.Headers.Authorization.Scheme.Should().Be("Bearer");
-            Handler.Request.Headers.Authorization.Parameter.Should().Be(_accessToken);
+            Handler.Request.Headers.Authorization?.Scheme.Should().Be("Bearer");
+            Handler.Request.Headers.Authorization?.Parameter.Should().Be(_accessToken);
         }
 
         [Fact]

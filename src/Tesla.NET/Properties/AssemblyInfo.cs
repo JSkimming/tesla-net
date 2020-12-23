@@ -7,17 +7,13 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-#if NET45
-[assembly: AssemblyTitle("Tesla.NET .NET Framework")]
-#else
-[assembly: AssemblyTitle("Tesla.NET .NET Standard")]
-#endif
+[assembly: AssemblyTitle("Tesla.NET")]
 
 [assembly: AssemblyDescription("A .NET client library for the Tesla Owner API.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Tesla.NET")]
-[assembly: AssemblyCopyright("Copyright © 2018 James Skimming")]
+[assembly: AssemblyCopyright("Copyright © 2018-2021 James Skimming")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

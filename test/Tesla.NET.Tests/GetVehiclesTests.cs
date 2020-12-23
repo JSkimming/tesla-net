@@ -71,8 +71,8 @@ namespace Tesla.NET
             await Sut.GetVehiclesAsync(AccessToken).ConfigureAwait(false);
 
             // Assert
-            Handler.Request.Headers.Authorization.Scheme.Should().Be("Bearer");
-            Handler.Request.Headers.Authorization.Parameter.Should().Be(AccessToken);
+            Handler.Request.Headers.Authorization?.Scheme.Should().Be("Bearer");
+            Handler.Request.Headers.Authorization?.Parameter.Should().Be(AccessToken);
         }
 
         [Fact]

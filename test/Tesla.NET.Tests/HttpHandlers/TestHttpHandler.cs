@@ -177,7 +177,7 @@ namespace Tesla.NET.HttpHandlers
             return responseMessage;
         }
 
-        private static async Task<string?> GetStringContent(HttpContent content)
+        private static async Task<string?> GetStringContent(HttpContent? content)
         {
             if (content is null)
                 return null;
