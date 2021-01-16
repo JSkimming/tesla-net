@@ -22,7 +22,8 @@ namespace Tesla.NET
             sut.Should().BeAssignableTo<ITeslaClient>();
         }
 
-        [Theory, AutoMoqData]
+        [Theory]
+        [AutoMoqData]
         public void Use_the_specified_Base_Uri(Uri baseUri)
         {
             // Arrange/Act
@@ -32,7 +33,8 @@ namespace Tesla.NET
             sut.BaseUri.Should().BeSameAs(baseUri);
         }
 
-        [Theory, AutoMoqData]
+        [Theory]
+        [AutoMoqData]
         public void Use_the_specified_HTTP_Client_and_Base_Uri(Uri baseUri, HttpClient client)
         {
             // Arrange/Act
@@ -43,7 +45,8 @@ namespace Tesla.NET
             sut.Client.Should().BeSameAs(client);
         }
 
-        [Theory, AutoMoqData]
+        [Theory]
+        [AutoMoqData]
         public void Use_the_specified_HTTP_Client(HttpClient client)
         {
             // Arrange/Act
@@ -54,32 +57,17 @@ namespace Tesla.NET
         }
 
         [Fact]
-        public void Dispose_The_HttpClient()
-        {
-            // Arrange
-            var sut = new TeslaClient();
-
-            // Act
-            sut.Dispose();
-
-            // Assert
-            sut.Client.Should().BeNull();
-            sut.BaseUri.Should().BeNull();
-        }
-
-        [Fact]
         public void Dispose_Is_Idempotent()
         {
             // Arrange
             var sut = new TeslaClient();
+            Action action = () => sut.Dispose();
 
             // Act
-            sut.Dispose();
-            sut.Dispose();
+            action();
 
             // Assert
-            sut.Client.Should().BeNull();
-            sut.BaseUri.Should().BeNull();
+            action.Should().NotThrow();
         }
     }
 }

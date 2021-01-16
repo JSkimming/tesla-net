@@ -17,7 +17,7 @@ namespace Tesla.NET.Models.Internal
         /// Initializes a new instance of the <see cref="ResponseDataWrapper{TResponse}"/> class.
         /// </summary>
         /// <param name="response">The <see cref="Response"/> object.</param>
-        public ResponseDataWrapper(TResponse response = default)
+        public ResponseDataWrapper(TResponse response)
         {
             Response = response;
         }

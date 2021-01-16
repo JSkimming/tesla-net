@@ -58,9 +58,9 @@ namespace Tesla.NET.Models.Internal
         /// <param name="notEnoughPowerToHeat">The <see cref="NotEnoughPowerToHeat"/>.</param>
         /// <param name="timestamp">The <see cref="Timestamp"/>.</param>
         public ChargeState(
-            string chargingState = null,
-            string fastChargerType = null,
-            string fastChargerBrand = null,
+            string? chargingState = null,
+            string? fastChargerType = null,
+            string? fastChargerBrand = null,
             long? chargeLimitSoc = null,
             long? chargeLimitSocStd = null,
             long? chargeLimitSocMin = null,
@@ -84,13 +84,13 @@ namespace Tesla.NET.Models.Internal
             bool? tripCharging = null,
             long? chargeRate = null,
             bool? chargePortDoorOpen = null,
-            string connChargeCable = null,
+            string? connChargeCable = null,
             long? scheduledChargingStartTime = null,
             bool? scheduledChargingPending = null,
             bool? userChargeEnableRequest = null,
             bool? chargeEnableRequest = null,
             int? chargerPhases = null,
-            string chargePortLatch = null,
+            string? chargePortLatch = null,
             long? chargeCurrentRequest = null,
             long? chargeCurrentRequestMax = null,
             bool? managedChargingActive = null,
@@ -146,17 +146,17 @@ namespace Tesla.NET.Models.Internal
         /// <summary>
         /// Gets the charging state of a <see cref="IVehicle"/>.
         /// </summary>
-        public string ChargingState { get; }
+        public string? ChargingState { get; }
 
         /// <summary>
         /// Gets the type of fast charging.
         /// </summary>
-        public string FastChargerType { get; }
+        public string? FastChargerType { get; }
 
         /// <summary>
         /// Gets the brand of fast charging.
         /// </summary>
-        public string FastChargerBrand { get; }
+        public string? FastChargerBrand { get; }
 
         /// <summary>
         /// Gets the charge limit <see cref="IVehicle"/>.
@@ -276,7 +276,7 @@ namespace Tesla.NET.Models.Internal
         /// <summary>
         /// Gets the type of the charge cable connected to a <see cref="IVehicle"/>.
         /// </summary>
-        public string ConnChargeCable { get; }
+        public string? ConnChargeCable { get; }
 
         /// <summary>
         /// Gets the schedule charging start time of a <see cref="IVehicle"/>.
@@ -311,7 +311,7 @@ namespace Tesla.NET.Models.Internal
         /// <summary>
         /// Gets the charge port latch of a <see cref="IVehicle"/>.
         /// </summary>
-        public string ChargePortLatch { get; }
+        public string? ChargePortLatch { get; }
 
         /// <summary>
         /// Gets the charge current request of a <see cref="IVehicle"/>.

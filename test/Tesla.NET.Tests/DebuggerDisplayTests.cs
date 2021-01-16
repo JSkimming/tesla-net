@@ -12,33 +12,18 @@ namespace Tesla.NET
 
     public abstract class DebuggerDisplayTestsBase : FixtureContext
     {
-        private Type _sutType;
-        private DebuggerDisplayAttribute _debuggerDisplay;
-        private PropertyInfo _debuggerDisplayPropertyInfo;
-        private MethodInfo _debuggerDisplayGetMethod;
-        private object _debuggerDisplayValue;
-        protected string DebuggerDisplayText;
+        private Type? _sutType;
+        private DebuggerDisplayAttribute? _debuggerDisplay;
+        private PropertyInfo? _debuggerDisplayPropertyInfo;
+        private MethodInfo? _debuggerDisplayGetMethod;
+        private object? _debuggerDisplayValue;
 
         protected DebuggerDisplayTestsBase(ITestOutputHelper output)
             : base(output)
         {
         }
 
-        protected void GetDebuggerDisplay<TSut>(TSut sut)
-        {
-            _sutType = sut.GetType();
-
-            _debuggerDisplay = _sutType.GetTypeInfo().GetCustomAttribute<DebuggerDisplayAttribute>(inherit: false);
-
-            _debuggerDisplayPropertyInfo =
-                _sutType.GetProperty("DebuggerDisplay", BindingFlags.NonPublic | BindingFlags.Instance);
-
-            _debuggerDisplayGetMethod = _debuggerDisplayPropertyInfo.GetGetMethod(true);
-
-            _debuggerDisplayValue = _debuggerDisplayGetMethod.Invoke(sut, new object[] { });
-
-            DebuggerDisplayText = _debuggerDisplayValue.ToString();
-        }
+        protected string? DebuggerDisplayText { get; private set; }
 
         [Fact]
         public void have_the_debugger_display_attribute()
@@ -49,6 +34,8 @@ namespace Tesla.NET
         [Fact]
         public void specify_the_debugger_display_property()
         {
+            if (_debuggerDisplay is null) throw new InvalidOperationException(nameof(_debuggerDisplay) + " is null");
+
             _debuggerDisplay.Value.Should().BeEquivalentTo("{DebuggerDisplay,nq}");
         }
 
@@ -73,7 +60,25 @@ namespace Tesla.NET
         [Fact]
         public void include_the_type_in_the_debugger_display()
         {
+            if (_sutType is null) throw new InvalidOperationException(nameof(_sutType) + " is null");
+
             DebuggerDisplayText.Should().StartWith($"{_sutType.Name}:");
+        }
+
+        protected void GetDebuggerDisplay<TSut>(TSut sut)
+        {
+            _sutType = sut?.GetType();
+
+            _debuggerDisplay = _sutType?.GetCustomAttribute<DebuggerDisplayAttribute>(inherit: false);
+
+            _debuggerDisplayPropertyInfo =
+                _sutType?.GetProperty("DebuggerDisplay", BindingFlags.NonPublic | BindingFlags.Instance);
+
+            _debuggerDisplayGetMethod = _debuggerDisplayPropertyInfo?.GetGetMethod(true);
+
+            _debuggerDisplayValue = _debuggerDisplayGetMethod?.Invoke(sut, new object[] { });
+
+            DebuggerDisplayText = _debuggerDisplayValue?.ToString();
         }
     }
 }

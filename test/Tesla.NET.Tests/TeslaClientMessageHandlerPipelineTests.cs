@@ -43,7 +43,7 @@ namespace Tesla.NET
             foreach (DelegatingHandler handler in _handlers)
             {
                 current.Should().BeSameAs(handler);
-                current = handler.InnerHandler;
+                current = handler.InnerHandler!;
             }
         }
 
@@ -55,10 +55,10 @@ namespace Tesla.NET
 
             // Assert
             HttpMessageHandler current = result;
-            DelegatingHandler @delegate;
+            DelegatingHandler? @delegate;
             while ((@delegate = current as DelegatingHandler) != null)
             {
-                current = @delegate.InnerHandler;
+                current = @delegate.InnerHandler!;
             }
 
             current.Should().BeOfType<HttpClientHandler>();
@@ -99,7 +99,7 @@ namespace Tesla.NET
             foreach (DelegatingHandler handler in _handlers.OfType<DelegatingHandler>())
             {
                 current.Should().BeSameAs(handler);
-                current = handler.InnerHandler;
+                current = handler.InnerHandler!;
             }
         }
 
@@ -111,10 +111,10 @@ namespace Tesla.NET
 
             // Assert
             HttpMessageHandler current = result;
-            DelegatingHandler @delegate;
+            DelegatingHandler? @delegate;
             while ((@delegate = current as DelegatingHandler) != null)
             {
-                current = @delegate.InnerHandler;
+                current = @delegate.InnerHandler!;
             }
 
             current.Should().BeSameAs(_last);

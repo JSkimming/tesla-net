@@ -30,50 +30,52 @@ namespace Tesla.NET.Models.Internal
         public void fourteen_properties() => _json.Count.Should().Be(14);
 
         [Fact]
-        public void id() => _json["id"].Value<long>().Should().Be(_sut.Id);
+        public void id() => Get("id").Value<long>().Should().Be(_sut.Id);
 
         [Fact]
-        public void vehicle_id() => _json["vehicle_id"].Value<long>().Should().Be(_sut.VehicleId);
+        public void vehicle_id() => Get("vehicle_id").Value<long>().Should().Be(_sut.VehicleId);
 
         [Fact]
-        public void vin() => _json["vin"].Value<string>().Should().Be(_sut.Vin);
+        public void vin() => Get("vin").Value<string>().Should().Be(_sut.Vin);
 
         [Fact]
-        public void display_name() => _json["display_name"].Value<string>().Should().Be(_sut.DisplayName);
+        public void display_name() => Get("display_name").Value<string>().Should().Be(_sut.DisplayName);
 
         [Fact]
-        public void option_codes() => _json["option_codes"].Value<string>().Should().Be(_sut.OptionCodes);
+        public void option_codes() => Get("option_codes").Value<string>().Should().Be(_sut.OptionCodes);
 
         [Fact]
-        public void color() => _json["color"].Value<string>().Should().Be(_sut.Color);
+        public void color() => Get("color").Value<string>().Should().Be(_sut.Color);
 
         [Fact]
         public void tokens() =>
-            _json["tokens"].Select(t => t.Value<string>()).Should().BeEquivalentTo(_sut.Tokens, WithStrictOrdering);
+            Get("tokens").Select(t => t.Value<string>()).Should().BeEquivalentTo(_sut.Tokens, WithStrictOrdering);
 
         [Fact]
-        public void state() => _json["state"].Value<string>().Should().Be(_sut.State);
+        public void state() => Get("state").Value<string>().Should().Be(_sut.State);
 
         [Fact]
-        public void in_service() => _json["in_service"].Value<string>().Should().Be(_sut.InService);
+        public void in_service() => Get("in_service").Value<string>().Should().Be(_sut.InService);
 
         [Fact]
         public void remote_start_enabled() =>
-            _json["remote_start_enabled"].Value<bool>().Should().Be(_sut.RemoteStartEnabled);
+            Get("remote_start_enabled").Value<bool>().Should().Be(_sut.RemoteStartEnabled);
 
         [Fact]
-        public void calendar_enabled() => _json["calendar_enabled"].Value<bool>().Should().Be(_sut.CalendarEnabled);
+        public void calendar_enabled() => Get("calendar_enabled").Value<bool>().Should().Be(_sut.CalendarEnabled);
 
         [Fact]
         public void notifications_enabled() =>
-            _json["notifications_enabled"].Value<bool>().Should().Be(_sut.NotificationsEnabled);
+            Get("notifications_enabled").Value<bool>().Should().Be(_sut.NotificationsEnabled);
 
         [Fact]
-        public void backseat_token() => _json["backseat_token"].Value<string>().Should().Be(_sut.BackseatToken);
+        public void backseat_token() => Get("backseat_token").Value<string>().Should().Be(_sut.BackseatToken);
 
         [Fact]
         public void backseat_token_updated_at() =>
-            _json["backseat_token_updated_at"].Value<string>().Should().Be(_sut.BackseatTokenUpdatedAt);
+            Get("backseat_token_updated_at").Value<string>().Should().Be(_sut.BackseatTokenUpdatedAt);
+
+        private JToken Get(string name) => _json[name] ?? throw new InvalidOperationException($"'{name}' is null.");
     }
 
     public class When_serializing_and_deserializing_Vehicle : FixtureContext
@@ -89,7 +91,7 @@ namespace Tesla.NET.Models.Internal
 
             output.WriteLine("Serialized JSON:" + Environment.NewLine + json);
 
-            _actual = json.ToObject<Vehicle>();
+            _actual = json.ToObject<Vehicle>() ?? throw new InvalidOperationException();
         }
 
         [Fact]
@@ -105,56 +107,58 @@ namespace Tesla.NET.Models.Internal
             : base(output)
         {
             _json = SampleJson.Vehicle;
-            _sut = _json.ToObject<Vehicle>();
+            _sut = _json.ToObject<Vehicle>() ?? throw new InvalidOperationException();
 
             output.WriteLine("Serialized JSON:" + Environment.NewLine + _json);
         }
 
         [Fact]
-        public void id() => _sut.Id.Should().Be(_json["id"].Value<long>());
+        public void id() => _sut.Id.Should().Be(Get("id").Value<long>());
 
         [Fact]
-        public void vehicle_id() => _sut.VehicleId.Should().Be(_json["vehicle_id"].Value<long>());
+        public void vehicle_id() => _sut.VehicleId.Should().Be(Get("vehicle_id").Value<long>());
 
         [Fact]
-        public void vin() => _sut.Vin.Should().Be(_json["vin"].Value<string>());
+        public void vin() => _sut.Vin.Should().Be(Get("vin").Value<string>());
 
         [Fact]
-        public void display_name() => _sut.DisplayName.Should().Be(_json["display_name"].Value<string>());
+        public void display_name() => _sut.DisplayName.Should().Be(Get("display_name").Value<string>());
 
         [Fact]
-        public void option_codes() => _sut.OptionCodes.Should().Be(_json["option_codes"].Value<string>());
+        public void option_codes() => _sut.OptionCodes.Should().Be(Get("option_codes").Value<string>());
 
         [Fact]
-        public void color() => _sut.Color.Should().Be(_json["color"].Value<string>());
+        public void color() => _sut.Color.Should().Be(Get("color").Value<string>());
 
         [Fact]
         public void tokens() =>
-            _sut.Tokens.Should().BeEquivalentTo(_json["tokens"].Select(t => t.Value<string>()), WithStrictOrdering);
+            _sut.Tokens.Should().BeEquivalentTo(Get("tokens").Select(t => t.Value<string>()), WithStrictOrdering);
 
         [Fact]
-        public void state() => _sut.State.Should().Be(_json["state"].Value<string>());
+        public void state() => _sut.State.Should().Be(Get("state").Value<string>());
 
         [Fact]
-        public void in_service() => _sut.InService.Should().Be(_json["in_service"].Value<string>());
+        public void in_service() => _sut.InService.Should().Be(Get("in_service").Value<string>());
 
         [Fact]
         public void remote_start_enabled() =>
-            _sut.RemoteStartEnabled.Should().Be(_json["remote_start_enabled"].Value<bool>());
+            _sut.RemoteStartEnabled.Should().Be(Get("remote_start_enabled").Value<bool>());
 
         [Fact]
-        public void calendar_enabled() => _sut.CalendarEnabled.Should().Be(_json["calendar_enabled"].Value<bool>());
+        public void calendar_enabled() => _sut.CalendarEnabled.Should().Be(Get("calendar_enabled").Value<bool>());
 
         [Fact]
         public void notifications_enabled() =>
-            _sut.NotificationsEnabled.Should().Be(_json["notifications_enabled"].Value<bool>());
+            _sut.NotificationsEnabled.Should().Be(Get("notifications_enabled").Value<bool>());
 
         [Fact]
-        public void backseat_token() => _sut.BackseatToken.Should().Be(_json["backseat_token"].Value<string>());
+        public void backseat_token() => _sut.BackseatToken.Should().Be(Get("backseat_token").Value<string>());
 
         [Fact]
         public void backseat_token_updated_at() =>
-            _sut.BackseatTokenUpdatedAt.Should().Be(_json["backseat_token_updated_at"].Value<string>());
+            _sut.BackseatTokenUpdatedAt.Should().Be(Get("backseat_token_updated_at").Value<string>());
+
+        private JToken Get(string name) => _json[name] ?? throw new InvalidOperationException($"'{name}' is null.");
     }
 
     public class When_deserializing_Vehicle_with_minimal_data_Should_default
@@ -165,16 +169,16 @@ namespace Tesla.NET.Models.Internal
         public When_deserializing_Vehicle_with_minimal_data_Should_default(ITestOutputHelper output)
         {
             _json = SampleJson.VehicleMinimal;
-            _sut = _json.ToObject<Vehicle>();
+            _sut = _json.ToObject<Vehicle>() ?? throw new InvalidOperationException();
 
             output.WriteLine("Serialized JSON:" + Environment.NewLine + _json);
         }
 
         [Fact]
-        public void id() => _sut.Id.Should().Be(default(long));
+        public void id() => _sut.Id.Should().Be(default);
 
         [Fact]
-        public void vehicle_id() => _sut.VehicleId.Should().Be(default(long));
+        public void vehicle_id() => _sut.VehicleId.Should().Be(default);
 
         [Fact]
         public void vin() => _sut.Vin.Should().NotBeNull().And.BeEmpty();

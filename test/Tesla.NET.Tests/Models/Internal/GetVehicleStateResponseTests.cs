@@ -43,7 +43,7 @@ namespace Tesla.NET.Models.Internal
 
             output.WriteLine("Serialized JSON:" + Environment.NewLine + json);
 
-            _actual = json.ToObject<ResponseDataWrapper<VehicleState>>();
+            _actual = json.ToObject<ResponseDataWrapper<VehicleState>>() ?? throw new InvalidOperationException();
         }
 
         [Fact]
@@ -60,8 +60,9 @@ namespace Tesla.NET.Models.Internal
             : base(output)
         {
             _json = SampleJson.GetVehicleStateResponse;
-            _sut = _json.ToObject<ResponseDataWrapper<VehicleState>>();
-            _expectedResponse = SampleJson.VehicleState.ToObject<VehicleState>();
+            _sut = _json.ToObject<ResponseDataWrapper<VehicleState>>() ?? throw new InvalidOperationException();
+            _expectedResponse = SampleJson.VehicleState.ToObject<VehicleState>()
+                                ?? throw new InvalidOperationException();
 
             output.WriteLine("Serialized JSON:" + Environment.NewLine + _json);
         }

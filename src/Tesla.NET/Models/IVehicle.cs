@@ -27,25 +27,25 @@ namespace Tesla.NET.Models
         /// Gets the VIN (vehicle identification number) of the <see cref="IVehicle"/>.
         /// </summary>
         [JsonProperty("vin")]
-        string Vin { get; }
+        string? Vin { get; }
 
         /// <summary>
         /// Gets the display name of the <see cref="IVehicle"/>.
         /// </summary>
         [JsonProperty("display_name")]
-        string DisplayName { get; }
+        string? DisplayName { get; }
 
         /// <summary>
         /// Gets the option codes of the <see cref="IVehicle"/>.
         /// </summary>
         [JsonProperty("option_codes")]
-        string OptionCodes { get; }
+        string? OptionCodes { get; }
 
         /// <summary>
         /// Gets the color of the <see cref="IVehicle"/>.
         /// </summary>
         [JsonProperty("color")]
-        string Color { get; }
+        string? Color { get; }
 
         /// <summary>
         /// Gets the tokens of the <see cref="IVehicle"/>.
@@ -57,13 +57,13 @@ namespace Tesla.NET.Models
         /// Gets the state of the <see cref="IVehicle"/>.
         /// </summary>
         [JsonProperty("state")]
-        string State { get; }
+        string? State { get; }
 
         /// <summary>
         /// Gets the in service state of the <see cref="IVehicle"/>.
         /// </summary>
         [JsonProperty("in_service")]
-        string InService { get; }
+        string? InService { get; }
 
         /// <summary>
         /// Gets a value indicating whether remote start is enabled for the <see cref="IVehicle"/>.
@@ -87,12 +87,12 @@ namespace Tesla.NET.Models
         /// Gets the <see cref="BackseatToken"/> of the <see cref="IVehicle"/>.
         /// </summary>
         [JsonProperty("backseat_token")]
-        string BackseatToken { get; }
+        string? BackseatToken { get; }
 
         /// <summary>
         /// Gets the <see cref="BackseatTokenUpdatedAt"/> of the <see cref="IVehicle"/>.
         /// </summary>
         [JsonProperty("backseat_token_updated_at")]
-        string BackseatTokenUpdatedAt { get; }
+        string? BackseatTokenUpdatedAt { get; }
     }
 }

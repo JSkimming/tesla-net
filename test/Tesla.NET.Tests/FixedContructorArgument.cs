@@ -41,7 +41,7 @@ namespace Tesla.NET
             _valueFunc = valueFunc ?? throw new ArgumentNullException(nameof(valueFunc));
         }
 
-        public object Create(object request, ISpecimenContext context)
+        public object? Create(object request, ISpecimenContext context)
         {
             if (!(request is ParameterInfo pi))
                 return new NoSpecimen();

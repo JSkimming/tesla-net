@@ -17,7 +17,7 @@ namespace Tesla.NET.Models.Internal
     public class MessageResponse<TData> : IMessageResponse<TData>
         where TData : class
     {
-        private readonly JObject _rawJson;
+        private readonly JObject? _rawJson;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MessageResponse{TData}"/> class.
@@ -25,7 +25,7 @@ namespace Tesla.NET.Models.Internal
         /// <param name="httpStatusCode">The <see cref="HttpStatusCode"/>.</param>
         /// <param name="rawJson">The raw JSON of the <see cref="Data"/>.</param>
         /// <param name="data">The <see cref="Data"/> object.</param>
-        public MessageResponse(HttpStatusCode httpStatusCode, JObject rawJson = null, TData data = null)
+        public MessageResponse(HttpStatusCode httpStatusCode, JObject? rawJson = null, TData? data = null)
         {
             HttpStatusCode = httpStatusCode;
             _rawJson = rawJson;
@@ -40,7 +40,7 @@ namespace Tesla.NET.Models.Internal
         /// <summary>
         /// Gets the raw JSON of the <see cref="IMessageResponse"/>.
         /// </summary>
-        public JObject RawJson => (JObject)_rawJson?.DeepClone();
+        public JObject? RawJson => (JObject?)_rawJson?.DeepClone();
 
         /// <summary>
         /// Gets the raw JSON of the <see cref="IMessageResponse"/>.
@@ -50,7 +50,7 @@ namespace Tesla.NET.Models.Internal
         /// <summary>
         /// Gets the <typeparamref name="TData"/> object.
         /// </summary>
-        public TData Data { get; }
+        public TData? Data { get; }
 
         private string DebuggerDisplay => $"{GetType().Name}: {HttpStatusCode:G}";
     }

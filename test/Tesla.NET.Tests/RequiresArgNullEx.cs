@@ -14,7 +14,8 @@ namespace Tesla.NET
 
     public class RequiresArgNullEx
     {
-        [Theory, RequiresArgNullExAutoMoq(typeof(TeslaClientBase))]
+        [Theory]
+        [RequiresArgNullExAutoMoq(typeof(TeslaClientBase))]
         [Substitute(typeof(TeslaClientBase), typeof(TeslaAuthClient))]
         [Substitute(typeof(MessageResponse<>), typeof(MessageResponse<object>))]
         [Substitute(typeof(ResponseDataWrapper<>), typeof(ResponseDataWrapper<Guid>))]

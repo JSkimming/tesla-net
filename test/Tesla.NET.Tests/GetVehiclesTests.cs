@@ -71,8 +71,8 @@ namespace Tesla.NET
             await Sut.GetVehiclesAsync(AccessToken).ConfigureAwait(false);
 
             // Assert
-            Handler.Request.Headers.Authorization.Scheme.Should().Be("Bearer");
-            Handler.Request.Headers.Authorization.Parameter.Should().Be(AccessToken);
+            Handler.Request.Headers.Authorization?.Scheme.Should().Be("Bearer");
+            Handler.Request.Headers.Authorization?.Parameter.Should().Be(AccessToken);
         }
 
         [Fact]
@@ -153,7 +153,8 @@ namespace Tesla.NET
             // Add random values to test whether it is correctly passed through.
             _expected["randomValue1"] = Fixture.Create("randomValue1");
             _expected["randomValue2"] = JObject.FromObject(new { fakeId = Guid.NewGuid() });
-            _expected["response"][0]["randomValue3"] = Fixture.Create("randomValue3");
+            JToken response = _expected["response"]?[0] ?? throw new InvalidOperationException("response is null.");
+            response["randomValue3"] = Fixture.Create("randomValue3");
 
             Handler.SetResponseContent(_expected);
         }

@@ -37,11 +37,8 @@ namespace Tesla.NET
         {
             if (disposing)
             {
-                Client?.Dispose();
+                Client.Dispose();
             }
-
-            Client = null;
-            BaseUri = null;
         }
     }
 }

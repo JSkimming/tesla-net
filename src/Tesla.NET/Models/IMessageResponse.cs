@@ -20,7 +20,7 @@ namespace Tesla.NET.Models
         /// <summary>
         /// Gets the raw JSON of the <see cref="IMessageResponse"/>.
         /// </summary>
-        JObject RawJson { get; }
+        JObject? RawJson { get; }
 
         /// <summary>
         /// Gets the raw JSON of the <see cref="IMessageResponse"/>.

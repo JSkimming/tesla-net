@@ -60,8 +60,8 @@ namespace Tesla.NET
             await Sut.RevokeAccessTokenAsync(_accessToken).ConfigureAwait(false);
 
             // Assert
-            Handler.Request.Headers.Authorization.Scheme.Should().Be("Bearer");
-            Handler.Request.Headers.Authorization.Parameter.Should().Be(_accessToken);
+            Handler.Request.Headers.Authorization?.Scheme.Should().Be("Bearer");
+            Handler.Request.Headers.Authorization?.Parameter.Should().Be(_accessToken);
         }
 
         [Fact]
@@ -82,7 +82,7 @@ namespace Tesla.NET
             await Sut.RevokeAccessTokenAsync(_accessToken).ConfigureAwait(false);
 
             // Assert
-            string requestContent = Handler.RequestContents[0];
+            string? requestContent = Handler.RequestContents[0];
             Dictionary<string, StringValues> formParameters = QueryHelpers.ParseQuery(requestContent);
 
             formParameters.Should().HaveCount(1);
@@ -95,7 +95,7 @@ namespace Tesla.NET
             await Sut.RevokeAccessTokenAsync(_accessToken).ConfigureAwait(false);
 
             // Assert
-            string requestContent = Handler.RequestContents[0];
+            string? requestContent = Handler.RequestContents[0];
             Dictionary<string, StringValues> formParameters = QueryHelpers.ParseQuery(requestContent);
 
             formParameters
@@ -135,7 +135,7 @@ namespace Tesla.NET
         }
 
         [Fact]
-        public async Task  Should_return_the_error_status_code()
+        public async Task Should_return_the_error_status_code()
         {
             // Act
             IMessageResponse actual = await Sut.RevokeAccessTokenAsync(_accessToken).ConfigureAwait(false);

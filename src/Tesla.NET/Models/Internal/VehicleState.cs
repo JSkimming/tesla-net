@@ -44,17 +44,17 @@ namespace Tesla.NET.Models.Internal
         /// <param name="vehicleName">The <see cref="VehicleName"/>.</param>
         public VehicleState(
             long apiVersion = default,
-            string autoparkState = default,
-            string autoparkStateV2 = default,
-            string autoparkStyle = default,
+            string? autoparkState = default,
+            string? autoparkStateV2 = default,
+            string? autoparkStyle = default,
             bool calendarSupported = default,
-            string carVersion = default,
+            string? carVersion = default,
             long centerDisplayState = default,
             long df = default,
             long dr = default,
             long ft = default,
             bool homelinkNearby = default,
-            string lastAutoparkError = default,
+            string? lastAutoparkError = default,
             bool locked = default,
             bool notificationsSupported = default,
             double odometer = default,
@@ -65,11 +65,11 @@ namespace Tesla.NET.Models.Internal
             bool remoteStartSupported = default,
             long rt = default,
             long? sunRoofPercentOpen = default,
-            string sunRoofState = default,
+            string? sunRoofState = default,
             long timestamp = default,
             bool valetMode = default,
             bool valetPinNeeded = default,
-            string vehicleName = default)
+            string? vehicleName = default)
         {
             ApiVersion = apiVersion;
             AutoparkState = autoparkState ?? string.Empty;
@@ -108,17 +108,17 @@ namespace Tesla.NET.Models.Internal
         /// <summary>
         /// Gets the state of auto-park.
         /// </summary>
-        public string AutoparkState { get; }
+        public string? AutoparkState { get; }
 
         /// <summary>
         /// Gets the state of V2 auto-park.
         /// </summary>
-        public string AutoparkStateV2 { get; }
+        public string? AutoparkStateV2 { get; }
 
         /// <summary>
         /// Gets the style of auto-park.
         /// </summary>
-        public string AutoparkStyle { get; }
+        public string? AutoparkStyle { get; }
 
         /// <summary>
         /// Gets a value indicating whether the Calendar is supported.
@@ -128,7 +128,7 @@ namespace Tesla.NET.Models.Internal
         /// <summary>
         /// Gets the car firmware version.
         /// </summary>
-        public string CarVersion { get; }
+        public string? CarVersion { get; }
 
         /// <summary>
         /// Gets the state of the center display.
@@ -158,7 +158,7 @@ namespace Tesla.NET.Models.Internal
         /// <summary>
         /// Gets the last auto-park error.
         /// </summary>
-        public string LastAutoparkError { get; }
+        public string? LastAutoparkError { get; }
 
         /// <summary>
         /// Gets a value indicating whether the car is locked.
@@ -213,7 +213,7 @@ namespace Tesla.NET.Models.Internal
         /// <summary>
         /// Gets the state of the sunroof.
         /// </summary>
-        public string SunRoofState { get; }
+        public string? SunRoofState { get; }
 
         /// <summary>
         /// Gets the millisecond Epoch timestamp when the <see cref="IVehicleState"/> was captured.
@@ -238,7 +238,7 @@ namespace Tesla.NET.Models.Internal
         /// <summary>
         /// Gets the name of the <see cref="IVehicle"/>.
         /// </summary>
-        public string VehicleName { get; }
+        public string? VehicleName { get; }
 
         private string DebuggerDisplay => $"{GetType().Name}: {VehicleName} {CarVersion} @ {TimestampUtc:R}";
     }

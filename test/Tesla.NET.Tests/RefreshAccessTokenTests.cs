@@ -84,7 +84,7 @@ namespace Tesla.NET
                 .ConfigureAwait(false);
 
             // Assert
-            string requestContent = Handler.RequestContents[0];
+            string? requestContent = Handler.RequestContents[0];
             Dictionary<string, StringValues> formParameters = QueryHelpers.ParseQuery(requestContent);
 
             formParameters.Should().HaveCount(4);
@@ -98,7 +98,7 @@ namespace Tesla.NET
                 .ConfigureAwait(false);
 
             // Assert
-            string requestContent = Handler.RequestContents[0];
+            string? requestContent = Handler.RequestContents[0];
             Dictionary<string, StringValues> formParameters = QueryHelpers.ParseQuery(requestContent);
 
             formParameters
@@ -115,7 +115,7 @@ namespace Tesla.NET
                 .ConfigureAwait(false);
 
             // Assert
-            string requestContent = Handler.RequestContents[0];
+            string? requestContent = Handler.RequestContents[0];
             Dictionary<string, StringValues> formParameters = QueryHelpers.ParseQuery(requestContent);
 
             formParameters
@@ -132,7 +132,7 @@ namespace Tesla.NET
                 .ConfigureAwait(false);
 
             // Assert
-            string requestContent = Handler.RequestContents[0];
+            string? requestContent = Handler.RequestContents[0];
             Dictionary<string, StringValues> formParameters = QueryHelpers.ParseQuery(requestContent);
 
             formParameters
@@ -149,7 +149,7 @@ namespace Tesla.NET
                 .ConfigureAwait(false);
 
             // Assert
-            string requestContent = Handler.RequestContents[0];
+            string? requestContent = Handler.RequestContents[0];
             Dictionary<string, StringValues> formParameters = QueryHelpers.ParseQuery(requestContent);
 
             formParameters
@@ -193,7 +193,7 @@ namespace Tesla.NET
         }
 
         [Fact]
-        public async Task  Should_return_the_error_status_code()
+        public async Task Should_return_the_error_status_code()
         {
             // Act
             IMessageResponse actual =
