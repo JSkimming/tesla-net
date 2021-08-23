@@ -103,7 +103,7 @@ namespace Tesla.NET
 
             formParameters
                 .Should().ContainKey("grant_type")
-                .WhichValue.Should().HaveCount(1)
+                .WhoseValue.Should().HaveCount(1)
                 .And.ContainSingle("refresh_token");
         }
 
@@ -120,7 +120,7 @@ namespace Tesla.NET
 
             formParameters
                 .Should().ContainKey("client_id")
-                .WhichValue.Should().HaveCount(1)
+                .WhoseValue.Should().HaveCount(1)
                 .And.ContainSingle(_clientId);
         }
 
@@ -137,7 +137,7 @@ namespace Tesla.NET
 
             formParameters
                 .Should().ContainKey("client_secret")
-                .WhichValue.Should().HaveCount(1)
+                .WhoseValue.Should().HaveCount(1)
                 .And.ContainSingle(_clientSecret);
         }
 
@@ -154,7 +154,7 @@ namespace Tesla.NET
 
             formParameters
                 .Should().ContainKey("refresh_token")
-                .WhichValue.Should().HaveCount(1)
+                .WhoseValue.Should().HaveCount(1)
                 .And.ContainSingle(_refreshToken);
         }
     }

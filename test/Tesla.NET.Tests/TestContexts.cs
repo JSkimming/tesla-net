@@ -9,6 +9,7 @@ namespace Tesla.NET
     using System.Net.Http;
     using AutoFixture;
     using FluentAssertions.Equivalency;
+    using FluentAssertions.Equivalency.Tracing;
     using Tesla.NET.HttpHandlers;
     using Xunit.Abstractions;
 
