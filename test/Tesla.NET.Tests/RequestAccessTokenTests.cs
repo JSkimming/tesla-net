@@ -104,7 +104,7 @@ namespace Tesla.NET
 
             formParameters
                 .Should().ContainKey("grant_type")
-                .WhichValue.Should().HaveCount(1)
+                .WhoseValue.Should().HaveCount(1)
                 .And.ContainSingle("password");
         }
 
@@ -121,7 +121,7 @@ namespace Tesla.NET
 
             formParameters
                 .Should().ContainKey("client_id")
-                .WhichValue.Should().HaveCount(1)
+                .WhoseValue.Should().HaveCount(1)
                 .And.ContainSingle(_clientId);
         }
 
@@ -138,7 +138,7 @@ namespace Tesla.NET
 
             formParameters
                 .Should().ContainKey("client_secret")
-                .WhichValue.Should().HaveCount(1)
+                .WhoseValue.Should().HaveCount(1)
                 .And.ContainSingle(_clientSecret);
         }
 
@@ -155,7 +155,7 @@ namespace Tesla.NET
 
             formParameters
                 .Should().ContainKey("email")
-                .WhichValue.Should().HaveCount(1)
+                .WhoseValue.Should().HaveCount(1)
                 .And.ContainSingle(_email);
         }
 
@@ -172,7 +172,7 @@ namespace Tesla.NET
 
             formParameters
                 .Should().ContainKey("password")
-                .WhichValue.Should().HaveCount(1)
+                .WhoseValue.Should().HaveCount(1)
                 .And.ContainSingle(_password);
         }
     }

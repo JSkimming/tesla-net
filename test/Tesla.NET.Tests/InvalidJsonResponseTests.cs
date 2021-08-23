@@ -70,13 +70,13 @@ namespace Tesla.NET
         }
 
         [Fact]
-        public void It_should_not_throw_an_exception()
+        public async Task It_should_not_throw_an_exception()
         {
             // Act
             Func<Task> action = () => Sut.GetVehicleStateAsync(_vehicleId, AccessToken);
 
             // Assert
-            action.Should().NotThrow();
+            await action.Should().NotThrowAsync();
         }
     }
 

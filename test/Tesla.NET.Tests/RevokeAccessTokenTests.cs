@@ -100,7 +100,7 @@ namespace Tesla.NET
 
             formParameters
                 .Should().ContainKey("token")
-                .WhichValue.Should().HaveCount(1)
+                .WhoseValue.Should().HaveCount(1)
                 .And.ContainSingle(_accessToken);
         }
     }
