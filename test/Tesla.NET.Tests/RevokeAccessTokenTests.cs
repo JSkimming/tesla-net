@@ -14,7 +14,6 @@ namespace Tesla.NET
     using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Extensions.Primitives;
     using Tesla.NET.Models;
-    using Tesla.NET.Models.Internal;
     using Xunit;
     using Xunit.Abstractions;
 
