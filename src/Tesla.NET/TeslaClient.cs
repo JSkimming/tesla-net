@@ -4,6 +4,7 @@
 namespace Tesla.NET
 {
     using System;
+    using System.CodeDom;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
@@ -129,6 +130,15 @@ namespace Tesla.NET
                 throw new ArgumentNullException(nameof(accessToken));
 
             return Client.GetVehicleStateAsync(BaseUri, vehicleId, accessToken, cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public Task<IMessageResponse<IResponseDataWrapper<IVehicle>>> SendWakeUpAsync(long vehicleId, string accessToken, CancellationToken cancellationToken = default)
+        {
+            if (string.IsNullOrWhiteSpace(accessToken))
+                throw new ArgumentNullException(nameof(accessToken));
+
+            return Client.SendWakeUpAsync(BaseUri, vehicleId, accessToken, cancellationToken);
         }
     }
 }

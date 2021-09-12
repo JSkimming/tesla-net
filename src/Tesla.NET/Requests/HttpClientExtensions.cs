@@ -302,6 +302,47 @@ namespace Tesla.NET.Requests
         }
 
         /// <summary>
+        /// Sends wake up message to th evehile for <see cref="IVehicle" />  with the specified
+        /// <see cref="IVehicle.Id"/>.
+        /// </summary>
+        /// <param name="client">The <see cref="HttpClient"/>.</param>
+        /// <param name="baseUri">The base <see cref="Uri"/> of the Tesla Owner API.</param>
+        /// <param name="vehicleId">The unique <see cref="IVehicle.Id"/> of a <see cref="IVehicle"/>.</param>
+        /// <param name="accessToken">
+        /// The access token used to authenticate the request; can be <see langword="null"/> if the authentication is
+        /// added by default.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for a task to
+        /// complete.</param>
+        /// <returns>The vehicle that has been awakened.</returns>
+        public static Task<IMessageResponse<IResponseDataWrapper<IVehicle>>> SendWakeUpAsync(
+            this HttpClient client,
+            Uri baseUri,
+            long vehicleId,
+            string accessToken = null,
+            CancellationToken cancellationToken = default)
+        {
+            if (client == null)
+                throw new ArgumentNullException(nameof(client));
+            if (baseUri == null)
+                throw new ArgumentNullException(nameof(baseUri));
+
+            IEnumerable<KeyValuePair<string, string>> parameters = GetParameters();
+
+            Uri requestUri = new Uri(baseUri, $"api/1/vehicles/{vehicleId}/wake_up");
+
+            return
+                client
+                    .PostFormAsync(requestUri, parameters, accessToken, cancellationToken)
+                    .ReadJsonAsAsync<IResponseDataWrapper<IVehicle>, ResponseDataWrapper<Vehicle>>(cancellationToken);
+
+            IEnumerable<KeyValuePair<string, string>> GetParameters()
+            {
+                yield return new KeyValuePair<string, string>("id", vehicleId.ToString());
+            }
+        }
+
+        /// <summary>
         /// Posts the form <paramref name="parameters"/> to the <paramref name="requestUri"/>.
         /// </summary>
         /// <param name="client">The <see cref="HttpClient"/>.</param>
