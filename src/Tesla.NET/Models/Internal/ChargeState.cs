@@ -80,7 +80,7 @@ namespace Tesla.NET.Models.Internal
             long? chargerPilotCurrent = null,
             long? chargerActualCurrent = null,
             long? chargerPower = null,
-            long? timeToFullCharge = null,
+            string timeToFullCharge = null,
             bool? tripCharging = null,
             long? chargeRate = null,
             bool? chargePortDoorOpen = null,
@@ -254,9 +254,9 @@ namespace Tesla.NET.Models.Internal
         public long? ChargerPower { get; }
 
         /// <summary>
-        /// Gets the time in minutes to a full charge of a <see cref="IVehicle"/> when charging.
+        /// Gets the time in "hours.minutes" to a full charge of a <see cref="IVehicle"/> when charging.
         /// </summary>
-        public long? TimeToFullCharge { get; }
+        public string TimeToFullCharge { get; }
 
         /// <summary>
         /// Gets a value indicating whether a <see cref="IVehicle"/> is trip charging.

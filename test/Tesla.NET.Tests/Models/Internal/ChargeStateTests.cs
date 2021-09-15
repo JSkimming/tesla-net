@@ -120,7 +120,7 @@ namespace Tesla.NET.Models.Internal
 
         [Fact]
         public void time_to_full_charge() =>
-            _json["time_to_full_charge"].Value<long?>().Should().Be(_sut.TimeToFullCharge);
+            _json["time_to_full_charge"].Value<string>().Should().Be(_sut.TimeToFullCharge);
 
         [Fact]
         public void trip_charging() =>
@@ -319,7 +319,7 @@ namespace Tesla.NET.Models.Internal
 
         [Fact]
         public void time_to_full_charge() =>
-            _sut.TimeToFullCharge.Should().Be(_json["time_to_full_charge"].Value<long?>());
+            _sut.TimeToFullCharge.Should().Be(_json["time_to_full_charge"].Value<string>());
 
         [Fact]
         public void trip_charging() =>

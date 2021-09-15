@@ -147,7 +147,7 @@ namespace Tesla.NET.Models
         /// Gets the time in minutes to a full charge of a <see cref="IVehicle"/> when charging.
         /// </summary>
         [JsonProperty("time_to_full_charge")]
-        long? TimeToFullCharge { get; }
+        string TimeToFullCharge { get; }
 
         /// <summary>
         /// Gets a value indicating whether a <see cref="IVehicle"/> is trip charging.
